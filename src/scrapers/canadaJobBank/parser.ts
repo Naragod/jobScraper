@@ -1,6 +1,6 @@
-import { findElementsInElement, getElementAfter, getJSDOMNode } from "../../apiRequests/htmlTraversal";
 import { flatten } from "../../utils";
 import { Page, Locator } from "playwright";
+import { findElementsInElement, getElementAfter, getJSDOMNode } from "../../apiRequests/htmlTraversal";
 
 const getListItemTextContent = async (
   items: Locator[],

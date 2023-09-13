@@ -15,7 +15,5 @@ export const getAllJobPageLinks = async (
   const jobEntries = await getNodeList(url, "[class*='posting-apply']");
 
   // return all links
-  return findElementsInNodeList(jobEntries, "A")
-    .map((item: any) => item.href)
-    .filter((item) => item !== "/login");
+  return findElementsInNodeList(jobEntries, "A").map((item: any) => item.href);
 };
