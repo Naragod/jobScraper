@@ -1,23 +1,24 @@
-import { getApplicationBasicInfo, getApplicationEmailAddress, getJobRequirements } from "./parser";
-import { getAllJobPageLinks, baseURL as canadaJobBankBaseUrl } from "../../apiRequests/canadaJobBank/requestHandler";
-import { getBrowserPage, closeBrowser } from "../browserSupport";
+import { Page } from "playwright";
 import { sleep } from "../../emailer/emailService";
+import { getApplicationBasicInfo, getApplicationEmailAddress, getJobRequirements } from "./parser";
+import { getBrowserPage, closeBrowser } from "../browserSupport";
 import { writeToFile } from "../../emailer/fileHandler";
+import { getAllJobPageLinks, baseURL as canadaJobBankBaseUrl } from "../../apiRequests/canadaJobBank/requestHandler";
 
 const DEFAULT_JOB_AGE = 7;
 
-export const getPageInformation = async (link: string, browserPage: any) => {
+export const getPageInformation = async (link: string, page: Page) => {
   try {
-    await browserPage.goto(link);
+    await page.goto(link);
     // basic info will always appear regardless of the job application type: Should go first.
-    const applicationInfo = await getApplicationBasicInfo(browserPage);
+    const applicationInfo = await getApplicationBasicInfo(page);
     if (applicationInfo.jobProvider !== "Job Bank") {
-      const externalLink = await browserPage.locator('[id="externalJobLink"]').getAttribute("href");
+      const externalLink = await page.locator('[id="externalJobLink"]').getAttribute("href");
       return { err: `Job requires application on website: LINK:${externalLink}` };
     }
 
-    const jobRequirements = await getJobRequirements(browserPage);
-    const emailAddress = await getApplicationEmailAddress(browserPage);
+    const jobRequirements = await getJobRequirements(page);
+    const emailAddress = await getApplicationEmailAddress(page);
     return { emailAddress, applicationInfo, jobRequirements, err: false };
   } catch (err) {
     return { err: err };
