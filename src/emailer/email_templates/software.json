@@ -1,0 +1,10 @@
+{
+  "subject": "{position} Application",
+  "text": "Dear hiring manager, \n\nMy name is Mateo Naranjo. I am a Canadian citizen and wish to apply to the position of {position} as seen on {jobBoard}. I am a backend focused engineer with over 7 years experience building applications with NodeJs/Typescript and Python in the AWS ecosystem. I am highly experienced in creating scalable APIs and I believe my skill set would be a great asset to any team. \n\nPlease take a look at my github page: github.com/naragod. Here are a few notable examples of my work: https://github.com/Naragod/bankingTransactions, https://github.com/Naragod/snakeGame.\n\nMost recently, I created software to automate my job application process. This email for example was sent using my localEmailClient: https://github.com/Naragod/localEmailClient#readme \n\nInterested to learn more about who I am? Attached is my resume.\n\nThank you.",
+  "attachments": [
+    {
+      "filename": "MateoNaranjoDevResume.pdf",
+      "path": "/home/mateo/Desktop/projects/localEmailClient/assets/resumes/DevRes.pdf"
+    }
+  ]
+}

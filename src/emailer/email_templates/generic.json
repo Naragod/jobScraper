@@ -1,0 +1,10 @@
+{
+  "subject": "{position} Application",
+  "text": "Dear hiring manager, \n\nMy name is Mateo Naranjo. I am a Canadian citizen and wish to apply to the position of {position} as seen on {jobBoard}. I am looking to engage in more fulfilling work, with greater human interaction, as I previously enjoyed while working as a lifeguard and swim instructor. Attached is my resume. \n\nThank you.",
+  "attachments": [
+    {
+      "filename": "MateoNaranjoGenResume.pdf",
+      "path": "/home/mateo/Desktop/projects/localEmailClient/assets/resumes/GenericRes.pdf"
+    }
+  ]
+}
