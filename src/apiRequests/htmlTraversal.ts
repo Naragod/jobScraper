@@ -1,5 +1,6 @@
 import { JSDOM } from "jsdom";
 import { flatten } from "../utils";
+import { Locator } from "playwright";
 
 const filterList = ["TEXT", "#text"];
 
@@ -14,13 +15,13 @@ export const getNodeList = async (url: string, pattern: string): Promise<NodeLis
   return getJSDOMNode(htmlResponse, pattern);
 };
 
-export const findElementsInElement = (element: any, searchTerm: string): any[] => {
+export const findElementsInElement = (element: any, elementType: string): any[] => {
   if (element == null) return [];
   const arr = [...element.childNodes]
     .filter((child) => !filterList.includes(child.nodeName))
     .map((child) => {
-      if (child.nodeName == searchTerm) return child;
-      const grandChildren = findElementsInElement(child, searchTerm);
+      if (child.nodeName == elementType) return child;
+      const grandChildren = findElementsInElement(child, elementType);
 
       if (grandChildren.length == 0) return;
       return grandChildren;
@@ -63,4 +64,28 @@ export const getElementAfter = (nodeList: NodeList, elementType: string, element
     return nodeList[index + 1];
   }
   return null;
+};
+
+export const getTextContentList = async (locators: Locator[]) => {
+  const textContentsRaw = await Promise.all(
+    locators.reduce((prev: any, curr: any) => {
+      const text = curr.textContent();
+      return prev.concat(text).filter((item: any) => item != undefined);
+    }, [])
+  );
+  return flatten(textContentsRaw);
+};
+
+export const getListItemTextContent = async (
+  items: Locator[],
+  locate: string,
+  listItemIndex: number,
+  textContentIndex?: number
+): Promise<string | string[]> => {
+  const content = await items[listItemIndex].locator(locate).all();
+  const textContents = await getTextContentList(content);
+
+  if (textContentIndex == undefined) return textContents;
+  if (textContentIndex >= 0) return textContents[textContentIndex];
+  return textContents[textContents.length + textContentIndex];
 };

@@ -1,26 +1,11 @@
-import { flatten } from "../../utils";
-import { Page, Locator } from "playwright";
-import { findElementsInElement, getElementAfter, getJSDOMNode } from "../../apiRequests/htmlTraversal";
-
-const getListItemTextContent = async (
-  items: Locator[],
-  locate: string,
-  listItemIndex: number,
-  textContentIndex?: number
-): Promise<string | string[]> => {
-  const content = await items[listItemIndex].locator(locate).all();
-  const textContentsRaw = await Promise.all(
-    content.reduce((prev: any, curr: any) => {
-      const text = curr.textContent();
-      return prev.concat(text).filter((item: any) => item != undefined);
-    }, [])
-  );
-  const textContents = flatten(textContentsRaw);
-
-  if (textContentIndex == undefined) return textContents;
-  if (textContentIndex >= 0) return textContents[textContentIndex];
-  return textContents[textContents.length + textContentIndex];
-};
+import { Page } from "playwright";
+import {
+  findElementsInElement,
+  findElementsInNodeList,
+  getElementAfter,
+  getJSDOMNode,
+  getListItemTextContent,
+} from "../../apiRequests/htmlTraversal";
 
 export const getJobRequirements = async (page: Page) => {
   const jobRequirmentsDivHTML = await page.locator('[id="comparisonchart"]').innerHTML();
@@ -48,12 +33,14 @@ export const getJobRequirements = async (page: Page) => {
 
 export const getApplicationBasicInfo = async (page: Page) => {
   try {
-    const title = await page.locator('[class="title"]');
-    const basicInfoDiv = await page.locator('[class~="job-posting-brief"]');
-    const listItems = await basicInfoDiv.getByRole("listitem").all();
+    const listItems = await page.locator('[class~="job-posting-brief"]').getByRole("listitem").all();
+    const titleHTML = await page.locator(".job-posting-details-body").locator(".title").innerHTML();
+    const title = findElementsInNodeList(getJSDOMNode(titleHTML), "SPAN").map((item) =>
+      item.textContent.replace(/\t?\n|\t/gm, "")
+    )[0];
 
     return {
-      title: ((await getListItemTextContent([title], "span", 0, 2)) as string).replace(/\t?\n|\t/gm, ""),
+      title,
       location: await getListItemTextContent(listItems, "span", 0, 2),
       pay: await getListItemTextContent(listItems, "span", 1, 2),
       jobId: await getListItemTextContent(listItems, "span", listItems.length - 1, -1),
