@@ -1,8 +1,9 @@
 import { timeElapsed } from "../../utils";
-import { writeToFile } from "../../emailer/fileHandler";
 import { closeBrowser } from "../browserSupport";
+import { writeToFile } from "../../emailer/fileHandler";
+import { getJobInformation } from "./applicationHandler";
 import { getAllJobPageLinks } from "../../apiRequests/canadaJobBank/requestHandler";
-import { handleJobApplicationsInParallel } from "./applicationHandler";
+import { handleJobApplicationsInParallel } from "../executionSupport";
 
 const DEFAULT_JOB_AGE = 7;
 
@@ -13,7 +14,7 @@ export const applyToJobs = async (jobTitle?: string, location?: string, applicat
   for (let applicationPage = 1; applicationPage <= applicationLimit; applicationPage++) {
     if (applicationsViewed >= applicationLimit) break;
     const jobLinks = await getAllJobPageLinks(jobTitle, location, DEFAULT_JOB_AGE, applicationPage);
-    const result = await timeElapsed(handleJobApplicationsInParallel, jobLinks);
+    const result = await timeElapsed(handleJobApplicationsInParallel, jobLinks, getJobInformation);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
     writeToFile(`job_data_${applicationPage}_${now}.json`, JSON.stringify(result));
