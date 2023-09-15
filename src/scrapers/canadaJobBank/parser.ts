@@ -55,11 +55,10 @@ export const getApplicationBasicInfo = async (page: Page) => {
 export const getApplicationEmailAddress = async (page: Page) => {
   try {
     await page.click("[id='applynowbutton']");
-    const howToApplyDiv = await page.locator('[id="howtoapply"]');
-    return await howToApplyDiv.getByRole("link").textContent();
+    const howToApplyHTML = await page.locator('[id="howtoapply"]').innerHTML();
+    const emailAddresses = findElementsInNodeList(getJSDOMNode(howToApplyHTML), "A").map((item) => item.textContent);
+    return { eAddressErr: false, emailAddresses };
   } catch (err) {
-    console.log("No page button");
-    console.error(err);
-    return "";
+    return { eAddressErr: "No page button", emailAddresses: "" };
   }
 };
