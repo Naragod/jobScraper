@@ -1,3 +1,4 @@
+import { sleep } from "../utils";
 import { logger } from "./fileHandler";
 import { createTransport, Transporter } from "nodemailer";
 import { getEmailOptions, IEmailInputOptions } from "./emailParser";
@@ -13,10 +14,6 @@ export interface ITransportOptions {
   user: string;
   pass?: string;
 }
-
-export const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
 
 export const getEmailTransporter = async (auth: ITransporterAuth) => {
   return createTransport({

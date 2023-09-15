@@ -2,9 +2,9 @@ import { Page, chromium, Browser } from "playwright";
 
 let browser: Browser;
 export const getBrowserPage = async (options: any = {}): Promise<Page> => {
-  const timeout = options.timeout || 5000;
+  const timeout = options.timeout || 1000 * 5;
   // Launch the browser and open a new blank page
-  browser = await chromium.launch(options);
+  browser = browser || (await chromium.launch(options));
   const context = await browser.newContext();
 
   const page = await context.newPage();
