@@ -1,6 +1,5 @@
 import { findElementsInNodeList, getNodeList } from "../htmlTraversal";
-
-export const baseURL = "https://www.jobbank.gc.ca";
+import { baseURL } from "../../config/canadaJobBank.config.json";
 
 type SortType = "D" | "M";
 
@@ -20,16 +19,3 @@ export const getAllJobPageLinks = async (
     .map((item: any) => item.href)
     .filter((item) => item !== "/login");
 };
-
-// const goToPage = async (url: string) => {
-//   const jobsPage = "[class*='job-posting-content']";
-//   const page = await getNodeList(`${baseURL}/${url}`, jobsPage);
-
-//   const listElements = findElementsInNodeList(page, "SPAN").flat();
-//   // we want to use textContent: https://www.microfocus.com/documentation/silk-test/200/en/silktestworkbench-help-en/SILKTEST-21EEFF3F-DIFFERENCEBETWEENTEXTCONTENTSINNERTEXTINNERHTML-REF.html
-//   listElements.map((item: any) =>
-//     console.log(item.textContent.replace(/\s/g, ""))
-//   );
-//   const buttonElements = findElementsInNodeList(page, "BUTTON").flat();
-//   [...buttonElements].map((button) => {});
-// };

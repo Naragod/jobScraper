@@ -1,6 +1,5 @@
 import { findElementsInNodeList, getNodeList } from "../htmlTraversal";
-
-export const baseURL = "https://jobs.lever.co";
+import { baseURL } from "../../config/jobLeverl.config.json";
 
 export const getAllJobPageLinks = async (
   company: string,
