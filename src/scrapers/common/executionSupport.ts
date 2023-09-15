@@ -1,6 +1,7 @@
-import { sleep } from "../../utils";
-import { JobInfoGetterFn } from "./interfaces";
-import { getBrowserPage } from "./browserSupport";
+import { sleep, timeElapsed } from "../../utils";
+import { writeToFile } from "../../emailer/fileHandler";
+import { closeBrowser, getBrowserPage } from "./browserSupport";
+import { AllJobsLinksGetterFn, ApplyToJobsFn, JobInfoGetterFn } from "./interfaces";
 
 // configuration variables
 // ****************************************************************************
@@ -9,6 +10,7 @@ import { getBrowserPage } from "./browserSupport";
 // too many processes creates more memory management work for the browser.
 const CONCURRENT = 7;
 const THROTTLE_SPEED = 50;
+const DEFAULT_JOB_AGE = 7;
 
 export const handleJobApplication = async (link: string, handler: JobInfoGetterFn, throttleSpeed: number) => {
   // create new page to query for job information in parallel

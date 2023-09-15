@@ -10,3 +10,11 @@ export interface IJobInfo {
 export interface JobInfoGetterFn {
   (link: string, page: Page): Promise<IJobInfo>;
 }
+
+export interface ApplyToJobsFn {
+  (searchParams: any, applicationLimit?: number): Promise<void>;
+}
+
+export interface AllJobsLinksGetterFn {
+  (searchParams: any): Promise<string[]>;
+}
