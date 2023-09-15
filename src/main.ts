@@ -24,6 +24,7 @@ const main = async () => {
     await applyToJobsOnJobLever({ company });
   }
   await applytoJobsOnCanadaJobBoard({});
+  process.exit()
 };
 
 main();
