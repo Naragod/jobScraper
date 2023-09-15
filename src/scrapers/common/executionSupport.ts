@@ -1,5 +1,5 @@
 import { Page } from "playwright";
-import { sleep } from "../utils";
+import { sleep } from "../../utils";
 import { getBrowserPage } from "./browserSupport";
 
 // configuration variables

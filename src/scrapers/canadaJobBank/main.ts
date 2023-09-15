@@ -1,9 +1,9 @@
 import { timeElapsed } from "../../utils";
-import { closeBrowser } from "../browserSupport";
+import { closeBrowser } from "../common/browserSupport";
 import { writeToFile } from "../../emailer/fileHandler";
 import { getJobInformation } from "./applicationHandler";
 import { getAllJobPageLinks } from "../../apiRequests/canadaJobBank/requestHandler";
-import { handleJobApplicationsInParallel } from "../executionSupport";
+import { handleJobApplicationsInParallel } from "../common/executionSupport";
 
 const DEFAULT_JOB_AGE = 7;
 
