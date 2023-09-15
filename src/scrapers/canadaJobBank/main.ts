@@ -14,10 +14,10 @@ export const applyToJobs: ApplyToJobsFn = async (seachParams: any, applicationLi
   while (applicationsViewed < applicationLimit) {
     applicationPage += 1;
     const jobLinks = await getAllJobPageLinks(seachParams);
-    const result = await timeElapsed(handleJobApplicationsInParallel, jobLinks, getJobInformation);
+    const { result } = await timeElapsed(handleJobApplicationsInParallel, jobLinks, getJobInformation);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
-    writeToFile(`${seachParams.company}_${now}.json`, JSON.stringify(result));
+    writeToFile(`job_data_${applicationPage}_${now}.json`, JSON.stringify(result));
   }
   await closeBrowser();
 };
