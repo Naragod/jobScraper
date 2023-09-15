@@ -1,52 +1,22 @@
-import { Page } from "playwright";
-import { sleep } from "../../emailer/emailService";
-import { getApplicationBasicInfo, getApplicationEmailAddress, getJobRequirements } from "./parser";
-import { getBrowserPage, closeBrowser } from "../browserSupport";
+import { timeElapsed } from "../../utils";
 import { writeToFile } from "../../emailer/fileHandler";
-import { getAllJobPageLinks, baseURL as canadaJobBankBaseUrl } from "../../apiRequests/canadaJobBank/requestHandler";
+import { closeBrowser } from "../browserSupport";
+import { getAllJobPageLinks } from "../../apiRequests/canadaJobBank/requestHandler";
+import { handleJobApplicationsInParallel } from "./applicationHandler";
 
 const DEFAULT_JOB_AGE = 7;
 
-export const getPageInformation = async (link: string, page: Page) => {
-  try {
-    await page.goto(link);
-    // basic info will always appear regardless of the job application type: Should go first.
-    const applicationInfo = await getApplicationBasicInfo(page);
-    if (applicationInfo.jobProvider !== "Job Bank") {
-      const externalLink = await page.locator('[id="externalJobLink"]').getAttribute("href");
-      return { err: `Job requires application on website: LINK:${externalLink}` };
-    }
-
-    const jobRequirements = await getJobRequirements(page);
-    const emailAddress = await getApplicationEmailAddress(page);
-    return { emailAddress, applicationInfo, jobRequirements, err: false };
-  } catch (err) {
-    return { err: err };
-  }
-};
-
-export const applyToJobs = async (jobTitle?: string, location?: string, applications = 10) => {
-  let jobsInformation = [];
+export const applyToJobs = async (jobTitle?: string, location?: string, applicationLimit = 1000) => {
   let applicationsViewed = 0;
-  const now = new Date().toDateString();
-  const browserPage = await getBrowserPage({ headless: true });
+  const now = new Date().toISOString();
 
-  for (let applicationPage = 1; applicationPage <= applications; applicationPage++) {
+  for (let applicationPage = 1; applicationPage <= applicationLimit; applicationPage++) {
+    if (applicationsViewed >= applicationLimit) break;
     const jobLinks = await getAllJobPageLinks(jobTitle, location, DEFAULT_JOB_AGE, applicationPage);
-
-    if (applicationsViewed >= applications) break;
-
-    for (let link of jobLinks) {
-      if (applicationsViewed >= applications) break;
-      const completeLink = `${canadaJobBankBaseUrl}/${link}`;
-      const pageInfo = await getPageInformation(completeLink, browserPage);
-      jobsInformation.push(pageInfo);
-      applicationsViewed += 1;
-      await sleep(200);
-
-      console.log(`${applicationsViewed} / ${applicationPage * jobLinks.length}`, completeLink, pageInfo);
-    }
+    const result = await timeElapsed(handleJobApplicationsInParallel, jobLinks);
+    applicationsViewed += jobLinks.length;
+    console.log("applicationsViewed:", applicationsViewed);
+    writeToFile(`job_data_${applicationPage}_${now}.json`, JSON.stringify(result));
   }
-  writeToFile(`job_data_${now}.json`, JSON.stringify(jobsInformation));
   await closeBrowser();
 };
