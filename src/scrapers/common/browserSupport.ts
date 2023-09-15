@@ -1,6 +1,6 @@
 import { Page, chromium, Browser } from "playwright";
 
-let browser: Browser;
+let browser: Browser | null;
 export const getBrowserPage = async (options: any = {}): Promise<Page> => {
   const timeout = options.timeout || 1000 * 5;
   // Launch the browser and open a new blank page
@@ -13,5 +13,7 @@ export const getBrowserPage = async (options: any = {}): Promise<Page> => {
 };
 
 export const closeBrowser = async () => {
+  if (browser == null) return;
   await browser.close();
+  browser = null;
 };

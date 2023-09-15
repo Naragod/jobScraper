@@ -1,6 +1,6 @@
 import { Page } from "playwright";
 import { JobInfoGetterFn } from "../common/interfaces";
-import { getApplicationBasicInfo, getJobRequirements, fillInApplication } from "../jobLever/parser";
+import { getApplicationBasicInfo, getJobRequirements } from "../jobLever/parser";
 
 export const getJobInformation: JobInfoGetterFn = async (link: string, page: Page) => {
   try {
