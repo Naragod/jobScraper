@@ -16,6 +16,6 @@ export const getAllJobPageLinks = async (
 
   // return all links
   return findElementsInNodeList(jobEntries, "A")
-    .map((item: any) => item.href)
-    .filter((item) => item !== "/login");
+    .map((item: any) => `${baseURL}/${item.href}`)
+    .filter((item) => item !== `${baseURL}/login`);
 };
