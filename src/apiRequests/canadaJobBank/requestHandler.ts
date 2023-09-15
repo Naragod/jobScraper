@@ -10,6 +10,6 @@ export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: any
 
   // return all links
   return findElementsInNodeList(jobEntries, "A")
-    .map((item: any) => `${baseURL}/${item.href}`)
-    .filter((item) => item !== `${baseURL}/login`);
+    .map((item: any) => new URL(item.href, baseURL).href)
+    .filter((item) => item !== new URL("/login", baseURL).href);
 };
