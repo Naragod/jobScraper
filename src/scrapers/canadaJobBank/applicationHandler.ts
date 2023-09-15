@@ -30,7 +30,7 @@ export const getJobInformation = async (link: string, page: Page) => {
   }
 };
 
-const handleApplication = async (link: string, throttleSpeed: number) => {
+export const handleJobApplication = async (link: string, throttleSpeed: number) => {
   // create new page to query for job information in parallel
   const page = await getBrowserPage({ headless: true });
   const jobInfo = await getJobInformation(`${baseURL}/${link}`, page);
@@ -50,7 +50,7 @@ export const handleJobApplicationsInParallel = async (
   const promiseQueue = [];
 
   for (let link of jobLinks) {
-    const func = () => handleApplication(link, throttleSpeed);
+    const func = () => handleJobApplication(link, throttleSpeed);
     promiseQueue.push(func());
 
     if (promiseQueue.length >= concurrent) {
