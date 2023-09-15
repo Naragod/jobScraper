@@ -1,5 +1,5 @@
-import { Page } from "playwright";
 import { sleep } from "../../utils";
+import { JobInfoGetterFn } from "./interfaces";
 import { getBrowserPage } from "./browserSupport";
 
 // configuration variables
@@ -9,17 +9,6 @@ import { getBrowserPage } from "./browserSupport";
 // too many processes creates more memory management work for the browser.
 const CONCURRENT = 7;
 const THROTTLE_SPEED = 50;
-
-export interface IJobInfo {
-  link: string;
-  jobRequirements: any;
-  applicationInfo: any;
-  err: any;
-}
-
-export interface JobInfoGetterFn {
-  (link: string, page: Page): Promise<IJobInfo>;
-}
 
 export const handleJobApplication = async (link: string, handler: JobInfoGetterFn, throttleSpeed: number) => {
   // create new page to query for job information in parallel
