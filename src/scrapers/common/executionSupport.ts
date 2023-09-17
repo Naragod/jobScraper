@@ -1,7 +1,6 @@
-import { sleep, timeElapsed } from "../../utils";
-import { writeToFile } from "../../emailer/fileHandler";
-import { closeBrowser, getBrowserPage } from "./browserSupport";
-import { AllJobsLinksGetterFn, ApplyToJobsFn, JobInfoGetterFn } from "./interfaces";
+import { sleep } from "../../utils";
+import { JobInfoGetterFn } from "./interfaces";
+import { getBrowserPage } from "./browserSupport";
 
 // configuration variables
 // ****************************************************************************
@@ -11,9 +10,14 @@ import { AllJobsLinksGetterFn, ApplyToJobsFn, JobInfoGetterFn } from "./interfac
 const CONCURRENT = 7;
 const THROTTLE_SPEED = 50;
 
-export const handleJobApplication = async (link: string, handler: JobInfoGetterFn, throttleSpeed: number) => {
+export const handleJobApplication = async (
+  link: string,
+  handler: JobInfoGetterFn,
+  headless: boolean,
+  throttleSpeed: number
+) => {
   // create new page to query for job information in parallel
-  const page = await getBrowserPage({ headless: true });
+  const page = await getBrowserPage({ headless });
   const jobInfo = await handler(link, page);
   // close page to prevent memory leaks
   await page.close();
@@ -25,14 +29,16 @@ export const handleJobApplication = async (link: string, handler: JobInfoGetterF
 export const handleJobApplicationsInParallel = async (
   jobLinks: string[],
   handler: JobInfoGetterFn,
-  concurrent = CONCURRENT,
-  throttleSpeed = THROTTLE_SPEED
+  options: any = {}
 ) => {
   const result = [];
   const promiseQueue = [];
+  const headless = options.headless || true;
+  const concurrent = options.concurrent || CONCURRENT;
+  const throttleSpeed = options.throttleSpeed || THROTTLE_SPEED;
 
   for (let link of jobLinks) {
-    const func = () => handleJobApplication(link, handler, throttleSpeed);
+    const func = () => handleJobApplication(link, handler, headless, throttleSpeed);
     promiseQueue.push(func());
 
     if (promiseQueue.length >= concurrent) {
