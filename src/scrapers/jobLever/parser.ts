@@ -42,29 +42,29 @@ const getQuestionInputFields = async (inputs: Locator[], defaultInputType = "tex
   return result;
 };
 
-const getQuestionParameters = async (question: Locator) => {
+const getQuestionParameters = async (question: Locator): Promise<IApplicationQuestion> => {
   try {
     const labelsHTML = await question.locator("[class*='application-label']").innerHTML();
     const inputFieldDivs = await question.locator("[class*='application-field']").locator("input").all();
-    const allLabels = [...getJSDOMNode(labelsHTML)].map((item) => getAllTextFromChildNodes(item, ["", "✱"])).flat();
-    const uniqueLabels = [...new Set(allLabels)];
-    let inputFields = await getQuestionInputFields(inputFieldDivs);
+    // is textbox? textboxes do not identify as inputs such as radio btns, meaning inputFieldDivs will be an empty array
+    const inputDivs = inputFieldDivs.length == 0 ? await question.locator("textarea").all() : inputFieldDivs;
 
-    // is textbox? textboxes do not identify as inputs such as radio btns, textboxes, or checkboxes
-    if (inputFieldDivs.length == 0) {
-      const textarea = await question.locator("textarea").all();
-      inputFields = await getQuestionInputFields(textarea);
-    }
+    const allLabels = [...getJSDOMNode(labelsHTML)].map((item) => getAllTextFromChildNodes(item, ["", "✱"])).flat();
+    const inputFields = await getQuestionInputFields(inputDivs);
+    const uniqueLabels = [...new Set(allLabels)];
+
+    // application is guaranteed to have a name and email input field.
     const { isRequired, inputType } = inputFields[0];
     return { label: uniqueLabels[0], inputFields, inputType, isRequired, err: false };
   } catch (err) {
+    const html = await question.innerHTML();
+    console.log(html);
     console.log(err);
     return { label: "", inputFields: [], inputType: "", isRequired: false, err };
   }
 };
 
-export const getInputFields = async (page: Page) => {
-  let result: IApplicationQuestion[] = [];
+export const getInputFields = async (page: Page): Promise<IApplicationQuestion[]> => {
   const applicationPageLink = await page.locator(".postings-btn").first().getAttribute("href");
   await page.goto(<string>applicationPageLink);
 
@@ -72,12 +72,8 @@ export const getInputFields = async (page: Page) => {
   const applicationQuestions = await page.locator("[class='application-question']").all();
   const customApplicationQuestions = await page.locator("[class~='custom-question']").all();
 
-  for (let question of [...applicationQuestions, ...customApplicationQuestions]) {
-    const { label, inputFields, inputType, isRequired, err } = await getQuestionParameters(question);
-    if (err) continue;
-    result.push({ label, inputFields, inputType, isRequired });
-  }
-  return result;
+  const questionPromises = [...applicationQuestions, ...customApplicationQuestions].map(getQuestionParameters);
+  return (await Promise.allSettled(questionPromises)).map((item: any) => item.value);
 };
 
 // setters
