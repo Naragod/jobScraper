@@ -4,6 +4,7 @@ export interface IJobInfo {
   link: string;
   jobRequirements: any;
   applicationInfo: any;
+  applicationInputFields?: any[];
   err: any;
 }
 
@@ -11,7 +12,7 @@ export interface IApplicationQuestion {
   label: string;
   inputType: string;
   isRequired: boolean;
-  inputFields?: any[]
+  inputFields: any[];
   err: any;
 }
 
