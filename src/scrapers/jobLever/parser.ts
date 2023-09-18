@@ -2,7 +2,7 @@ import { Locator, Page } from "playwright";
 // const HttpClient = require("../../captcha/endcaptcha.js");
 // const client = new HttpClient("lukasworldy", "mainMateoPass!1");
 
-import { getTextContentList, getAllTextFromChildNodes, getJSDOMNode } from "../../apiRequests/htmlTraversal";
+import { getTextContentList, getAllTextFromHTMLContent } from "../../apiRequests/htmlTraversal";
 import { IApplicationQuestion } from "../common/interfaces";
 
 // getters
@@ -14,6 +14,10 @@ export const getApplicationBasicInfo = async (page: Page) => {
   const department = await headingDiv.locator(".department").textContent();
   const commitment = await headingDiv.locator(".commitment").textContent();
   const workplaceTypes = await headingDiv.locator(".workplaceTypes").textContent();
+  const jobDescriptionHTML = await page.locator("[data-qa='job-description']").innerHTML();
+  const closingJobDescriptionHTML = await page.locator("[data-qa='closing-description']").innerHTML();
+  const jobDescription = getAllTextFromHTMLContent(jobDescriptionHTML);
+  const closingJobDescription = getAllTextFromHTMLContent(closingJobDescriptionHTML);
 
   return {
     title,
@@ -21,6 +25,8 @@ export const getApplicationBasicInfo = async (page: Page) => {
     department,
     commitment,
     workplaceTypes,
+    jobDescription,
+    closingJobDescription,
   };
 };
 
@@ -49,13 +55,13 @@ const getQuestionParameters = async (question: Locator): Promise<IApplicationQue
     // is textbox? textboxes do not identify as inputs such as radio btns, meaning inputFieldDivs will be an empty array
     const inputDivs = inputFieldDivs.length == 0 ? await question.locator("textarea").all() : inputFieldDivs;
 
-    const allLabels = [...getJSDOMNode(labelsHTML)].map((item) => getAllTextFromChildNodes(item, ["", "✱"])).flat();
+    // there is not css selector patter to include self: https://stackoverflow.com/a/59838990/8714371
+    const labels = getAllTextFromHTMLContent(labelsHTML, "*", ["✱"]);
     const inputFields = await getQuestionInputFields(inputDivs);
-    const uniqueLabels = [...new Set(allLabels)];
 
     // application is guaranteed to have a name and email input field.
     const { isRequired, inputType } = inputFields[0];
-    return { label: uniqueLabels[0], inputFields, inputType, isRequired, err: false };
+    return { label: labels[0], inputFields, inputType, isRequired, err: false };
   } catch (err) {
     return { label: await question.innerHTML(), inputFields: [], inputType: "unknown", isRequired: false, err };
   }
