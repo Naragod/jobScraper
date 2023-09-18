@@ -37,7 +37,7 @@ const getQuestionInputFields = async (inputs: Locator[], defaultInputType = "tex
     const inputValue = await input.getAttribute("value");
     const inputType = (await input.getAttribute("type")) || defaultInputType;
     const isRequired = (await input.getAttribute("required")) != null ? true : false;
-    result.push({ input, inputName, inputValue, inputType, isRequired });
+    result.push({ inputName, inputValue, inputType, isRequired });
   }
   return result;
 };
