@@ -7,6 +7,13 @@ export interface IJobInfo {
   err: any;
 }
 
+export interface IApplicationQuestion {
+  label: string;
+  inputType: string;
+  isRequired: boolean;
+  inputFields?: any[]
+}
+
 export interface JobInfoGetterFn {
   (link: string, page: Page): Promise<IJobInfo>;
 }
