@@ -15,6 +15,23 @@ export const getNodeList = async (url: string, pattern: string): Promise<NodeLis
   return getJSDOMNode(htmlResponse, pattern);
 };
 
+export const getAllChildrenNodes = (node: any): any[] => {
+  const arr = [...node.childNodes].map((child) => {
+    if (child.childNodes.length == 0) return child;
+    const grandChildren = getAllChildrenNodes(child);
+
+    if (grandChildren.length == 0) return;
+    return grandChildren;
+  });
+  return flatten(arr);
+};
+
+export const getAllTextFromChildNodes = (node: any, filter: string[] = []): string[] => {
+  return getAllChildrenNodes(node)
+    .map((item) => item.textContent)
+    .filter((item) => !filter.includes(item));
+};
+
 export const findElementsInElement = (element: any, elementType: string): any[] => {
   if (element == null) return [];
   const arr = [...element.childNodes]
