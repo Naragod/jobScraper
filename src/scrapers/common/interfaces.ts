@@ -12,6 +12,7 @@ export interface IApplicationQuestion {
   inputType: string;
   isRequired: boolean;
   inputFields?: any[]
+  err: any;
 }
 
 export interface JobInfoGetterFn {
