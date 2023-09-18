@@ -26,10 +26,17 @@ export const getAllChildrenNodes = (node: any): any[] => {
   return flatten(arr);
 };
 
-export const getAllTextFromChildNodes = (node: any, filter: string[] = []): string[] => {
+export const getAllTextFromChildNodes = (node: any, filter: string[] = [""]): string[] => {
   return getAllChildrenNodes(node)
     .map((item) => item.textContent)
     .filter((item) => !filter.includes(item));
+};
+
+export const getAllTextFromHTMLContent = (html: string, pattern = "*", filter = [""]) => {
+  const jsdomNode = getJSDOMNode(html, pattern);
+  const textContentArray = [...jsdomNode].map((item) => getAllTextFromChildNodes(item, filter));
+  // get all unique inputs from flattened array of strings.
+  return [...new Set(flatten(textContentArray))];
 };
 
 export const findElementsInElement = (element: any, elementType: string): any[] => {
