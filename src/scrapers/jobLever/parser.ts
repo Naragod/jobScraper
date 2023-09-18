@@ -57,10 +57,7 @@ const getQuestionParameters = async (question: Locator): Promise<IApplicationQue
     const { isRequired, inputType } = inputFields[0];
     return { label: uniqueLabels[0], inputFields, inputType, isRequired, err: false };
   } catch (err) {
-    const html = await question.innerHTML();
-    console.log(html);
-    console.log(err);
-    return { label: "", inputFields: [], inputType: "", isRequired: false, err };
+    return { label: await question.innerHTML(), inputFields: [], inputType: "unknown", isRequired: false, err };
   }
 };
 
