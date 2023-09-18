@@ -1,8 +1,9 @@
-import { Page } from "playwright";
+import { Locator, Page } from "playwright";
 // const HttpClient = require("../../captcha/endcaptcha.js");
 // const client = new HttpClient("lukasworldy", "mainMateoPass!1");
 
-import { getTextContentList } from "../../apiRequests/htmlTraversal";
+import { getTextContentList, getAllTextFromChildNodes, getJSDOMNode } from "../../apiRequests/htmlTraversal";
+import { IApplicationQuestion } from "../common/interfaces";
 
 // getters
 // ****************************************************************************
@@ -28,6 +29,57 @@ export const getJobRequirements = async (page: Page) => {
   return await getTextContentList(jobRequirementsDiv);
 };
 
+const getQuestionInputFields = async (inputs: Locator[], defaultInputType = "textarea") => {
+  let result = [];
+
+  for (let input of inputs) {
+    const inputName = await input.getAttribute("name");
+    const inputValue = await input.getAttribute("value");
+    const inputType = (await input.getAttribute("type")) || defaultInputType;
+    const isRequired = (await input.getAttribute("required")) != null ? true : false;
+    result.push({ input, inputName, inputValue, inputType, isRequired });
+  }
+  return result;
+};
+
+const getQuestionParameters = async (question: Locator) => {
+  try {
+    const labelsHTML = await question.locator("[class*='application-label']").innerHTML();
+    const inputFieldDivs = await question.locator("[class*='application-field']").locator("input").all();
+    const allLabels = [...getJSDOMNode(labelsHTML)].map((item) => getAllTextFromChildNodes(item, ["", "✱"])).flat();
+    const uniqueLabels = [...new Set(allLabels)];
+    let inputFields = await getQuestionInputFields(inputFieldDivs);
+
+    // is textbox? textboxes do not identify as inputs such as radio btns, textboxes, or checkboxes
+    if (inputFieldDivs.length == 0) {
+      const textarea = await question.locator("textarea").all();
+      inputFields = await getQuestionInputFields(textarea);
+    }
+    const { isRequired, inputType } = inputFields[0];
+    return { label: uniqueLabels[0], inputFields, inputType, isRequired, err: false };
+  } catch (err) {
+    console.log(err);
+    return { label: "", inputFields: [], inputType: "", isRequired: false, err };
+  }
+};
+
+export const getInputFields = async (page: Page) => {
+  let result: IApplicationQuestion[] = [];
+  const applicationPageLink = await page.locator(".postings-btn").first().getAttribute("href");
+  await page.goto(<string>applicationPageLink);
+
+  // good to checkout css selectors discussed here: https://stackoverflow.com/a/32728646/8714371
+  const applicationQuestions = await page.locator("[class='application-question']").all();
+  const customApplicationQuestions = await page.locator("[class~='custom-question']").all();
+
+  for (let question of [...applicationQuestions, ...customApplicationQuestions]) {
+    const { label, inputFields, inputType, isRequired, err } = await getQuestionParameters(question);
+    if (err) continue;
+    result.push({ label, inputFields, inputType, isRequired });
+  }
+  return result;
+};
+
 // setters
 // ****************************************************************************
 const setRequiredFields = async (inputs: any[], data: any) => {
@@ -40,7 +92,7 @@ const setRequiredFields = async (inputs: any[], data: any) => {
     if (!isRequired) continue;
     if (data[inputName] == undefined) {
       if (inputType == "text" || null) {
-        console.log(`Filling property ${inputName} with default value: N/A`);
+        console.log(`Filling property <${inputName}> with default value: N/A`);
         await input.fill("N/A");
         continue;
       }
