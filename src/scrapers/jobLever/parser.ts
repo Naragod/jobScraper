@@ -2,8 +2,9 @@ import { Locator, Page } from "playwright";
 // const HttpClient = require("../../captcha/endcaptcha.js");
 // const client = new HttpClient("lukasworldy", "mainMateoPass!1");
 
-import { getTextContentList, getAllTextFromHTMLContent } from "../../apiRequests/htmlTraversal";
 import { IApplicationQuestion } from "../common/interfaces";
+import { getTextContentList } from "../../apiRequests/htmlTraversal";
+import { getAllTextFromHTMLContent } from "../../apiRequests/htmlSpecificImplementations";
 
 // getters
 // ****************************************************************************
