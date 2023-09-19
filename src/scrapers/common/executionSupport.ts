@@ -14,7 +14,7 @@ export const handleJobApplication = async (
   link: string,
   handler: JobInfoGetterFn,
   headless: boolean,
-  throttleSpeed: number
+  throttleSpeed: number,
 ) => {
   // create new page to query for job information in parallel
   const page = await getBrowserPage({ headless });
@@ -29,7 +29,7 @@ export const handleJobApplication = async (
 export const handleJobApplicationsInParallel = async (
   jobLinks: string[],
   handler: JobInfoGetterFn,
-  options: any = {}
+  options: any = {},
 ) => {
   const result = [];
   const promiseQueue = [];

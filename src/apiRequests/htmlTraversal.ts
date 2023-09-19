@@ -53,7 +53,7 @@ export const findElementsInNodeList = (nodeList: NodeList, elementType: string):
     [...entry.childNodes].map((child: any) => {
       if (child.nodeName == elementType) return child;
       if (child.childNodes.length > 0) return findElementsInElement(child, elementType);
-    })
+    }),
   );
 
   return flatten(arr);
@@ -84,7 +84,7 @@ export const getTextContentList = async (locators: Locator[]) => {
     locators.reduce((prev: any, curr: any) => {
       const text = curr.textContent();
       return prev.concat(text).filter((item: any) => item != undefined);
-    }, [])
+    }, []),
   );
   return flatten(textContentsRaw);
 };

@@ -30,7 +30,7 @@ export const getListItemTextContent = async (
   items: Locator[],
   locate: string,
   listItemIndex: number,
-  textContentIndex?: number
+  textContentIndex?: number,
 ): Promise<string | string[]> => {
   const content = await items[listItemIndex].locator(locate).all();
   const textContents = await getTextContentList(content);

@@ -110,7 +110,7 @@ function _call(cmd, payload) {
       },
       function (err, httpResponse, body) {
         clientEvent.emit("response", _match_respose.call(this, body, cmd));
-      }
+      },
     );
   } else {
     request.get(
@@ -119,7 +119,7 @@ function _call(cmd, payload) {
       },
       function (err, httpResponse, body) {
         clientEvent.emit("response", _match_respose.call(this, body, cmd));
-      }
+      },
     );
   }
 
