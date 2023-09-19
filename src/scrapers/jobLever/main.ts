@@ -21,3 +21,9 @@ export const applyToJobs: ApplyToJobsFn = async (searchParams: any, applicationL
   }
   await closeBrowser();
 };
+
+// const page = await getBrowserPage({ headless: true });
+
+// const link = "https://jobs.lever.co/eventbrite/cb92a999-05f6-4db7-ab42-c78f3574ecd3";
+// const link = "https://jobs.lever.co/eventbrite/76a2bc1c-5d91-4e46-896c-f689155fad75";
+// await getJobInformation(link, page);
