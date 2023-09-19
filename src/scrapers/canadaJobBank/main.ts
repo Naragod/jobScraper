@@ -6,7 +6,7 @@ import { getAllJobPageLinks } from "../../apiRequests/canadaJobBank/requestHandl
 import { handleJobApplicationsInParallel } from "../common/executionSupport";
 import { ApplyToJobsFn } from "../common/interfaces";
 
-export const applyToJobs: ApplyToJobsFn = async (seachParams: any, applicationLimit = 1000) => {
+export const applyToJobs: ApplyToJobsFn = async (seachParams: any, applicationLimit = 100) => {
   let applicationPage = 0;
   let applicationsViewed = 0;
   const now = new Date().toISOString();
@@ -21,3 +21,7 @@ export const applyToJobs: ApplyToJobsFn = async (seachParams: any, applicationLi
   }
   await closeBrowser();
 };
+
+// take a look at this job posting.
+// can increase the number of information captured.
+// https://www.jobbank.gc.ca/jobsearch/jobposting/39094276;jsessionid=D05641B8C2280F1AF4ED26414D6DC909.jobsearch74?source=searchresults
