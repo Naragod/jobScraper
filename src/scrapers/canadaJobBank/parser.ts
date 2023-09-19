@@ -1,5 +1,5 @@
 import { Page } from "playwright";
-import { getElementAfter, getJSDOMNode } from "../../apiRequests/htmlTraversal";
+import { findElementsInElement, getElementAfter, getJSDOMNode } from "../../apiRequests/htmlTraversal";
 import { getAllTextFromHTMLContent, getListItemTextContent } from "../../apiRequests/htmlSpecificImplementations";
 
 export const getJobRequirements = async (page: Page) => {
@@ -17,7 +17,12 @@ export const getJobRequirements = async (page: Page) => {
     techExperience: getElementAfter(jobRequirementElements, "H4", "Computer and technology knowledge"),
   };
 
-  sections.map((sectionKey: string) => (result[sectionKey] = getAllTextFromHTMLContent(sections[sectionKey], "SPAN")));
+  for (let sectionKey in sections) {
+    // get all span elements in list Node <ul> and extract their textContent
+    result[sectionKey] = findElementsInElement(sections[sectionKey], "SPAN")
+      .map((item) => item.textContent)
+      .filter((item: any) => item != "");
+  }
   return result;
 };
 
