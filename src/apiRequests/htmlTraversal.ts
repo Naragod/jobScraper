@@ -2,7 +2,7 @@ import { JSDOM } from "jsdom";
 import { flatten } from "../utils";
 import { Locator } from "playwright";
 
-const filterList = ["TEXT", "#text"];
+const FILTERLIST = ["TEXT", "#text"];
 
 export const getJSDOMNode = (html: string, pattern = "*") => {
   const { window } = new JSDOM(html);
@@ -26,23 +26,10 @@ export const getAllChildrenNodes = (node: any): any[] => {
   return flatten(arr);
 };
 
-export const getAllTextFromChildNodes = (node: any, filter: string[] = [""]): string[] => {
-  return getAllChildrenNodes(node)
-    .map((item) => item.textContent)
-    .filter((item) => !filter.includes(item));
-};
-
-export const getAllTextFromHTMLContent = (html: string, pattern = "*", filter = [""]) => {
-  const jsdomNode = getJSDOMNode(html, pattern);
-  const textContentArray = [...jsdomNode].map((item) => getAllTextFromChildNodes(item, filter));
-  // get all unique inputs from flattened array of strings.
-  return [...new Set(flatten(textContentArray))];
-};
-
 export const findElementsInElement = (element: any, elementType: string): any[] => {
   if (element == null) return [];
   const arr = [...element.childNodes]
-    .filter((child) => !filterList.includes(child.nodeName))
+    .filter((child) => !FILTERLIST.includes(child.nodeName))
     .map((child) => {
       if (child.nodeName == elementType) return child;
       const grandChildren = findElementsInElement(child, elementType);
@@ -54,12 +41,12 @@ export const findElementsInElement = (element: any, elementType: string): any[] 
 };
 
 /**
- * Returns a flattened list of nodes having the elementType specified
- *
- * Example: <div> <span>hello</span> <div><span>world</span></div> </div>
- *
- * findElementsInNodeList(nodeList, "SPAN") returns Node("SPAN")[] will returns a list of
- * node elements of type span, regardless if they are nested.
+ * @example:<div> <span>hello</span> <div><span>world</span></div> </div>
+ * Callingf indElementsInNodeList(nodeList, "SPAN") returns "SPAN"[].
+ * A list of node elements of type span, regardless if they are nested will be returned.
+ * @param nodeList
+ * @param elementType
+ * @returns Returns a flattened list of nodes having the elementType specified
  */
 export const findElementsInNodeList = (nodeList: NodeList, elementType: string): any[] => {
   const arr = [...nodeList].map((entry: any) =>
@@ -73,12 +60,14 @@ export const findElementsInNodeList = (nodeList: NodeList, elementType: string):
 };
 
 /**
- * Returns the node right after the found element.
+ * @example: HTML: <h1>title</h1><p>paragraph</p>
+ * Calling getElementAfter(nodeList, "P", "title") on the above HTML returns <p>paragraph</p> as this
+ * is below <h1><title</h1> element
+ * @param nodeList
+ * @param elementType
+ * @param elementContent
+ * @returns Returns the node right after the searched for element.
  *
- * Example: <h1>title</h1><p>paragraph</p>
- *
- * getElementAfter(nodeList, "P", "title") returns Node(<p>paragraph</p>) as this
- * happens to be right after the <h1><title</h1> element
  */
 export const getElementAfter = (nodeList: NodeList, elementType: string, elementContent: string) => {
   for (let index = 0; index < nodeList.length; index++) {
@@ -98,18 +87,4 @@ export const getTextContentList = async (locators: Locator[]) => {
     }, [])
   );
   return flatten(textContentsRaw);
-};
-
-export const getListItemTextContent = async (
-  items: Locator[],
-  locate: string,
-  listItemIndex: number,
-  textContentIndex?: number
-): Promise<string | string[]> => {
-  const content = await items[listItemIndex].locator(locate).all();
-  const textContents = await getTextContentList(content);
-
-  if (textContentIndex == undefined) return textContents;
-  if (textContentIndex >= 0) return textContents[textContentIndex];
-  return textContents[textContents.length + textContentIndex];
 };
