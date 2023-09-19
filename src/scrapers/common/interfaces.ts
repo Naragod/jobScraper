@@ -16,14 +16,22 @@ export interface IApplicationQuestion {
   err: any;
 }
 
+export interface IJobSearchOptions {
+  location?: string;
+  jobTitle?: string;
+  company?: string;
+  sort?: string;
+  age?: number;
+}
+
 export interface JobInfoGetterFn {
   (link: string, page: Page): Promise<IJobInfo>;
 }
 
 export interface ApplyToJobsFn {
-  (searchParams: any, applicationLimit?: number): Promise<void>;
+  (searchParams: IJobSearchOptions, applicationLimit?: number): Promise<void>;
 }
 
 export interface AllJobsLinksGetterFn {
-  (searchParams: any): Promise<string[]>;
+  (searchParams: IJobSearchOptions): Promise<string[]>;
 }
