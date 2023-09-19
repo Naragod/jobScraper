@@ -35,13 +35,26 @@ export const getJobRequirements = async (page: Page) => {
   return await getTextContentList(jobRequirementsDiv);
 };
 
-const getQuestionInputFields = async (inputs: Locator[], defaultInputType = "textarea") => {
+const getQuestionInputFields = async (question: Locator) => {
   let result = [];
+  let inputs: any[] = [];
+  // is input (radio, text), textbox, select? Neither textboxes nor dropdowns identify as inputs
+  // we have to check for each of them otherwise inputs will be an empty array
+  const selectorTypes = [
+    question.locator("[class*='application-field']").locator("input").all(),
+    question.locator("textarea").all(),
+    question.locator("select").all(),
+  ];
+
+  for (let selectorType of selectorTypes) {
+    if (inputs.length > 0) break;
+    inputs = await selectorType;
+  }
 
   for (let input of inputs) {
-    const inputName = await input.getAttribute("name");
-    const inputValue = await input.getAttribute("value");
-    const inputType = (await input.getAttribute("type")) || defaultInputType;
+    const inputName = (await input.getAttribute("name")) || "";
+    const inputType = (await input.getAttribute("type")) || "";
+    const inputValue = (await input.getAttribute("value")) || "";
     const isRequired = (await input.getAttribute("required")) != null ? true : false;
     result.push({ inputName, inputValue, inputType, isRequired });
   }
@@ -51,15 +64,9 @@ const getQuestionInputFields = async (inputs: Locator[], defaultInputType = "tex
 const getQuestionParameters = async (question: Locator): Promise<IApplicationQuestion> => {
   try {
     const labelsHTML = await question.locator("[class*='application-label']").innerHTML();
-    const inputFieldDivs = await question.locator("[class*='application-field']").locator("input").all();
-    // is textbox? textboxes do not identify as inputs such as radio btns, meaning inputFieldDivs will be an empty array
-    const inputDivs = inputFieldDivs.length == 0 ? await question.locator("textarea").all() : inputFieldDivs;
-
-    // there is not css selector patter to include self: https://stackoverflow.com/a/59838990/8714371
+    // there is no css selector patter to include self: https://stackoverflow.com/a/59838990/8714371
     const labels = getAllTextFromHTMLContent(labelsHTML, "*", ["✱"]);
-    const inputFields = await getQuestionInputFields(inputDivs);
-
-    // application is guaranteed to have a name and email input field.
+    const inputFields = await getQuestionInputFields(question);
     const { isRequired, inputType } = inputFields[0];
     return { label: labels[0], inputFields, inputType, isRequired, err: false };
   } catch (err) {
