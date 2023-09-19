@@ -1,11 +1,6 @@
 import { Page } from "playwright";
-import {
-  findElementsInElement,
-  findElementsInNodeList,
-  getElementAfter,
-  getJSDOMNode,
-  getListItemTextContent,
-} from "../../apiRequests/htmlTraversal";
+import { getElementAfter, getJSDOMNode } from "../../apiRequests/htmlTraversal";
+import { getAllTextFromHTMLContent, getListItemTextContent } from "../../apiRequests/htmlSpecificImplementations";
 
 export const getJobRequirements = async (page: Page) => {
   const jobRequirmentsDivHTML = await page.locator('[id="comparisonchart"]').innerHTML();
@@ -22,12 +17,7 @@ export const getJobRequirements = async (page: Page) => {
     techExperience: getElementAfter(jobRequirementElements, "H4", "Computer and technology knowledge"),
   };
 
-  for (let sectionKey in sections) {
-    // get all span elements in list Node <ul> and extract their textContent
-    result[sectionKey] = findElementsInElement(sections[sectionKey], "SPAN")
-      .map((item) => item.textContent)
-      .filter((item: any) => item != "");
-  }
+  sections.map((sectionKey: string) => (result[sectionKey] = getAllTextFromHTMLContent(sections[sectionKey], "SPAN")));
   return result;
 };
 
@@ -35,9 +25,7 @@ export const getApplicationBasicInfo = async (page: Page) => {
   try {
     const listItems = await page.locator('[class~="job-posting-brief"]').getByRole("listitem").all();
     const titleHTML = await page.locator(".job-posting-details-body").locator(".title").innerHTML();
-    const title = findElementsInNodeList(getJSDOMNode(titleHTML), "SPAN").map((item) =>
-      item.textContent.replace(/\t?\n|\t/gm, "")
-    )[0];
+    const title = getAllTextFromHTMLContent(titleHTML, "SPAN").map((item) => item.replace(/\t?\n|\t/gm, ""))[0];
 
     return {
       title,
@@ -55,8 +43,8 @@ export const getApplicationBasicInfo = async (page: Page) => {
 export const getApplicationEmailAddress = async (page: Page) => {
   try {
     await page.click("[id='applynowbutton']");
-    const howToApplyHTML = await page.locator('[id="howtoapply"]').innerHTML();
-    const emailAddresses = findElementsInNodeList(getJSDOMNode(howToApplyHTML), "A").map((item) => item.textContent);
+    const howToApplyHTML = await page.locator("#howtoapply").innerHTML();
+    const emailAddresses = getAllTextFromHTMLContent(howToApplyHTML, "A");
     return { eAddressErr: false, emailAddresses };
   } catch (err) {
     return { eAddressErr: "No page button", emailAddresses: "" };
