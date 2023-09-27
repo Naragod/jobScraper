@@ -13,7 +13,7 @@ export const getBrowserPage = async (options: any = {}): Promise<Page> => {
 };
 
 export const closeBrowser = async () => {
-  if (browser == null) return;
+  if (browser == undefined || browser == null) return;
   await browser.close();
   browser = null;
 };
