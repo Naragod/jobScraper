@@ -9,7 +9,9 @@
     "dev": "npm run build; clear; node --enable-source-maps dist/main.js",
     "prettydev": "npm run build; clear; node --enable-source-maps dist/main.js; npm run format",
     "build": "tsc",
-    "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'"
+    "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'",
+    "remove-volumes": "sudo docker volume rm $(sudo docker volume ls -q)",
+    "remove-containers": "sudo docker rm $(sudo docker ps -a -q)"
   },
   "author": "Mateo Nar",
   "license": "ISC",
