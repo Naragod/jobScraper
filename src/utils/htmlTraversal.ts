@@ -1,6 +1,6 @@
 import { JSDOM } from "jsdom";
-import { flatten } from "../utils";
 import { Locator } from "playwright";
+import { flatten } from "../utils/main";
 
 const FILTERLIST = ["TEXT", "#text"];
 
