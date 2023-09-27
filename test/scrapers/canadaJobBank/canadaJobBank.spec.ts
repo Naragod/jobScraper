@@ -1,16 +1,20 @@
 import { Page } from "playwright";
-import { getJobInformation } from "../../../src/scrapers/jobLever/applicationHandler";
 import { closeBrowser, getBrowserPage } from "../../../src/scrapers/common/browserSupport";
-import { getApplicationBasicInfo, getJobRequirements, getInputFields } from "../../../src/scrapers/jobLever/parser";
+import {
+  getApplicationBasicInfo,
+  getJobRequirements,
+  getApplicationEmailAddress,
+} from "../../../src/scrapers/canadaJobBank/parser";
+import { getJobInformation } from "../../../src/scrapers/canadaJobBank/applicationHandler";
 
 // Expected Content
 // ****************************************************************************
-import {inputFields} from "./data/inputFields.json"
-import { applicationInfo, jobRequirements, link } from "./data/jobInfo.json";
+// import { inputFields } from "../data/CanadaJobBank/inputFields.json";
+import { applicationInfo, jobRequirements, link, applicationEmailAddress } from "./data/jobInfo.json";
 
-describe("JobLever", () => {
+describe("CanadaJobBank", () => {
   let page: Page;
-  const baseUrl = "https://jobs.lever.co/eventbrite/8ec0f8df-3542-43aa-ae4f-c45e9d25537a";
+  const baseUrl = "https://www.jobbank.gc.ca/jobsearch/jobposting/39094276";
 
   beforeEach(async () => {
     page = await getBrowserPage();
@@ -33,10 +37,10 @@ describe("JobLever", () => {
       expect(result).toEqual(applicationInfo);
     });
 
-    it("getInputFields - Usage", async () => {
+    it("getApplicationEmailAddress - Usage", async () => {
       await page.goto(baseUrl);
-      const result = await getInputFields(page);
-      expect(result).toEqual(inputFields);
+      const result = await getApplicationEmailAddress(page);
+      expect(result).toEqual(applicationEmailAddress);
     }, 8000);
   });
 
@@ -47,7 +51,7 @@ describe("JobLever", () => {
         link,
         jobRequirements,
         applicationInfo,
-        applicationInputFields: inputFields,
+        emailAddresses: applicationEmailAddress["emailAddresses"],
         err: false,
       });
     }, 8000);

@@ -1,0 +1,38 @@
+{
+  "link": "https://www.jobbank.gc.ca/jobsearch/jobposting/39094276",
+  "jobRequirements": {
+    "education": ["Other trades certificate or diploma"],
+    "experience": ["Experience an asset"],
+    "languages": "English",
+    "tasks": [
+      "Assess client's needs and resources and recommend the appropriate goods or services",
+      "Estimate costs of installing and maintaining equipment or service",
+      "Provide input into product design where goods or services must be tailored to suit client's needs",
+      "Consult with clients after sale to provide ongoing support",
+      "Train customers' staff in the operation and maintenance of equipment",
+      "Resolve product and service related problems",
+      "Troubleshoot technical problems related to equipment",
+      "Read and interpret blueprints",
+      "Estimate or quote prices, credit or contract terms, warranties and delivery dates",
+      "Consult with clients after sale or signed contracts",
+      "Provide customer service",
+      "Provide clients with presentations on the benefits and uses of goods or services"
+    ],
+    "techExperience": ["MS Excel", "MS Office", "MS Outlook", "MS Word"]
+  },
+  "applicationInfo": {
+    "jobId": "#2589442",
+    "jobProvider": "Job Bank",
+    "location": "Calgary, AB",
+    "pay": "$26.00 to $30.00HOUR hourly (To be negotiated)",
+    "title": "technical sales representative"
+  },
+  "applicationEmailAddress": {
+    "eAddressErr": false,
+    "emailAddresses": [
+      "Help - Applying directly on Job Bank (Direct Apply)",
+      "a Plus account",
+      "dexoncan@dexoncanada.com"
+    ]
+  }
+}
