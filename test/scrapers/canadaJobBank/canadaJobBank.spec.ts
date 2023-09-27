@@ -9,7 +9,6 @@ import { getJobInformation } from "../../../src/scrapers/canadaJobBank/applicati
 
 // Expected Content
 // ****************************************************************************
-// import { inputFields } from "../data/CanadaJobBank/inputFields.json";
 import { applicationInfo, jobRequirements, link, applicationEmailAddress } from "./data/jobInfo.json";
 
 describe("CanadaJobBank", () => {

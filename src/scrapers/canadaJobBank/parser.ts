@@ -10,6 +10,7 @@ export const getApplicationBasicInfo = async (page: Page) => {
 
     return {
       title,
+      commitment: await getListItemTextContent(listItems, "span", 2, 2),
       location: await getListItemTextContent(listItems, "span", 0, 2),
       pay: await getListItemTextContent(listItems, "span", 1, 2),
       jobId: await getListItemTextContent(listItems, "span", listItems.length - 1, -1),
