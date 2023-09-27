@@ -1,6 +1,6 @@
 import { Page } from "playwright";
-import { findElementsInElement, getElementAfter, getJSDOMNode } from "../../apiRequests/htmlTraversal";
-import { getAllTextFromHTMLContent, getListItemTextContent } from "../../apiRequests/htmlSpecificImplementations";
+import { getAllTextFromHTMLContent, getListItemTextContent } from "../../utils/htmlSpecificImplementations";
+import { findElementsInElement, getElementAfter, getJSDOMNode } from "../../utils/htmlTraversal";
 
 export const getApplicationBasicInfo = async (page: Page) => {
   try {
