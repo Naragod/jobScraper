@@ -1,14 +1,29 @@
-version: '3'
+version: "3"
 services:
-  # Postgres
-  # db:
-  #   image: postgres:16
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #   environment:
-  #     - POSTGRES_HOST_AUTH_METHOD=trust
-  #   ports:
-  #     - '6321:5432'
+  # Postgres with pgvector extension
+  db:
+    image: ankane/pgvector
+    volumes:
+      - postgres_database_jobscraper_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=jobs
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "6321:5432"
+
+  # Connection Process first time: https://stackoverflow.com/a/56617524/8714371
+  pgadmin:
+    image: dpage/pgadmin4:7
+    environment:
+      - "PGADMIN_DEFAULT_EMAIL=macanudo300@gmail.com"
+      - "PGADMIN_DEFAULT_PASSWORD=password"
+    ports:
+      - "6320:80"
+    volumes:
+      - pgadmin_config:/var/lib/pgadmin/data
+    depends_on:
+      - db
 
   # Svelte app
   app:
@@ -17,10 +32,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./:/app/
+    depends_on:
+      - db
     # ports:
     #   - '5173:5173'
-    # depends_on:
-    #   - db
 
-# volumes:
-#   postgres_data:
+volumes:
+  postgres_database_jobscraper_data:
+  pgadmin_config:

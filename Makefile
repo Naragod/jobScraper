@@ -8,3 +8,6 @@ clean:
 
 rm-containers:
 	npm run remove-containers
+
+psql:
+	psql -U postgres -d jobs -p 6321 -h localhost
