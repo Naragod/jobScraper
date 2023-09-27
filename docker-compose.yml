@@ -1,0 +1,26 @@
+version: '3'
+services:
+  # Postgres
+  # db:
+  #   image: postgres:16
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_HOST_AUTH_METHOD=trust
+  #   ports:
+  #     - '6321:5432'
+
+  # Svelte app
+  app:
+    image: jobscraper
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app/
+    # ports:
+    #   - '5173:5173'
+    # depends_on:
+    #   - db
+
+# volumes:
+#   postgres_data:
