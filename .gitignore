@@ -4,4 +4,4 @@ logs/
 dist/
 email_config.json
 **.config.json
-test/
+coverage

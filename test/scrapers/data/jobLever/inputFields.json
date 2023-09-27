@@ -1,0 +1,398 @@
+{
+  "inputFields": [
+    {
+      "label": "Full name",
+      "inputFields": [{ "inputName": "name", "inputValue": "", "inputType": "text", "isRequired": true }],
+      "inputType": "text",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Pronouns",
+      "inputFields": [
+        { "inputName": "pronouns", "inputValue": "He/him", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "She/her", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "They/them", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "Xe/xem", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "Ze/hir", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "Ey/em", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "Hir/hir", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "Fae/faer", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "Hu/hu", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "Use name only", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "", "inputValue": "Custom", "inputType": "checkbox", "isRequired": false },
+        { "inputName": "pronouns", "inputValue": "", "inputType": "text", "isRequired": false }
+      ],
+      "inputType": "checkbox",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "Email",
+      "inputFields": [{ "inputName": "email", "inputValue": "", "inputType": "email", "isRequired": true }],
+      "inputType": "email",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Phone",
+      "inputFields": [{ "inputName": "phone", "inputValue": "", "inputType": "text", "isRequired": true }],
+      "inputType": "text",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Current company",
+      "inputFields": [{ "inputName": "org", "inputValue": "", "inputType": "text", "isRequired": true }],
+      "inputType": "text",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "LinkedIn URL",
+      "inputFields": [{ "inputName": "urls[LinkedIn]", "inputValue": "", "inputType": "text", "isRequired": false }],
+      "inputType": "text",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "Twitter URL",
+      "inputFields": [{ "inputName": "urls[Twitter]", "inputValue": "", "inputType": "text", "isRequired": false }],
+      "inputType": "text",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "GitHub URL",
+      "inputFields": [{ "inputName": "urls[GitHub]", "inputValue": "", "inputType": "text", "isRequired": false }],
+      "inputType": "text",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "Portfolio URL",
+      "inputFields": [{ "inputName": "urls[Portfolio]", "inputValue": "", "inputType": "text", "isRequired": false }],
+      "inputType": "text",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "Other website",
+      "inputFields": [{ "inputName": "urls[Other]", "inputValue": "", "inputType": "text", "isRequired": false }],
+      "inputType": "text",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "I identify my ethnicity as",
+      "inputFields": [
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "White / Caucasian",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Hispanic, Latino, or Spanish origin",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Black or African American",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Asian",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Native Hawaiian or other Pacific Islander",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Indigenous Peoples, First Nations, Native American, or Alaska Native",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Middle Eastern or North African",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Some other race, ethnicity, or origin",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field0]",
+          "inputValue": "Prefer not to answer",
+          "inputType": "checkbox",
+          "isRequired": false
+        }
+      ],
+      "inputType": "checkbox",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "To which gender identity do you most identify?",
+      "inputFields": [
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field1]",
+          "inputValue": "Female",
+          "inputType": "radio",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field1]",
+          "inputValue": "Male",
+          "inputType": "radio",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field1]",
+          "inputValue": "Non-binary",
+          "inputType": "radio",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field1]",
+          "inputValue": "Transgender female",
+          "inputType": "radio",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field1]",
+          "inputValue": "Transgender male",
+          "inputType": "radio",
+          "isRequired": false
+        },
+        {
+          "inputName": "surveysResponses[ed84cfdb-8644-4160-a54b-c0d183a9711e][responses][field1]",
+          "inputValue": "Prefer not to answer",
+          "inputType": "radio",
+          "isRequired": false
+        }
+      ],
+      "inputType": "radio",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "<p data-qa=\"legitimate-interest-copy\">By applying for this position, your data will be processed as per Eventbrite&nbsp;<span class=\"text-muted mt1 underline\"><a href=\"https://eventbrite.app.box.com/v/ApplicantPrivacyNotice\" target=\"_blank\" data-qa=\"privacy-link\">Privacy Policy</a></span>.</p>",
+      "inputFields": [],
+      "inputType": "unknown",
+      "isRequired": false,
+      "err": "{\"name\":\"TimeoutError\"}"
+    },
+    {
+      "label": "In what US state are you based/ plan to be based?",
+      "inputFields": [
+        {
+          "inputName": "cards[005f8002-a84e-4727-8233-983fb6111601][field0]",
+          "inputValue": "",
+          "inputType": "",
+          "isRequired": true
+        }
+      ],
+      "inputType": "",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "In the event you are selected for this position, will you now or in the future require Eventbrite to commence (\"sponsor\") an immigration case to employ you? If yes, please specify",
+      "inputFields": [
+        {
+          "inputName": "cards[2d284a23-beca-4d8f-a7c0-1e5a614002b0][field0]",
+          "inputValue": "",
+          "inputType": "",
+          "isRequired": true
+        }
+      ],
+      "inputType": "",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Please share with us your salary expectation.",
+      "inputFields": [
+        {
+          "inputName": "cards[2d284a23-beca-4d8f-a7c0-1e5a614002b0][field1]",
+          "inputValue": "",
+          "inputType": "",
+          "isRequired": true
+        }
+      ],
+      "inputType": "",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Did a current Briteling encourage you to apply? If so, please state their name",
+      "inputFields": [
+        {
+          "inputName": "cards[b3b9b09c-26e6-4aa6-8396-7af69e50e9b0][field0]",
+          "inputValue": "",
+          "inputType": "text",
+          "isRequired": true
+        }
+      ],
+      "inputType": "text",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Have they already submitted your resume?",
+      "inputFields": [
+        {
+          "inputName": "cards[b3b9b09c-26e6-4aa6-8396-7af69e50e9b0][field1]",
+          "inputValue": "Yes",
+          "inputType": "radio",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[b3b9b09c-26e6-4aa6-8396-7af69e50e9b0][field1]",
+          "inputValue": "No",
+          "inputType": "radio",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[b3b9b09c-26e6-4aa6-8396-7af69e50e9b0][field1]",
+          "inputValue": "Unsure",
+          "inputType": "radio",
+          "isRequired": false
+        }
+      ],
+      "inputType": "radio",
+      "isRequired": false,
+      "err": false
+    },
+    {
+      "label": "Please confirm your full legal name for the application.",
+      "inputFields": [
+        {
+          "inputName": "cards[d9d0de5b-1550-4831-b2c0-e3db0f329ee2][field0]",
+          "inputValue": "",
+          "inputType": "text",
+          "isRequired": true
+        }
+      ],
+      "inputType": "text",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Do you have any Eventbrite connections or family/friends that currently work for the company? If so, please state their name.",
+      "inputFields": [
+        {
+          "inputName": "cards[16663805-89ce-4bd8-b898-50236654ad66][field0]",
+          "inputValue": "",
+          "inputType": "",
+          "isRequired": true
+        }
+      ],
+      "inputType": "",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "In what US city & state are you based/ planning to be based?",
+      "inputFields": [
+        {
+          "inputName": "cards[6e161ccd-6011-4cf8-bbe9-e1e2571ddf19][field0]",
+          "inputValue": "",
+          "inputType": "",
+          "isRequired": true
+        }
+      ],
+      "inputType": "",
+      "isRequired": true,
+      "err": false
+    },
+    {
+      "label": "Have you previously worked for Eventbrite or any of the following organizations - ToneDen, Eventagogo, Picatic, Ticketea, Ticketfly, Ticketscript, Eventioz, Queue Ticketing or Nvite? Please select all that apply.",
+      "inputFields": [
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Eventbrite",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - ToneDen",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Eventagogo",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Picatic",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Ticketea",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Ticketfly",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Ticketscript",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Eventioz",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Queue Ticketing",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "Yes - Nvite",
+          "inputType": "checkbox",
+          "isRequired": false
+        },
+        {
+          "inputName": "cards[f6f0d4c4-6125-4212-966c-6fb05fae35f2][field0]",
+          "inputValue": "No",
+          "inputType": "checkbox",
+          "isRequired": false
+        }
+      ],
+      "inputType": "checkbox",
+      "isRequired": false,
+      "err": false
+    }
+  ]
+}
