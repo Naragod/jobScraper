@@ -8,6 +8,7 @@ import { getTextContentList } from "../../utils/htmlTraversal";
 // getters
 // ****************************************************************************
 export const getApplicationBasicInfo = async (page: Page) => {
+  const company = page.url().split("/")[3];
   const headingDiv = await page.locator(".posting-headline");
   const title = await headingDiv.getByRole("heading").textContent();
   const location = await headingDiv.locator(".location").textContent();
@@ -23,6 +24,7 @@ export const getApplicationBasicInfo = async (page: Page) => {
     jobDescription,
     closingJobDescription,
     title: sanitizeString(title),
+    company: sanitizeString(company),
     location: sanitizeString(location),
     department: sanitizeString(department),
     commitment: sanitizeString(commitment),

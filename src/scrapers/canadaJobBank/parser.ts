@@ -6,10 +6,12 @@ export const getApplicationBasicInfo = async (page: Page) => {
   try {
     const listItems = await page.locator('[class~="job-posting-brief"]').getByRole("listitem").all();
     const titleHTML = await page.locator(".job-posting-details-body").locator(".title").innerHTML();
+    const companyHTML = await page.locator("span[property='hiringOrganization']").all();
     const title = getAllTextFromHTMLContent(titleHTML, "SPAN").map((item) => item.replace(/\t?\n|\t/gm, ""))[0];
 
     return {
       title,
+      company: await getListItemTextContent(companyHTML, "span", 0, 0),
       commitment: await getListItemTextContent(listItems, "span", 2, 2),
       location: await getListItemTextContent(listItems, "span", 0, 2),
       pay: await getListItemTextContent(listItems, "span", 1, 2),
