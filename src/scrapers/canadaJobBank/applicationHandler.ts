@@ -10,10 +10,17 @@ export const getJobInformation: JobInfoGetterFn = async (link: string, page: Pag
 
     if (applicationInfo.jobProvider !== "Job Bank") {
       const externalLink = await page.locator('[id="externalJobLink"]').getAttribute("href");
-      return { err: "Job requires application on website", link, externalLink, applicationInfo, jobRequirements: {} };
+      return {
+        link,
+        applicationInfo,
+        jobRequirements: {},
+        applicationInputFields: [],
+        externalLink: externalLink || "",
+        err: "Job requires application on website",
+      };
     }
     const jobRequirements = await getJobRequirements(page);
-    const { eAddressErr, emailAddresses } = await getApplicationEmailAddress(page);
+    const { eAddressErr, emailAddresses = [] } = await getApplicationEmailAddress(page);
     return { link, applicationInfo, jobRequirements, applicationInputFields: emailAddresses, err: eAddressErr };
   } catch (err) {
     return { link, applicationInfo: {}, jobRequirements: {}, applicationInputFields: [], err };
