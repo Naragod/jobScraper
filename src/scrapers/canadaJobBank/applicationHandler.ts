@@ -14,8 +14,8 @@ export const getJobInformation: JobInfoGetterFn = async (link: string, page: Pag
     }
     const jobRequirements = await getJobRequirements(page);
     const { eAddressErr, emailAddresses } = await getApplicationEmailAddress(page);
-    return { link, emailAddresses, applicationInfo, jobRequirements, err: eAddressErr };
+    return { link, applicationInfo, jobRequirements, applicationInputFields: emailAddresses, err: eAddressErr };
   } catch (err) {
-    return { link, applicationInfo: {}, jobRequirements: {}, err };
+    return { link, applicationInfo: {}, jobRequirements: {}, applicationInputFields: [], err };
   }
 };
