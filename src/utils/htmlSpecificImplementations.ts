@@ -2,7 +2,7 @@ import { Locator } from "playwright";
 import { flatten } from "../utils/main";
 import { getAllChildrenNodes, getJSDOMNode, getTextContentList } from "./htmlTraversal";
 
-// specific implementation of findGetAllChildrenNodes which obtains all children textContent properties
+// specific implementation of getAllChildrenNodes which obtains all children textContent properties
 export const getAllTextFromChildNodes = (node: any, filter: string[] = [""]): string[] => {
   return getAllChildrenNodes(node)
     .map((item) => item.textContent)
