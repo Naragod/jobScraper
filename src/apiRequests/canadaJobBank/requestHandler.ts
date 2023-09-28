@@ -1,6 +1,6 @@
 import { baseURL } from "../../config/canadaJobBank.config.json";
-import { findElementsInNodeList, getNodeList } from "../htmlTraversal";
 import { AllJobsLinksGetterFn } from "../../scrapers/common/interfaces";
+import { findElementsInNodeList, getNodeList } from "../../utils/htmlTraversal";
 
 export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: any): Promise<string[]> => {
   const { jobTitle, location, age = 7, page = 1, sort } = searchParams;

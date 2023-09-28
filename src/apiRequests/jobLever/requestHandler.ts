@@ -1,6 +1,6 @@
 import { baseURL } from "../../config/jobLeverl.config.json";
 import { AllJobsLinksGetterFn } from "../../scrapers/common/interfaces";
-import { findElementsInNodeList, getNodeList } from "../htmlTraversal";
+import { findElementsInNodeList, getNodeList } from "../../utils/htmlTraversal";
 
 export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: any) => {
   const { company, location, commitment, worplaceType } = searchParams;
