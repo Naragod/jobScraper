@@ -2,9 +2,9 @@ import { Page } from "playwright";
 
 export interface IJobInfo {
   link: string;
-  jobRequirements: any;
   applicationInfo: any;
-  applicationInputFields?: any[];
+  jobRequirements: any;
+  applicationInputFields: any[];
   err: any;
 }
 
@@ -17,11 +17,14 @@ export interface IApplicationQuestion {
 }
 
 export interface IJobSearchOptions {
-  location?: string;
-  jobTitle?: string;
-  company?: string;
-  sort?: string;
+  searchTerm: string;
   age?: number;
+  pay?: number;
+  sort?: string;
+  page?: number;
+  location?: string;
+  commitment?: string;
+  workplaceType?: string | number;
 }
 
 export interface JobInfoGetterFn {
