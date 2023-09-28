@@ -1,4 +1,3 @@
-import { timeElapsed } from "../../utils";
 import { IJobInfo, scrapeJobsFn } from "../common/interfaces";
 import { writeToFile } from "../../emailer/fileHandler";
 import { closeBrowser } from "../common/browserSupport";
@@ -10,13 +9,13 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
   let applicationPage = 0;
   let applicationsViewed = 0;
   const now = new Date().toISOString();
-  const jobsInformation: IJobInfo[] = [];
+  let jobsInformation: IJobInfo[] = [];
 
   while (applicationsViewed < applicationLimit) {
     applicationPage += 1;
     const jobLinks = await getAllJobPageLinks(searchParams);
-    const { result } = await timeElapsed<IJobInfo>(handleJobApplicationsInParallel, jobLinks, getJobInformation);
-    jobsInformation.push(result);
+    const result = <IJobInfo[]>await handleJobApplicationsInParallel(jobLinks, getJobInformation);
+    jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
     writeToFile(`${searchParams.company}_${applicationPage}_${now}.json`, JSON.stringify(result));
