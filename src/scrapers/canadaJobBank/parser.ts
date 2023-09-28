@@ -55,6 +55,6 @@ export const getApplicationEmailAddress = async (page: Page) => {
     const emailAddresses = getAllTextFromHTMLContent(howToApplyHTML, "A");
     return { eAddressErr: false, emailAddresses };
   } catch (err) {
-    return { eAddressErr: "No page button", emailAddresses: "" };
+    return { eAddressErr: "No page button", emailAddresses: [""] };
   }
 };
