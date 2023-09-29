@@ -1,6 +1,6 @@
-import { sleep } from "../../utils";
 import { JobInfoGetterFn } from "./interfaces";
 import { getBrowserPage } from "./browserSupport";
+import { sleep } from "../../utils/main";
 
 // configuration variables
 // ****************************************************************************
@@ -14,7 +14,7 @@ export const handleJobApplication = async (
   link: string,
   handler: JobInfoGetterFn,
   headless: boolean,
-  throttleSpeed: number,
+  throttleSpeed: number
 ) => {
   // create new page to query for job information in parallel
   const page = await getBrowserPage({ headless });
@@ -29,9 +29,10 @@ export const handleJobApplication = async (
 export const handleJobApplicationsInParallel = async (
   jobLinks: string[],
   handler: JobInfoGetterFn,
-  options: any = {},
+  options: any = {}
 ) => {
   const result = [];
+  const jobsToRetry = [];
   const promiseQueue = [];
   const headless = options.headless || true;
   const concurrent = options.concurrent || CONCURRENT;
@@ -43,10 +44,21 @@ export const handleJobApplicationsInParallel = async (
 
     if (promiseQueue.length >= concurrent) {
       const p = await promiseQueue.shift();
-      result.push(p);
+
+      if (p?.err == false) {
+        result.push(p);
+        continue;
+      }
+      jobsToRetry.push(p);
     }
   }
   const jobInformationList = await Promise.allSettled(promiseQueue);
-  jobInformationList.map((resolvedP: any) => result.push(resolvedP.value));
-  return result;
+  jobInformationList.map((resolvedP: any) => {
+    if (resolvedP.value.err == false) {
+      result.push(resolvedP.value);
+      return;
+    }
+    jobsToRetry.push(resolvedP.value);
+  });
+  return { result, jobsToRetry };
 };
