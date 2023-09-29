@@ -6,7 +6,7 @@ import { handleJobApplicationsInParallel } from "../common/executionSupport";
 import { IJobInfo, scrapeJobsFn } from "../common/interfaces";
 import { classifyJobs } from "../../classifiers/main";
 
-export const scrapeJobs: scrapeJobsFn = async (seachParams: any, applicationLimit = 100) => {
+export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLimit = 100) => {
   let applicationPage = 0;
   let applicationsViewed = 0;
   const now = new Date().toISOString();
@@ -14,7 +14,7 @@ export const scrapeJobs: scrapeJobsFn = async (seachParams: any, applicationLimi
 
   while (applicationsViewed < applicationLimit) {
     applicationPage += 1;
-    const jobLinks = await getAllJobPageLinks(seachParams);
+    const jobLinks = await getAllJobPageLinks(searchParams);
 
     // if there are more applications to be viewed than the application limit set, remove the excess
     if (applicationsViewed + jobLinks.length > applicationLimit) {
@@ -26,7 +26,7 @@ export const scrapeJobs: scrapeJobsFn = async (seachParams: any, applicationLimi
     jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
-    writeToFile(`job_data_${applicationPage}_${now}.json`, JSON.stringify(result));
+    writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(result));
   }
 
   await closeBrowser();

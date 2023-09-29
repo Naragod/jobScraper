@@ -25,7 +25,7 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
     jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
-    writeToFile(`${searchParams.company}_${applicationPage}_${now}.json`, JSON.stringify(result));
+    writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(result));
   }
   await closeBrowser();
   return jobsInformation;

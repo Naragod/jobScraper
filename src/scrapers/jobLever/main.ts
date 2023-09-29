@@ -14,7 +14,7 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
   while (applicationsViewed < applicationLimit) {
     applicationPage += 1;
     const jobLinks = await getAllJobPageLinks(searchParams);
-    
+
     // if there are more applications to be viewed than the application limit set, remove the excess
     if (applicationsViewed + jobLinks.length > applicationLimit) {
       const keep = applicationLimit - applicationsViewed;
@@ -25,7 +25,7 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
     jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
-    writeToFile(`${searchParams.company}_${applicationPage}_${now}.json`, JSON.stringify(result));
+    writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(result));
   }
   await closeBrowser();
   return jobsInformation;
