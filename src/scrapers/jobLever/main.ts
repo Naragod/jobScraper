@@ -27,6 +27,8 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
     await saveJobInfo(jobsInformation);
+    
+    if(jobsToRetry.length == 0) continue;
     writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(jobsToRetry));
   }
   await closeBrowser();
