@@ -14,6 +14,13 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
   while (applicationsViewed < applicationLimit) {
     applicationPage += 1;
     const jobLinks = await getAllJobPageLinks(searchParams);
+    
+    // if there are more applications to be viewed than the application limit set, remove the excess
+    if (applicationsViewed + jobLinks.length > applicationLimit) {
+      const keep = applicationLimit - applicationsViewed;
+      const remove = jobLinks.length - keep;
+      jobLinks.splice(keep, remove);
+    }
     const result = <IJobInfo[]>await handleJobApplicationsInParallel(jobLinks, getJobInformation);
     jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
@@ -23,9 +30,3 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
   await closeBrowser();
   return jobsInformation;
 };
-
-// const page = await getBrowserPage({ headless: true });
-
-// const link = "https://jobs.lever.co/eventbrite/cb92a999-05f6-4db7-ab42-c78f3574ecd3";
-// const link = "https://jobs.lever.co/eventbrite/76a2bc1c-5d91-4e46-896c-f689155fad75";
-// await getJobInformation(link, page);

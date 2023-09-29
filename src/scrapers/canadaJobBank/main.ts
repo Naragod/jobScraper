@@ -1,4 +1,3 @@
-import { timeElapsed } from "../../utils";
 import { closeBrowser } from "../common/browserSupport";
 import { writeToFile } from "../../emailer/fileHandler";
 import { getJobInformation } from "./applicationHandler";
@@ -16,7 +15,14 @@ export const scrapeJobs: scrapeJobsFn = async (seachParams: any, applicationLimi
   while (applicationsViewed < applicationLimit) {
     applicationPage += 1;
     const jobLinks = await getAllJobPageLinks(seachParams);
-    const { result } = await timeElapsed<IJobInfo>(handleJobApplicationsInParallel, jobLinks, getJobInformation);
+
+    // if there are more applications to be viewed than the application limit set, remove the excess
+    if (applicationsViewed + jobLinks.length > applicationLimit) {
+      const keep = applicationLimit - applicationsViewed;
+      const remove = jobLinks.length - keep;
+      jobLinks.splice(keep, remove);
+    }
+    const result = <IJobInfo[]>await handleJobApplicationsInParallel(jobLinks, getJobInformation);
     jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
@@ -28,9 +34,3 @@ export const scrapeJobs: scrapeJobsFn = async (seachParams: any, applicationLimi
 };
 
 export const matchJobs = (jobs: IJobInfo[], skills: string[]) => classifyJobs(jobs, skills);
-
-// take a look at this job posting.
-// can increase the number of information captured.
-// https://www.jobbank.gc.ca/jobsearch/jobposting/39094276;jsessionid=D05641B8C2280F1AF4ED26414D6DC909.jobsearch74?source=searchresults
-// const link = "https://www.jobbank.gc.ca/jobsearch/jobposting/39124644?source=searchresults";
-// const result = await getJobInformation(link, page);
