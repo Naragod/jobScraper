@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS job_information(
     -- hash of job information properties
     id TEXT PRIMARY KEY,
-    "location" TEXT,
     title TEXT NOT NULL,
     link TEXT NOT NULL,
     company TEXT NOT NULL,
+    "location" TEXT,
     pay TEXT,
     "description" TEXT,
     workplace_type TEXT,

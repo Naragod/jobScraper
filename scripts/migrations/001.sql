@@ -1,1 +1,1 @@
-INSERT INTO job_information (id, company) VALUES('abcd', 'netflix');
+INSERT INTO job_information (id, title, link, company) VALUES('abcd', 'test entry job', 'www.example.com', 'netflix');
