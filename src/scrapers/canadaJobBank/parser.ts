@@ -7,6 +7,17 @@ import {
   getJSDOMNode,
 } from "../../utils/htmlTraversal";
 
+const getApplicationEmailAddress = async (page: Page) => {
+  try {
+    await page.click("[id='applynowbutton']");
+    const howToApplyHTML = await page.locator("#howtoapply").innerHTML();
+    const eAddresses = getAllTextFromHTMLContent(howToApplyHTML, "A");
+    return { eAddressErr: false, eAddresses };
+  } catch (err) {
+    return { eAddressErr: "No page button", eAddresses: [""] };
+  }
+};
+
 export const getApplicationBasicInfo = async (page: Page) => {
   try {
     const listItems = await page.locator('[class~="job-posting-brief"]').getByRole("listitem").all();
@@ -16,10 +27,11 @@ export const getApplicationBasicInfo = async (page: Page) => {
 
     return {
       title,
+      emailAddresses: await getApplicationEmailAddress(page),
+      pay: await getListItemTextContent(listItems, "span", 1, 2),
+      location: await getListItemTextContent(listItems, "span", 0, 2),
       company: await getListItemTextContent(companyHTML, "span", 0, 0),
       commitment: await getListItemTextContent(listItems, "span", 2, 2),
-      location: await getListItemTextContent(listItems, "span", 0, 2),
-      pay: await getListItemTextContent(listItems, "span", 1, 2),
       jobId: await getListItemTextContent(listItems, "span", listItems.length - 1, -1),
       jobProvider: await getListItemTextContent(listItems, "span", listItems.length - 1, -2),
     };
@@ -51,15 +63,4 @@ export const getJobRequirements = async (page: Page) => {
       .filter((item: any) => item != "");
   }
   return result;
-};
-
-export const getApplicationEmailAddress = async (page: Page) => {
-  try {
-    await page.click("[id='applynowbutton']");
-    const howToApplyHTML = await page.locator("#howtoapply").innerHTML();
-    const emailAddresses = getAllTextFromHTMLContent(howToApplyHTML, "A");
-    return { eAddressErr: false, emailAddresses };
-  } catch (err) {
-    return { eAddressErr: "No page button", emailAddresses: [""] };
-  }
 };
