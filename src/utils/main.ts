@@ -8,6 +8,26 @@ export const flatten = (arr: any[]): any[] => {
     .filter((item: any) => item != undefined && item != "");
 };
 
+export const destructureObj = (obj: any, destructureBy: any[]): any => {
+  let result: any = {};
+  let leftOvers: any = {};
+
+  for (let key of Object.keys(obj)) {
+    if (typeof obj[key] == "object") {
+      let { result: rr, leftOvers: lo } = destructureObj(obj[key], destructureBy);
+      result = { ...result, ...rr };
+      leftOvers = { ...leftOvers, ...lo };
+      continue;
+    }
+    if (destructureBy.includes(key)) {
+      result[key] = obj[key];
+      continue;
+    }
+    leftOvers[key] = obj[key];
+  }
+  return { result, leftOvers };
+};
+
 export const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
