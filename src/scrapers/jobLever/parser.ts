@@ -10,13 +10,55 @@ import { getTextContentList } from "../../utils/playwrightHtmlTraversal";
 export const getApplicationBasicInfo = async (page: Page) => {
   const company = page.url().split("/")[3];
   const headingDiv = await page.locator(".posting-headline");
-  const title = await headingDiv.getByRole("heading").textContent();
-  const location = await headingDiv.locator(".location").textContent();
-  const department = await headingDiv.locator(".department").textContent();
-  const commitment = await headingDiv.locator(".commitment").textContent();
-  const workplaceTypes = await headingDiv.locator(".workplaceTypes").textContent();
-  const jobDescriptionHTML = await page.locator("[data-qa='job-description']").innerHTML();
-  const closingJobDescriptionHTML = await page.locator("[data-qa='closing-description']").innerHTML();
+  const title = await headingDiv
+    .getByRole("heading")
+    .textContent()
+    .catch((err) => {
+      console.log(err);
+      return "";
+    });
+  const location = await headingDiv
+    .locator(".location")
+    .textContent()
+    .catch((err) => {
+      console.log(err);
+      return "";
+    });
+  const department = await headingDiv
+    .locator(".department")
+    .textContent()
+    .catch((err) => {
+      console.log(err);
+      return "";
+    });
+  const commitment = await headingDiv
+    .locator(".commitment")
+    .textContent()
+    .catch((err) => {
+      console.log(err);
+      return "";
+    });
+  const workplaceTypes = await headingDiv
+    .locator(".workplaceTypes")
+    .textContent()
+    .catch((err) => {
+      console.log(err);
+      return "";
+    });
+  const jobDescriptionHTML = await page
+    .locator("[data-qa='job-description']")
+    .innerHTML()
+    .catch((err) => {
+      console.log(err);
+      return "";
+    });
+  const closingJobDescriptionHTML = await page
+    .locator("[data-qa='closing-description']")
+    .innerHTML()
+    .catch((err) => {
+      console.log(err);
+      return "";
+    });
   const jobDescription = getAllTextFromHTMLContent(jobDescriptionHTML);
   const closingJobDescription = getAllTextFromHTMLContent(closingJobDescriptionHTML);
 

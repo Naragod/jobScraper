@@ -10,7 +10,13 @@ import {
 const getApplicationEmailAddress = async (page: Page) => {
   try {
     await page.click("[id='applynowbutton']");
-    const howToApplyHTML = await page.locator("#howtoapply").innerHTML();
+    const howToApplyHTML = await page
+      .locator("#howtoapply")
+      .innerHTML()
+      .catch((err) => {
+        console.log(err);
+        return "";
+      });
     const eAddresses = getAllTextFromHTMLContent(howToApplyHTML, "A");
     return { eAddressErr: false, eAddresses };
   } catch (err) {
@@ -20,9 +26,29 @@ const getApplicationEmailAddress = async (page: Page) => {
 
 export const getApplicationBasicInfo = async (page: Page) => {
   try {
-    const listItems = await page.locator('[class~="job-posting-brief"]').getByRole("listitem").all();
-    const titleHTML = await page.locator(".job-posting-details-body").locator(".title").innerHTML();
-    const companyHTML = await page.locator("span[property='hiringOrganization']").all();
+    const listItems = await page
+      .locator('[class~="job-posting-brief"]')
+      .getByRole("listitem")
+      .all()
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+    const titleHTML = await page
+      .locator(".job-posting-details-body")
+      .locator(".title")
+      .innerHTML()
+      .catch((err) => {
+        console.log(err);
+        return "";
+      });
+    const companyHTML = await page
+      .locator("span[property='hiringOrganization']")
+      .all()
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
     const title = getAllTextFromHTMLContent(titleHTML, "SPAN").map((item) => item.replace(/\t?\n|\t/gm, ""))[0];
 
     return {
@@ -36,7 +62,7 @@ export const getApplicationBasicInfo = async (page: Page) => {
       jobProvider: await getListItemTextContent(listItems, "span", listItems.length - 1, -2),
     };
   } catch (err) {
-    console.log("Error while getting getApplicationBasicInfo:", page.url());
+    console.error("Error while getting getApplicationBasicInfo:", page.url());
     throw err;
   }
 };
