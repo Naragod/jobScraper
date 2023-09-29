@@ -1,6 +1,9 @@
 CREATE TABLE IF NOT EXISTS job_information(
     -- hash of job information properties
     id TEXT PRIMARY KEY,
+    "location" TEXT,
+    title TEXT NOT NULL,
+    link TEXT NOT NULL,
     company TEXT NOT NULL,
     pay TEXT,
     "description" TEXT,
@@ -21,8 +24,6 @@ CREATE TABLE IF NOT EXISTS job_requirements(
 
 CREATE TABLE IF NOT EXISTS jobs(
     id SERIAL PRIMARY KEY,
-    "location" TEXT,
-    title TEXT NOT NULL,
     job_information_id TEXT NOT NULL,
     job_requirements_id TEXT NOT NULL,
     FOREIGN KEY (job_information_id) REFERENCES job_information (id),
