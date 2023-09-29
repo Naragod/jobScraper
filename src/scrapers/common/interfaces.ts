@@ -4,7 +4,7 @@ export interface IJobInfo {
   link: string;
   applicationInfo: any;
   jobRequirements: any;
-  applicationInputFields: any[];
+  applicationInputFields?: any[];
   externalLink?: string;
   err: any;
 }
