@@ -1,15 +1,11 @@
 import { Page } from "playwright";
 import { closeBrowser, getBrowserPage } from "../../../src/scrapers/common/browserSupport";
-import {
-  getApplicationBasicInfo,
-  getJobRequirements,
-  getApplicationEmailAddress,
-} from "../../../src/scrapers/canadaJobBank/parser";
 import { getJobInformation } from "../../../src/scrapers/canadaJobBank/applicationHandler";
+import { getApplicationBasicInfo, getJobRequirements } from "../../../src/scrapers/canadaJobBank/parser";
 
 // Expected Content
 // ****************************************************************************
-import { applicationInfo, jobRequirements, link, applicationEmailAddress } from "./data/jobInfo.json";
+import { applicationInfo, jobRequirements, link } from "./data/jobInfo.json";
 
 describe("CanadaJobBank", () => {
   let page: Page;
@@ -35,12 +31,6 @@ describe("CanadaJobBank", () => {
       const result = await getApplicationBasicInfo(page);
       expect(result).toEqual(applicationInfo);
     });
-
-    it("getApplicationEmailAddress - Usage", async () => {
-      await page.goto(baseUrl);
-      const result = await getApplicationEmailAddress(page);
-      expect(result).toEqual(applicationEmailAddress);
-    }, 8000);
   });
 
   describe("Application Handler", () => {
@@ -50,7 +40,6 @@ describe("CanadaJobBank", () => {
         link,
         jobRequirements,
         applicationInfo,
-        emailAddresses: applicationEmailAddress["emailAddresses"],
         err: false,
       });
     }, 8000);

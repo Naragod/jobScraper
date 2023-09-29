@@ -27,14 +27,10 @@
     "pay": "$26.00 to $30.00HOUR hourly (To be negotiated)",
     "title": "technical sales representative",
     "commitment": "Full time",
-    "company": "Dexon Canada Air Systems Inc."
-  },
-  "applicationEmailAddress": {
-    "eAddressErr": false,
-    "emailAddresses": [
-      "Help - Applying directly on Job Bank (Direct Apply)",
-      "a Plus account",
-      "dexoncan@dexoncanada.com"
-    ]
+    "company": "Dexon Canada Air Systems Inc.",
+    "emailAddresses": {
+      "eAddressErr": false,
+      "eAddresses": ["Help - Applying directly on Job Bank (Direct Apply)", "a Plus account", "dexoncan@dexoncanada.com"]
+    }
   }
 }
