@@ -4,6 +4,7 @@ import { closeBrowser } from "../common/browserSupport";
 import { getJobInformation } from "./applicationHandler";
 import { handleJobApplicationsInParallel } from "../common/executionSupport";
 import { getAllJobPageLinks } from "../../apiRequests/jobLever/requestHandler";
+import { saveJobInfo } from "../../database/main";
 
 export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLimit = 10) => {
   let applicationPage = 0;
@@ -21,11 +22,12 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
       const remove = jobLinks.length - keep;
       jobLinks.splice(keep, remove);
     }
-    const result = <IJobInfo[]>await handleJobApplicationsInParallel(jobLinks, getJobInformation);
+    const { result, jobsToRetry } = await handleJobApplicationsInParallel(jobLinks, getJobInformation);
     jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
-    writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(result));
+    await saveJobInfo(jobsInformation);
+    writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(jobsToRetry));
   }
   await closeBrowser();
   return jobsInformation;

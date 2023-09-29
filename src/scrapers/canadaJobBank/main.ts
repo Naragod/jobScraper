@@ -22,11 +22,11 @@ export const scrapeJobs: scrapeJobsFn = async (searchParams: any, applicationLim
       const remove = jobLinks.length - keep;
       jobLinks.splice(keep, remove);
     }
-    const result = <IJobInfo[]>await handleJobApplicationsInParallel(jobLinks, getJobInformation);
+    const { result, jobsToRetry } = await handleJobApplicationsInParallel(jobLinks, getJobInformation);
     jobsInformation = jobsInformation.concat(result);
     applicationsViewed += jobLinks.length;
     console.log("applicationsViewed:", applicationsViewed);
-    writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(result));
+    writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(jobsToRetry));
   }
 
   await closeBrowser();
