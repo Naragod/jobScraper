@@ -6,7 +6,7 @@ describe("getAllJobPageLinks", () => {
   it("LinkedIn - Usage", async () => {
     const searchParams = { searchTerm: "software developer" };
     const links = await getAllJobPageLinksLinkedIn(searchParams);
-    expect(links.length).toEqual(25);
+    expect(links.length).toEqual(25); // LinkedIn is very flakky.
   });
 
   it("CanadaJobBank - Usage", async () => {
@@ -16,8 +16,8 @@ describe("getAllJobPageLinks", () => {
   });
 
   it("JobLever - Usage", async () => {
-    const searchParams = { searchTerm: "netlfix" };
+    const searchParams = { searchTerm: "tophat" };
     const links = await getAllJobPageLinksJobLever(searchParams);
-    expect(links.length).toEqual(25);
+    expect(links.length).toEqual(6); // This number is prone to change
   });
 });
