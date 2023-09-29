@@ -4,11 +4,12 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "build": "tsc",
     "test": "clear; jest --runInBand ",
     "test-coverage": "clear; jest --coverage",
     "dev": "npm run build; clear; node --enable-source-maps dist/main.js",
+    "migrate": "chmod +x ./scripts/run_migrations.sh; ./scripts/run_migrations.sh",
     "prettydev": "npm run build; clear; node --enable-source-maps dist/main.js; npm run format",
-    "build": "tsc",
     "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'",
     "remove-volumes": "sudo docker volume rm $(sudo docker volume ls -q)",
     "remove-containers": "sudo docker rm $(sudo docker ps -a -q)"

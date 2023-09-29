@@ -1,0 +1,1 @@
+INSERT INTO job_information (id, company) VALUES('abcd', 'netflix');

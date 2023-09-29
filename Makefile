@@ -6,8 +6,11 @@ clean:
 	docker system prune -a --volumes
 	npm run remove-volumes
 
+migrate:
+	npm run migrate
+
 rm-containers:
 	npm run remove-containers
 
 psql:
-	psql -U postgres -d jobs -p 6321 -h localhost
+	psql postgresql://postgres@localhost:6321/postgres
