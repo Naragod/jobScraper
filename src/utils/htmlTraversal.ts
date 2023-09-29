@@ -1,5 +1,4 @@
 import { JSDOM } from "jsdom";
-import { Locator } from "playwright";
 import { flatten } from "../utils/main";
 
 const FILTERLIST = ["TEXT", "#text"];
@@ -53,7 +52,7 @@ export const findElementsInNodeList = (nodeList: NodeList, elementType: string):
     [...entry.childNodes].map((child: any) => {
       if (child.nodeName == elementType) return child;
       if (child.childNodes.length > 0) return findElementsInElement(child, elementType);
-    }),
+    })
   );
 
   return flatten(arr);
@@ -79,12 +78,17 @@ export const getElementAfter = (nodeList: NodeList, elementType: string, element
   return null;
 };
 
-export const getTextContentList = async (locators: Locator[]) => {
-  const textContentsRaw = await Promise.all(
-    locators.reduce((prev: any, curr: any) => {
-      const text = curr.textContent();
-      return prev.concat(text).filter((item: any) => item != undefined);
-    }, []),
-  );
-  return flatten(textContentsRaw);
+// specific implementation of getAllChildrenNodes which obtains all children textContent properties
+export const getAllTextFromChildNodes = (node: any, filter: string[] = [""]): string[] => {
+  return getAllChildrenNodes(node)
+    .map((item) => item.textContent)
+    .filter((item) => !filter.includes(item));
+};
+
+// specific implementation of findElementsInNodeList, creates the JSDOMNode object for you
+export const getAllTextFromHTMLContent = (html: string, pattern = "*", filter = [""]): string[] => {
+  const jsdomNode = getJSDOMNode(html, pattern);
+  const textContentArray = [...jsdomNode].map((item) => getAllTextFromChildNodes(item, filter));
+  // get all unique inputs from flattened array of strings.
+  return <string[]>[...new Set(flatten(textContentArray))];
 };
