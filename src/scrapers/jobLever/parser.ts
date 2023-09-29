@@ -67,10 +67,11 @@ export const getApplicationBasicInfo = async (page: Page) => {
     closingJobDescription,
     title: sanitizeString(title),
     company: sanitizeString(company),
-    location: sanitizeString(location),
     department: sanitizeString(department),
     commitment: sanitizeString(commitment),
     workplaceTypes: sanitizeString(workplaceTypes),
+    description: jobDescription.concat(closingJobDescription),
+    location: sanitizeString(location, [new RegExp("/", "gi")]),
   };
 };
 
