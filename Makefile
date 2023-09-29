@@ -2,6 +2,9 @@
 up: 
 	docker compose up
 
+stop-all:
+	sudo docker stop $(sudo docker ps -q)
+
 clean:
 	docker system prune -a --volumes
 	npm run remove-volumes
@@ -14,3 +17,6 @@ rm-containers:
 
 psql:
 	psql postgresql://postgres@localhost:6321/postgres
+
+remove-all:
+	sudo docker rm $(sudo docker ps -a -q)
