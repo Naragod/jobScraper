@@ -1,6 +1,6 @@
 import { Page } from "playwright";
 import { JobInfoGetterFn } from "../common/interfaces";
-import { getApplicationBasicInfo, getApplicationEmailAddress, getJobRequirements } from "./parser";
+import { getApplicationBasicInfo, getJobRequirements } from "./parser";
 
 export const getJobInformation: JobInfoGetterFn = async (link: string, page: Page) => {
   try {
@@ -14,8 +14,7 @@ export const getJobInformation: JobInfoGetterFn = async (link: string, page: Pag
       return { link, applicationInfo, jobRequirements: {}, externalLink: externalLink || "", err };
     }
     const jobRequirements = await getJobRequirements(page);
-    const { eAddressErr, emailAddresses = [] } = await getApplicationEmailAddress(page);
-    return { link, applicationInfo: { ...applicationInfo, emailAddresses }, jobRequirements, err: eAddressErr };
+    return { link, applicationInfo: applicationInfo, jobRequirements, err: false };
   } catch (err) {
     return { link, applicationInfo: {}, jobRequirements: {}, err };
   }
