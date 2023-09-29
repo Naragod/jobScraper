@@ -8,7 +8,7 @@ export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJo
   url = workplaceType != undefined ? `${url}&workplaceType=${workplaceType}` : url;
   url = location != undefined ? `${url}&location=${encodeURIComponent(location)}` : url;
   url = commitment != undefined ? `${url}&commitment=${encodeURIComponent(commitment)}` : url;
-  const jobEntries = await getNodeList(encodeURI(url), "[class*='posting-apply']");
+  const jobEntries = await getNodeList(url, ".posting-apply");
 
   // return all links
   return findElementsInNodeList(jobEntries, "A").map((item: any) => item.href);
