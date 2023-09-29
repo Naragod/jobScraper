@@ -5,3 +5,7 @@ dist/
 email_config.json
 **.config.json
 coverage
+
+# ignore auto generated test files
+*.spec.js
+*.spec.js.map
