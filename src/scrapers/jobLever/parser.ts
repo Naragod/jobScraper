@@ -2,8 +2,8 @@ import { Locator, Page } from "playwright";
 
 import { sanitizeString } from "../../utils/parser";
 import { IApplicationQuestion } from "../common/interfaces";
-import { getAllTextFromHTMLContent } from "../../utils/htmlSpecificImplementations";
-import { getTextContentList } from "../../utils/htmlTraversal";
+import { getAllTextFromHTMLContent } from "../../utils/htmlTraversal";
+import { getTextContentList } from "../../utils/playwrightHtmlTraversal";
 
 // getters
 // ****************************************************************************

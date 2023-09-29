@@ -1,6 +1,11 @@
 import { Page } from "playwright";
-import { getAllTextFromHTMLContent, getListItemTextContent } from "../../utils/htmlSpecificImplementations";
-import { findElementsInElement, getElementAfter, getJSDOMNode } from "../../utils/htmlTraversal";
+import { getListItemTextContent } from "../../utils/playwrightHtmlTraversal";
+import {
+  findElementsInElement,
+  getAllTextFromHTMLContent,
+  getElementAfter,
+  getJSDOMNode,
+} from "../../utils/htmlTraversal";
 
 export const getApplicationBasicInfo = async (page: Page) => {
   try {
