@@ -1,6 +1,6 @@
-import { getAllJobPageLinks as  getAllJobPageLinksLinkedIn } from "../../src/apiRequests/linkedIn/requestHandler";
-import { getAllJobPageLinks as  getAllJobPageLinksJobLever } from "../../src/apiRequests/jobLever/requestHandler";
-import { getAllJobPageLinks as  getAllJobPageLinksCanadaJobBank } from "../../src/apiRequests/canadaJobBank/requestHandler";
+import { getAllJobPageLinks as getAllJobPageLinksLinkedIn } from "../../src/apiRequests/linkedIn/requestHandler";
+import { getAllJobPageLinks as getAllJobPageLinksJobLever } from "../../src/apiRequests/jobLever/requestHandler";
+import { getAllJobPageLinks as getAllJobPageLinksCanadaJobBank } from "../../src/apiRequests/canadaJobBank/requestHandler";
 
 describe("getAllJobPageLinks", () => {
   it("LinkedIn - Usage", async () => {

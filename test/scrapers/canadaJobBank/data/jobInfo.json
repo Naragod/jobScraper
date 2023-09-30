@@ -30,7 +30,11 @@
     "company": "Dexon Canada Air Systems Inc.",
     "emailAddresses": {
       "eAddressErr": false,
-      "eAddresses": ["Help - Applying directly on Job Bank (Direct Apply)", "a Plus account", "dexoncan@dexoncanada.com"]
+      "eAddresses": [
+        "Help - Applying directly on Job Bank (Direct Apply)",
+        "a Plus account",
+        "dexoncan@dexoncanada.com"
+      ]
     }
   }
 }

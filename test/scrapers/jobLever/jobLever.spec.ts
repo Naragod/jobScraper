@@ -5,7 +5,7 @@ import { getApplicationBasicInfo, getJobRequirements, getInputFields } from "../
 
 // Expected Content
 // ****************************************************************************
-import {inputFields} from "./data/inputFields.json"
+import { inputFields } from "./data/inputFields.json";
 import { applicationInfo, jobRequirements, link } from "./data/jobInfo.json";
 
 describe("JobLever", () => {
