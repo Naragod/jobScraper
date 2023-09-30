@@ -19,6 +19,5 @@ Job Posting Example: https://boards.greenhouse.io/aescape/
 Website: https://www.jobvite.com/
 Job Posting Example: https://jobs.jobvite.com/info-stretch-corporation/jobs
 
-
 Website: https://careers.icims.com/careers-home
 Job Posting Example: https://careers.icims.com/careers-home/jobs

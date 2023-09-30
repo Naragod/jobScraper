@@ -22,35 +22,35 @@ export const getApplicationBasicInfo = async (page: Page) => {
     const criteriaList = await page.locator("li.description__job-criteria-item").all();
 
     const location = await companyLocationDiv[1].textContent().catch((err) => {
-      err["location"] = err.message
+      err["location"] = err.message;
       return "";
     });
     const companyName = await companyLocationDiv[0]
       .locator("a")
       .textContent()
       .catch((err) => {
-        err["companyName"] = err.message
+        err["companyName"] = err.message;
         return "";
       });
     const companyLink = await companyLocationDiv[0]
       .locator("a")
       .getAttribute("href")
       .catch((err) => {
-        err["companyLink"] = err.message
+        err["companyLink"] = err.message;
         return "";
       });
     const pay = await page
       .locator(".compensation__salary")
       .textContent()
       .catch((err) => {
-        err["pay"] = err.message
+        err["pay"] = err.message;
         return "";
       });
     const externalLinks = await page
       .locator("[data-tracking-control-name='public_jobs_apply-link-offsite_sign-up-modal-sign-up-later']")
       .all()
       .catch((err) => {
-        err["externalLinks"] = err.message
+        err["externalLinks"] = err.message;
         return [];
       });
 

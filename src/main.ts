@@ -1,30 +1,33 @@
-import { applyToJobs as applyToJobsOnJobLever } from "./scrapers/jobLever/main";
-import { applyToJobs as applytoJobsOnCanadaJobBoard } from "./scrapers/canadaJobBank/main";
+import { scrapeJobs as scrapeJobsOnJobLever } from "./scrapers/jobLever/main";
+import { scrapeJobs as scrapeJobsOnLinkedIn } from "./scrapers/linkedIn/main";
+import { scrapeJobs as scrapeJobsOnCanadaJobBoard } from "./scrapers/canadaJobBank/main";
 
-// import { user as canadaJobBankUser, password as canadaJobBankPass } from "./config/canadaJobBank.config.json";
+import { user as canadaJobBankUser, password as canadaJobBankPass } from "./config/canadaJobBank.config.json";
 
-const COMPANIES = ["netflix", "eventbrite"];
-
-const USER_DATA = {
-  resume: "/home/mateo/Desktop/projects/localEmailClient/assets/resumes/DevRes.pdf",
-  name: "Mateo Naranjo",
-  email: "mateo.naranjo.barandica@gmail.com",
-  phone: "647 366 8313",
-  org: "N/A",
-  "urls[Twitter]": "",
-  "urls[GitHub]": "https://github.com/naragod",
-  "urls[Portfolio]": "",
-  "urls[Other]": "",
-  comments: "",
-  "urls[LinkedIn]": "https://www.linkedin.com/in/mateo-naranjo/",
-};
+const COMPANIES = [
+  "netflix",
+  // "eventbrite",
+  // "wealthsimple",
+  // "1password",
+  // "Horizon",
+  // "waabi",
+  // "Plooto",
+  // "acquird",
+  // "tophat",
+  // "composer",
+  // "medium",
+  // "15five",
+  // "360learning",
+  // "bosonai"
+];
 
 const main = async () => {
-  for (let company of COMPANIES) {
-    await applyToJobsOnJobLever({ company });
-  }
-  await applytoJobsOnCanadaJobBoard({});
-  process.exit()
+  const linkedInJobs = await scrapeJobsOnLinkedIn({ searchTerm: "Software Engineer" }, 5);
+  const canadaBoardJobs = await scrapeJobsOnCanadaJobBoard({ searchTerm: "software", location: "toronto" }, 5);
+  let jobLeverJobs = await Promise.allSettled(
+    COMPANIES.map((company) => scrapeJobsOnJobLever({ searchTerm: company }, 5))
+  ).catch(console.error);
+  process.exit();
 };
 
 main();

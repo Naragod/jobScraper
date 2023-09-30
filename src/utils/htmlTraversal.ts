@@ -52,7 +52,7 @@ export const findElementsInNodeList = (nodeList: NodeList, elementType: string):
     [...entry.childNodes].map((child: any) => {
       if (child.nodeName == elementType) return child;
       if (child.childNodes.length > 0) return findElementsInElement(child, elementType);
-    })
+    }),
   );
 
   return flatten(arr);

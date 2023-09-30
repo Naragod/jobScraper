@@ -6,7 +6,7 @@ export const getTextContentList = async (locators: Locator[]) => {
     locators.reduce((prev: any, curr: any) => {
       const text = curr.textContent();
       return prev.concat(text).filter((item: any) => item != undefined);
-    }, [])
+    }, []),
   );
   return flatten(textContentsRaw);
 };
@@ -24,7 +24,7 @@ export const getListItemTextContent = async (
   items: Locator[],
   locate: string,
   listItemIndex: number,
-  textContentIndex?: number
+  textContentIndex?: number,
 ): Promise<string | string[]> => {
   const content = await items[listItemIndex].locator(locate).all();
   const textContents = await getTextContentList(content);

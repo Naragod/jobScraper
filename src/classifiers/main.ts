@@ -16,10 +16,11 @@ export const classify = (job: IJobInfo, candidateSkills: string[]) => {
   if (techExperience == undefined) return { link, skillMatches: [], requirements: [], matchingPercent: 0 };
   const strippedDownSkills = stripDown(candidateSkills);
   const strippedDownTechExp = stripDown(techExperience);
-  const skillMatches = strippedDownTechExp.filter((item:any) => strippedDownSkills.includes(item));
+  const skillMatches = strippedDownTechExp.filter((item: any) => strippedDownSkills.includes(item));
   const matchingPercent = skillMatches.length / strippedDownTechExp.length;
-  
-  if (isNaN(matchingPercent)) console.log("skillMatches:", skillMatches, "strippedDownTechExp:", strippedDownTechExp, matchingPercent);
+
+  if (isNaN(matchingPercent))
+    console.log("skillMatches:", skillMatches, "strippedDownTechExp:", strippedDownTechExp, matchingPercent);
   return { link, skillMatches, requirements: strippedDownTechExp, matchingPercent };
 };
 

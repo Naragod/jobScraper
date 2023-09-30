@@ -7,11 +7,13 @@ import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/inter
 
 export class JobBoard {
   public name: string;
+  public formatters: any;
   public getJobInformation: JobInfoGetterFn;
   public getAllJobPageLinks: AllJobsLinksGetterFn;
 
-  constructor(name: string, functions: any) {
+  constructor(name: string, functions: any, formatters: any) {
     this.name = name;
+    this.formatters = formatters;
     this.getJobInformation = functions["getJobInformation"];
     this.getAllJobPageLinks = functions["getAllJobPageLinks"];
   }
@@ -28,7 +30,7 @@ export class Scraper {
       let applicationsViewed = 0;
       const now = new Date().toISOString();
       let jobsInformation: IJobInfo[] = [];
-      const { getJobInformation, getAllJobPageLinks } = this.jobBoard;
+      const { getJobInformation, getAllJobPageLinks, formatters } = this.jobBoard;
 
       while (applicationsViewed < applicationLimit) {
         applicationPage += 1;
@@ -46,7 +48,7 @@ export class Scraper {
         jobsInformation = jobsInformation.concat(result);
         applicationsViewed += jobLinks.length;
         console.log("applicationsViewed:", applicationsViewed);
-        await saveJobInfo(result);
+        await saveJobInfo(result, formatters);
 
         if (jobsToRetry.length == 0) continue;
         writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(jobsToRetry));
