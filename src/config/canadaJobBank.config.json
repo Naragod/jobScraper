@@ -1,0 +1,7 @@
+{
+  "user": "mateo",
+  "password": "coolPassword123",
+  "database": "canadaJobBank",
+  "collection": "jobListings",
+  "baseURL": "https://www.jobbank.gc.ca"
+}

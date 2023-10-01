@@ -3,7 +3,7 @@ package-lock.json
 logs/
 dist/
 email_config.json
-**.config.json
+# **.config.json
 coverage
 
 # ignore auto generated test files
