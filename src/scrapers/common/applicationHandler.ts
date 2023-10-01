@@ -1,6 +1,6 @@
 import { saveJobInfo } from "../../database/main";
+import { writeFileSync } from "fs";
 import { classifyJobs } from "../../classifiers/main";
-import { writeToFile } from "../../emailer/fileHandler";
 import { closeBrowser } from "../common/browserSupport";
 import { handleJobApplicationsInParallel } from "../common/executionSupport";
 import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/interfaces";
@@ -51,7 +51,7 @@ export class Scraper {
         await saveJobInfo(result, formatters);
 
         if (jobsToRetry.length == 0) continue;
-        writeToFile(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(jobsToRetry));
+        writeFileSync(`${searchParams.searchTerm}_${applicationPage}_${now}.json`, JSON.stringify(jobsToRetry));
       }
 
       await closeBrowser();

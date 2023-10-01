@@ -2,8 +2,6 @@ import { scrapeJobs as scrapeJobsOnJobLever } from "./scrapers/jobLever/main";
 import { scrapeJobs as scrapeJobsOnLinkedIn } from "./scrapers/linkedIn/main";
 import { scrapeJobs as scrapeJobsOnCanadaJobBoard } from "./scrapers/canadaJobBank/main";
 
-import { user as canadaJobBankUser, password as canadaJobBankPass } from "./config/canadaJobBank.config.json";
-
 const COMPANIES = [
   "netflix",
   // "eventbrite",
@@ -18,7 +16,8 @@ const COMPANIES = [
   // "medium",
   // "15five",
   // "360learning",
-  // "bosonai"
+  // "bosonai",
+  // "ada"
 ];
 
 const main = async () => {
