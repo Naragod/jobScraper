@@ -7,7 +7,8 @@
     "build": "tsc",
     "test": "clear; jest --runInBand ",
     "test-coverage": "clear; jest --coverage",
-    "dev": "npm run build; clear; node --enable-source-maps dist/main.js",
+    "dev": "npm run build; clear; ENVIRONMENT=dev node --enable-source-maps dist/main.js",
+    "prod": "npm run build; clear; ENVIRONMENT=prod node --enable-source-maps dist/main.js",
     "migrate": "chmod +x ./scripts/run_migrations.sh; ./scripts/run_migrations.sh",
     "prettydev": "npm run build; clear; node --enable-source-maps dist/main.js; npm run format",
     "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'",
@@ -17,6 +18,7 @@
   "author": "Mateo Nar",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "jest": "^29.7.0",
     "jsdom": "^22.1.0",
     "mocha": "^10.2.0",
