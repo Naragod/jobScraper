@@ -13,6 +13,6 @@ export const saveJobInfo = async (jobInfo: IJobInfo[], formatters: any) => {
       const job_information_id = job_information_id_raw[0].id;
       const job_requirements_id = job_requirements_id_raw[0].id;
       await sql`INSERT INTO jobs ${sql({ job_information_id, job_requirements_id })}`;
-    })
+    }),
   );
 };

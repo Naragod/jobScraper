@@ -9,3 +9,5 @@ coverage
 # ignore auto generated test files
 *.spec.js
 *.spec.js.map
+notes.txt
+skills.config.json
