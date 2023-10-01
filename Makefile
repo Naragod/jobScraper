@@ -1,6 +1,9 @@
 
 up: 
-	docker compose up
+	docker compose up 
+
+dev:
+	docker compose run app bash -c "npm run dev"
 
 stop-all:
 	sudo docker stop $(sudo docker ps -q)

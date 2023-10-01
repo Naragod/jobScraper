@@ -13,6 +13,9 @@ services:
       - "6321:5432"
 
   # Connection Process first time: https://stackoverflow.com/a/56617524/8714371
+  # Comment out if already have DB GUI installed
+  # Optional
+  # ***************************************************************************
   pgadmin:
     image: dpage/pgadmin4:7
     environment:
@@ -24,18 +27,18 @@ services:
       - pgadmin_config:/var/lib/pgadmin/data
     depends_on:
       - db
+  # ***************************************************************************
 
-  # Svelte app
+  # # Svelte app
   app:
     image: jobscraper
+    container_name: jobscraper_app
     build:
       dockerfile: Dockerfile
     volumes:
       - ./:/app/
     depends_on:
       - db
-    # ports:
-    #   - '5173:5173'
 
 volumes:
   postgres_database_jobscraper_data:
