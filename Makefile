@@ -3,7 +3,10 @@ up:
 	docker compose up 
 
 dev:
-	docker compose run app bash -c "npm run dev"
+	docker compose run app bash -c "npm run prod"
+
+get-db-ip:
+	docker inspect  -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jobscraper_db
 
 stop-all:
 	sudo docker stop $(sudo docker ps -q)

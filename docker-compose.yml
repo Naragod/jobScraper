@@ -3,6 +3,7 @@ services:
   # Postgres with pgvector extension
   db:
     image: ankane/pgvector
+    container_name: jobscraper_db
     volumes:
       - postgres_database_jobscraper_data:/var/lib/postgresql/data
     environment:
