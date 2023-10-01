@@ -1,7 +1,7 @@
-import { sleep } from "../utils";
 import { logger } from "./fileHandler";
 import { createTransport, Transporter } from "nodemailer";
 import { getEmailOptions, IEmailInputOptions } from "./emailParser";
+import { sleep } from "../utils/main";
 
 export interface ITransporterAuth {
   user: string;

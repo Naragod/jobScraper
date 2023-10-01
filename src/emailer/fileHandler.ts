@@ -1,9 +1,8 @@
 import { join } from "path";
 import { unlinkSync, readFileSync, readdirSync, writeFileSync } from "fs";
-import { baseFolder } from "./email_config.json";
+import { baseFolder, logFolder } from "./email_config.json";
 import { createLogger, transports } from "winston";
 
-const logFolder = `/home/mateo/Desktop/projects/jobScraper/src/emailer/logs`;
 export const getLogger = () => {
   if (logger) return logger;
   return createLogger({
