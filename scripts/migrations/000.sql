@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS job_information(
     "description" TEXT,
     workplace_type TEXT,
     commitment TEXT,
+    external_link TEXT,
     extra json
 );
 
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS job_requirements(
 
 CREATE TABLE IF NOT EXISTS jobs(
     id SERIAL PRIMARY KEY,
+    job_board TEXT NOT NULL,
     job_information_id TEXT NOT NULL,
     job_requirements_id TEXT NOT NULL,
     FOREIGN KEY (job_information_id) REFERENCES job_information (id),
