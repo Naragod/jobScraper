@@ -8,7 +8,7 @@
     "test": "clear; jest --runInBand ",
     "test-coverage": "clear; jest --coverage",
     "dev": "npm run build; clear; ENVIRONMENT=dev node --enable-source-maps dist/main.js",
-    "prod": "npm run build; clear; ENVIRONMENT=prod node --enable-source-maps dist/main.js",
+    "prod": "npm run build; clear; ENVIRONMENT=prod node --enable-source-maps dist/main.js; npm run format;",
     "migrate": "chmod +x ./scripts/run_migrations.sh; ./scripts/run_migrations.sh",
     "prettydev": "npm run build; clear; node --enable-source-maps dist/main.js; npm run format",
     "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'",
@@ -36,6 +36,7 @@
     "@types/mocha": "^10.0.1",
     "@types/nodemailer": "^6.4.10",
     "@types/object-hash": "^3.0.4",
+    "prettier": "^3.0.3",
     "ts-jest": "^29.1.1"
   }
 }
