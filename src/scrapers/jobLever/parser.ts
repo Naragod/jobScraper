@@ -52,25 +52,15 @@ export const getApplicationBasicInfo = async (page: Page) => {
       console.log(err);
       return "";
     });
-  const closingJobDescriptionHTML = await page
-    .locator("[data-qa='closing-description']")
-    .innerHTML()
-    .catch((err) => {
-      console.log(err);
-      return "";
-    });
   const jobDescription = getAllTextFromHTMLContent(jobDescriptionHTML);
-  const closingJobDescription = getAllTextFromHTMLContent(closingJobDescriptionHTML);
 
   return {
-    jobDescription,
-    closingJobDescription,
+    description: jobDescription,
     title: sanitizeString(title),
     company: sanitizeString(company),
     department: sanitizeString(department),
     commitment: sanitizeString(commitment),
     workplaceTypes: sanitizeString(workplaceTypes),
-    description: jobDescription.concat(closingJobDescription),
     location: sanitizeString(location, [new RegExp("/", "gi")]),
   };
 };

@@ -11,5 +11,5 @@ export const scrapeJobs = async (searchParams: any, applicationLimit = 100) => {
   const functions = { getJobInformation, getAllJobPageLinks };
   const jobLever = new JobBoard("jobLever", functions, formatters);
   const jobLeverScraper = new Scraper(jobLever);
-  return jobLeverScraper.scrapeJobs(searchParams, applicationLimit);
+  return await jobLeverScraper.scrapeJobs(searchParams, applicationLimit);
 };
