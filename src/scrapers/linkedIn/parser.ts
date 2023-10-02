@@ -4,7 +4,14 @@ import { getAllTextFromHTMLContent } from "../../utils/htmlTraversal";
 
 export const getJobRequirements = async (page: Page) => {
   try {
-    const descriptionDiv = await page.locator(".show-more-less-html__markup").innerHTML();
+    const descriptionDiv = await page
+      .locator(".show-more-less-html__markup")
+      .innerHTML()
+      .catch((err) => {
+        console.log("Page:", page.url());
+        console.error(err);
+        return "";
+      });
     return getAllTextFromHTMLContent(descriptionDiv);
   } catch (err) {
     console.error(err);
