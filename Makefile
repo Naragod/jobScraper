@@ -2,7 +2,7 @@
 up: 
 	docker compose up 
 
-dev:
+run-scraper:
 	docker compose run app bash -c "npm run prod"
 
 get-db-ip:
