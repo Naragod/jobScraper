@@ -24,5 +24,3 @@ rm-containers:
 psql:
 	psql postgresql://postgres@localhost:6321/postgres
 
-remove-all:
-	sudo docker rm $(sudo docker ps -a -q)
