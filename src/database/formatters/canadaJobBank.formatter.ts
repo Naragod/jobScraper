@@ -3,19 +3,27 @@ import { destructureObj } from "../../utils/main";
 import { IJobInfo } from "../../scrapers/common/interfaces";
 
 const getUniqueId = (job: IJobInfo) => {
-  const columns = ["id", "link", "title", "location", "company", "pay", "description", "commitment"];
+  const columns = ["id", "title", "link", "company", "location", "pay", "commitment", "externalLink"];
   const { result } = destructureObj(job, columns);
   return hash(result);
 };
 
 export const formatToJobInfoTableStructure = (job: IJobInfo) => {
-  const columns = ["id", "link", "title", "location", "company", "pay", "description", "commitment"];
+  const columns = ["id", "title", "link", "company", "location", "pay", "commitment", "externalLink"];
   const { result, leftOvers } = destructureObj(job, columns);
-  return { id: hash(result), ...result, extra: JSON.stringify(leftOvers) };
+  const { externalLink = "", ...data } = result;
+  return { id: hash(data), external_link: externalLink, ...data, extra: JSON.stringify(leftOvers) };
 };
 
 // JobLever post return a list of tasks for jobRequirements
 export const formatToJobRequirementsStructure = (job: IJobInfo) => {
-  const { education, experience, tasks, techExperience } = job.jobRequirements;
-  return { id: getUniqueId(job), tasks, tech_experience: techExperience, education, experience };
+  const { education, languages, experience, tasks = [], techExperience } = job.jobRequirements;
+  let result: any = { id: getUniqueId(job), tasks };
+
+  if (education !== undefined) result["education"] = education;
+  if (experience !== undefined) result["experience"] = experience;
+  if (languages !== undefined) result["languages"] = [].concat(languages);
+  if (techExperience !== undefined) result["tech_experience"] = techExperience;
+
+  return result;
 };
