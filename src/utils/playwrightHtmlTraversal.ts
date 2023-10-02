@@ -4,7 +4,7 @@ import { Locator } from "playwright";
 export const getTextContentList = async (locators: Locator[]) => {
   const textContentsRaw = await Promise.all(
     locators.reduce((prev: any, curr: any) => {
-      const text = curr.textContent();
+      const text = curr.innerText();
       return prev.concat(text).filter((item: any) => item != undefined);
     }, []),
   );
@@ -30,6 +30,6 @@ export const getListItemTextContent = async (
   const textContents = await getTextContentList(content);
 
   if (textContentIndex == undefined) return textContents;
-  if (textContentIndex >= 0) return textContents[textContentIndex];
-  return textContents[textContents.length + textContentIndex];
+  if (textContentIndex >= 0) return textContents[textContentIndex] || "";
+  return textContents[textContents.length + textContentIndex] || "";
 };
