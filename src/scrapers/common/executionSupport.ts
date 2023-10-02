@@ -10,18 +10,15 @@ import { sleep } from "../../utils/main";
 const CONCURRENT = 7;
 const THROTTLE_SPEED = 50;
 
-export const handleJobApplication = async (
-  link: string,
-  handler: JobInfoGetterFn,
-  headless: boolean,
-  throttleSpeed: number,
-) => {
+export const handleJobApplication = async (link: string, handler: JobInfoGetterFn, options: any = {}) => {
+  const headless = options.headless || true;
+  const throttleSpeed = options.throttleSpeed || THROTTLE_SPEED;
   // create new page to query for job information in parallel
   const page = await getBrowserPage({ headless });
+  console.log("link:", link);
   const jobInfo = await handler(link, page);
   // close page to prevent memory leaks
   await page.close();
-  console.log(jobInfo.link);
   await sleep(throttleSpeed);
   return jobInfo;
 };
@@ -34,12 +31,10 @@ export const handleJobApplicationsInParallel = async (
   const result = [];
   const jobsToRetry = [];
   const promiseQueue = [];
-  const headless = options.headless || true;
   const concurrent = options.concurrent || CONCURRENT;
-  const throttleSpeed = options.throttleSpeed || THROTTLE_SPEED;
 
   for (let link of jobLinks) {
-    const func = () => handleJobApplication(link, handler, headless, throttleSpeed);
+    const func = () => handleJobApplication(link, handler, options);
     promiseQueue.push(func());
 
     if (promiseQueue.length >= concurrent) {
