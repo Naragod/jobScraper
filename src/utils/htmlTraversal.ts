@@ -8,7 +8,7 @@ export const getJSDOMNode = (html: string, pattern = "*") => {
   return window.document.querySelectorAll(pattern);
 };
 
-export const getNodeList = async (url: string, pattern: string): Promise<NodeList> => {
+export const getNodeList = async (url: string, pattern: string): Promise<NodeListOf<Element>> => {
   const response = await fetch(url);
   const htmlResponse = await response.text();
   return getJSDOMNode(htmlResponse, pattern);
