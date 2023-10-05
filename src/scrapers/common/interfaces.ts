@@ -4,8 +4,6 @@ export interface IJobInfo {
   link: string;
   applicationInfo: any;
   jobRequirements: any;
-  applicationInputFields?: any[];
-  externalLink?: string;
   err: any;
 }
 
@@ -30,6 +28,10 @@ export interface IJobSearchOptions {
 
 export interface JobInfoGetterFn {
   (link: string, page: Page): Promise<IJobInfo>;
+}
+
+export interface JobInfoGetterNativelyFn {
+  (link: string, pageContent: any): IJobInfo;
 }
 
 export interface scrapeJobsFn {
