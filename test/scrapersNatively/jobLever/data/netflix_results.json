@@ -1,0 +1,24 @@
+{
+  "jobInformation": {
+    "company": "netflix",
+    "description": [
+      "Feature Animation at Netflix is committed to creating content that makes a lasting impression on audiences and expands expectations of what is possible in storytelling. We are paving the way for the bold future of animation by building a community of amazing artists and talent. As a part of Netflix, Feature Animation values integrity, excellence, respect, inclusion, and collaboration. This is the new wave of animation  and you can help shape it",
+      "Job Summary:",
+      "This role is responsible for empowering artists to focus on their creative process by building the technology that connects each phase of the animation process, with a particular focus on pre-production, and automates the flow of information throughout the studio, from Burbank to Vancouver to Sydney and beyond.  This pipeline engineer will work closely with production to deeply understand the problems of the studio and partner with the larger technology team to address them, shaping the future of technology at Feature Animation at Netflix and the animation industry at large.",
+      "About Feature Animation at Netflix Technology:",
+      "The Feature Animation at Netflix Technology team is focused on developing cutting-edge tools and providing support to the growing slate of animated features.  We are active contributors to our strong culture of collaboration, opportunity, and partnership. We work directly with the artists and management staff to determine how best to apply technology solutions to all aspects of our studio.  We provide critical support in working with our creative partners (vendors) and establishing standardized workflows for departments.  We work closely with the other Technology teams across Netflix and its subsidiaries to offer the best solutions to the animation community."
+    ],
+    "title": "Software Engineer (L4), Pipeline Engineering - Feature Animation at Netflix",
+    "location": "Burbank, California",
+    "department": "Animation  Technology",
+    "workplaceTypes": "On-site"
+  },
+  "jobRequirements": [
+    "Engage with cross-functional partners, both technical and non-technical, to understand business needs and come up with robust solutions",
+    "Align on tradeoffs and decisions with stakeholders and partners across multiple locations and timezones",
+    "Build, test, and support pipelines to shepherd content and its metadata between creative workflows using technologies like Python, rez, REST, gRPC, and Kotlin",
+    "Develop foundational frameworks using service-oriented architecture and GraphQL",
+    "Partner with web developers on applications using Spring Boot Java and NodeJS and contribute to relational and non-relational database design supporting the backend",
+    "Share ideas openly and \"farm for dissent\" in an inclusive environment"
+  ]
+}

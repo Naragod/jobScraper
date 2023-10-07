@@ -1,6 +1,7 @@
 import { Page } from "playwright";
-import { JobInfoGetterFn } from "../common/interfaces";
+import { JobInfoGetterFn, JobInfoGetterNativelyFn } from "../common/interfaces";
 import { getApplicationBasicInfo, getJobRequirements, getInputFields } from "./parser";
+import { getApplicationBasicInfoNatively, getJobRequirementsNatively } from "./nativeParser";
 
 export const getJobInformation: JobInfoGetterFn = async (link: string, page: Page) => {
   try {
@@ -12,5 +13,16 @@ export const getJobInformation: JobInfoGetterFn = async (link: string, page: Pag
     return { link, applicationInfo, jobRequirements, applicationInputFields, err: false };
   } catch (err) {
     return { link, applicationInfo: {}, jobRequirements: [], applicationInputFields: [], err };
+  }
+};
+
+export const getJobInformationNatively: JobInfoGetterNativelyFn = (link: string, html: NodeListOf<Element>) => {
+  try {
+    const jobRequirements = getJobRequirementsNatively(html);
+    const applicationInfo = getApplicationBasicInfoNatively(link, html);
+    return { link, applicationInfo, jobRequirements, err: false };
+  } catch (err) {
+    console.error(err)
+    return { link, applicationInfo: {}, jobRequirements: [], err };
   }
 };

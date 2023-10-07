@@ -1,4 +1,4 @@
-import { getJobInformation } from "./applicationHandler";
+import { getJobInformationNatively } from "./applicationHandler";
 import { JobBoard, Scraper } from "../common/applicationHandler";
 import { getAllJobPageLinks } from "../../apiRequests/jobLever/requestHandler";
 import {
@@ -8,8 +8,8 @@ import {
 
 export const scrapeJobs = async (searchParams: any, applicationLimit = 100) => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
-  const functions = { getJobInformation, getAllJobPageLinks };
+  const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
   const jobLever = new JobBoard("jobLever", functions, formatters);
   const jobLeverScraper = new Scraper(jobLever);
-  return await jobLeverScraper.scrapeJobs(searchParams, applicationLimit);
+  return await jobLeverScraper.scrapeJobsNatively(searchParams, applicationLimit);
 };
