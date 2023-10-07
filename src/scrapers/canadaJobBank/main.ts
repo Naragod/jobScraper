@@ -1,4 +1,4 @@
-import { getJobInformation } from "./applicationHandler";
+import { getJobInformationNatively } from "./applicationHandler";
 import { getAllJobPageLinks } from "../../apiRequests/canadaJobBank/requestHandler";
 import { JobBoard, Scraper } from "../common/applicationHandler";
 import {
@@ -8,8 +8,8 @@ import {
 
 export const scrapeJobs = async (searchParams: any, applicationLimit = 100) => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
-  const functions = { getJobInformation, getAllJobPageLinks };
+  const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
   const canadaJobBoard = new JobBoard("canadaJobBoard", functions, formatters);
   const canadaJobBoardScraper = new Scraper(canadaJobBoard);
-  return await canadaJobBoardScraper.scrapeJobs(searchParams, applicationLimit);
+  return await canadaJobBoardScraper.scrapeJobsNatively(searchParams, applicationLimit);
 };
