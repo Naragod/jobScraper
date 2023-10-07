@@ -3,8 +3,10 @@ import { flatten } from "../../utils/main";
 import { locator, getAllInnerTextElements, getElementAfterNatively } from "../../utils/nativeHtmlTraversal";
 
 export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>) => {
+  const titleHtml = locator(html, ".job-posting-details-body").map((item) => getAllInnerTextElements(item, ".title"));
   const companyHTML = getAllInnerTextElements(html, "span[property='hiringOrganization']");
-  const listItems = getAllInnerTextElements(html, "ul.job-posting-brief > li");
+  const listItems = getAllInnerTextElements(html, ".job-posting-brief");
+  const title = [...new Set(flatten(titleHtml))][0];
 
   const company = flatten(companyHTML)[0];
   const pay = listItems[1].slice(1).join(", ");
@@ -12,9 +14,6 @@ export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>) => {
   const commitment = listItems[2].slice(1).join(", ");
   const jobId = listItems[listItems.length - 1].slice(-1)[0];
   const jobProvider = listItems[listItems.length - 1].slice(-2, -1)[0];
-
-  const titleHtml = locator(html, ".job-posting-details-body").map((item) => getAllInnerTextElements(item, ".title"));
-  const title = [...new Set(flatten(titleHtml))][0];
 
   return {
     title,

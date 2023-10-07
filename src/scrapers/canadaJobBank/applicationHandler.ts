@@ -36,6 +36,7 @@ export const getJobInformationNatively: JobInfoGetterNativelyFn = (link: string,
     const jobRequirements = getJobRequirementsNatively(html);
     return { link, applicationInfo, jobRequirements, err: false };
   } catch (err) {
+    console.error(err)
     return { link, applicationInfo: {}, jobRequirements: {}, err };
   }
 };
