@@ -4,6 +4,8 @@ import { classifyJobs } from "../../classifiers/main";
 import { closeBrowser } from "../common/browserSupport";
 import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/interfaces";
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
+import { removeExcessArrayItems } from "../../utils/parser";
+import { executeInParallel } from "./nativeExecutionSupport";
 
 export class JobBoard {
   public name: string;
@@ -31,6 +33,43 @@ export class Scraper {
 
       if (result.err) return;
       await saveJobInfo([result], formatters, name);
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
+  public async scrapeJobsNatively(
+    searchParams: any,
+    applicationLimit = 100,
+    executionOptions: any = {},
+  ): Promise<IJobInfo[]> {
+    try {
+      let applicationPage = 0;
+      let applicationsViewed = 0;
+      const now = new Date().toISOString();
+      let jobsInformation: IJobInfo[] = [];
+      const { getJobInformation, getAllJobPageLinks, formatters, name: JobBoardName } = this.jobBoard;
+      
+      while (applicationsViewed < applicationLimit) {
+        applicationPage += 1;
+        let jobLinks = await getAllJobPageLinks(searchParams);
+        const jobToRetryFileName = `./jobs_to_retry/${searchParams.searchTerm}_${applicationPage}_${now}.json`;
+
+        if (jobLinks.length == 0) break;
+        jobLinks = removeExcessArrayItems(jobLinks, applicationsViewed, applicationLimit);
+        const { result, jobsToRetry } = await executeInParallel(jobLinks, getJobInformation, executionOptions);
+        jobsInformation = jobsInformation.concat(result);
+
+        applicationsViewed += jobLinks.length;
+        console.log("applicationsViewed:", applicationsViewed);
+        await saveJobInfo(result, formatters, JobBoardName);
+
+        if (jobsToRetry.length == 0) continue;
+        writeFileSync(jobToRetryFileName, JSON.stringify(jobsToRetry));
+      }
+
+      return jobsInformation;
     } catch (err) {
       console.error(err);
       throw err;
@@ -65,7 +104,7 @@ export class Scraper {
         jobsInformation = jobsInformation.concat(result);
         applicationsViewed += jobLinks.length;
         console.log("applicationsViewed:", applicationsViewed);
-        await saveJobInfo(result, formatters, JobBoardName);
+        // await saveJobInfo(result, formatters, JobBoardName);
 
         if (jobsToRetry.length == 0) continue;
         writeFileSync(
