@@ -30,13 +30,18 @@ export const getInnerText = (el: Element): string[] => {
   return [...new Set(textArray)];
 };
 
-export const getAllInnerTextElements = (nodeList: NodeListOf<Element>, pattern: string) => {
+export const executeCallbackOnNodeList = (nodeList: NodeListOf<Element>, pattern: string, callback: Function) => {
   const result = [...nodeList]
     .map((node) => node.querySelectorAll(pattern))
-    .map((items) => [...items].map((child) => getInnerText(child)).filter((item) => item.length > 0))
+    .map((items) => [...items].map((child) => callback(child)).filter((item) => item.length > 0))
     .filter((item) => item.length > 0);
-  // return result;
   return removeDuplicatesFromTwoDimArr(result).flat();
+};
+
+// specific implementation of executeCallbackOnNodeList
+export const getAllInnerTextElements = (nodeList: NodeListOf<Element>, pattern: string) => {
+  const callback = (child: Element) => getInnerText(child);
+  return executeCallbackOnNodeList(nodeList, pattern, callback);
 };
 
 export const getElementAfterNatively = (
