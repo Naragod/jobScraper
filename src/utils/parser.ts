@@ -8,6 +8,7 @@ const sanatizeBy = (input: string, regexes: any[]): string =>
  */
 export const sanitizeString = (str: any, regexes: RegExp[] = []): string => {
   if (typeof str !== "string") return str;
+  regexes = [...new Set(regexes)];
   regexes.unshift(new RegExp(/[^\x00-\x7F\xA0’]/, "gi"));
   return sanatizeBy(str, regexes).trim();
 };

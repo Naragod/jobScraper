@@ -15,32 +15,29 @@ export const getNativeNodeList = async (url: string, pattern: string): Promise<N
 
 // can only get text of elements with children.
 // a childless node will return an empty querySelectorAll array regardles of the pattern
-export const getInnerText = (el: Element): string[] => {
+export const getInnerText = (el: Element, regexes: RegExp[] = []): string[] => {
   const textArray: string[] = flatten(
     [...el.querySelectorAll(":not(script,style,.hidden)")].map((item) => {
-      if (item.children.length == 0) return sanitizeString(item.textContent) || "";
-      // if (item.children.length == 0) return item.textContent || "";
-      return getInnerText(item);
+      if (item.children.length == 0) return sanitizeString(item.textContent, regexes) || "";
+      return getInnerText(item, regexes);
     }),
   );
 
   // Using el.textContent on a childless node is fine.
-  if (textArray.length == 0) return [el.textContent || ""];
+  if (textArray.length == 0) return [sanitizeString(el.textContent, regexes) || ""];
   // get all unique inputs from flattened array of strings.
   return [...new Set(textArray)];
 };
 
 export const executeCallbackOnNodeList = (nodeList: NodeListOf<Element>, pattern: string, callback: Function) => {
-  const result = [...nodeList]
-    .map((node) => node.querySelectorAll(pattern))
-    .map((items) => [...items].map((child) => callback(child)).filter((item) => item.length > 0))
-    .filter((item) => item.length > 0);
-  return removeDuplicatesFromTwoDimArr(result).flat();
+  const elements = [...nodeList][0].querySelectorAll(pattern);
+  const result = [...elements].map((child, i: number) => callback(child, i)).filter((item) => item !== undefined);
+  return [...new Set(result)];
 };
 
 // specific implementation of executeCallbackOnNodeList
-export const getAllInnerTextElements = (nodeList: NodeListOf<Element>, pattern: string) => {
-  const callback = (child: Element) => getInnerText(child);
+export const getAllInnerTextElements = (nodeList: NodeListOf<Element>, pattern: string, regexes: RegExp[] = []) => {
+  const callback = (child: Element) => getInnerText(child, regexes);
   return executeCallbackOnNodeList(nodeList, pattern, callback);
 };
 
