@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS job_information(
     workplace_type TEXT,
     commitment TEXT,
     external_link TEXT,
-    extra json
+    extra JSON
 );
 
 CREATE TABLE IF NOT EXISTS job_requirements(

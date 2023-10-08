@@ -4,7 +4,7 @@ import { getLinkedDOMNode } from "../../../src/utils/nativeHtmlTraversal";
 import { jobInformation, jobRequirements } from "./data/netflix_results.json";
 
 describe("JobLever Scraper", () => {
-  describe("Native Parser", () => {
+  describe("JobLever Native Parser", () => {
     const link = "https://jobs.lever.co/netflix/44912894-f070-4989-9f9f-92ffb2ed210a";
     const htmlString = getHTMLStringFromFile("test/scrapersNatively/jobLever/data/netflix_page.html");
 
