@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS job_information(
     title TEXT NOT NULL,
     link TEXT NOT NULL,
     company TEXT NOT NULL,
-    "location" TEXT,
+    "location" TEXT NOT NULL,
     pay TEXT,
     "description" TEXT,
     workplace_type TEXT,

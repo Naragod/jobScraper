@@ -1,33 +1,14 @@
 import { scrapeJobs as scrapeJobsOnJobLever } from "./scrapers/jobLever/main";
 import { scrapeJobs as scrapeJobsOnLinkedIn } from "./scrapers/linkedIn/main";
 import { scrapeJobs as scrapeJobsOnCanadaJobBoard } from "./scrapers/canadaJobBank/main";
-
-const COMPANIES = [
-  "netflix",
-  // "eventbrite",
-  // "wealthsimple",
-  // "1password",
-  // "Horizon",
-  // "waabi",
-  // "Plooto",
-  // "acquird",
-  // "tophat",
-  // "composer",
-  // "medium",
-  // "15five",
-  // "360learning",
-  // "bosonai",
-  // "ada",
-  // "truerank"
-];
+import { companies } from "./config/jobLever.config.json";
+import { timeElapsed } from "./utils/main";
 
 const main = async () => {
   console.log("ENVIRONMENT:", process.env.ENVIRONMENT);
-  const linkedInJobs = await scrapeJobsOnLinkedIn({ searchTerm: "Software Engineer" }, 5);
-  const canadaBoardJobs = await scrapeJobsOnCanadaJobBoard({ searchTerm: "software", location: "toronto" }, 5);
-  let jobLeverJobs = await Promise.allSettled(
-    COMPANIES.map((company) => scrapeJobsOnJobLever({ searchTerm: company }, 5))
-  ).catch(console.error);
+  // await timeElapsed(scrapeJobsOnLinkedIn, { searchTerm: "Software Engineer" }, 15);
+  await timeElapsed(scrapeJobsOnCanadaJobBoard, { searchTerm: "software", location: "toronto" }, 1000);
+  await Promise.allSettled(companies.map((company) => timeElapsed(scrapeJobsOnJobLever, { searchTerm: company }, 100)));
   process.exit();
 };
 

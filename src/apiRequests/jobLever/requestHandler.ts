@@ -1,4 +1,4 @@
-import { baseURL } from "../../config/jobLeverl.config.json";
+import { baseURL } from "../../config/jobLever.config.json";
 import { AllJobsLinksGetterFn, IJobSearchOptions } from "../../scrapers/common/interfaces";
 import { findElementsInNodeList, getNodeList } from "../../utils/htmlTraversal";
 
