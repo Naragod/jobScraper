@@ -22,7 +22,7 @@ export const formatToJobRequirementsStructure = (job: IJobInfo) => {
 
   if (education !== undefined) result["education"] = education;
   if (experience !== undefined) result["experience"] = experience;
-  if (languages !== undefined) result["languages"] = [].concat(languages);
+  if (languages !== undefined) result["languages"] = [].concat(<any>languages);
   if (techExperience !== undefined) result["tech_experience"] = techExperience;
 
   return result;

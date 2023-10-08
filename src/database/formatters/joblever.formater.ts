@@ -16,5 +16,5 @@ export const formatToJobInfoTableStructure = (job: IJobInfo) => {
 
 // JobLever post return a list of tasks for jobRequirements
 export const formatToJobRequirementsStructure = (job: IJobInfo) => {
-  return { id: getUniqueId(job), tasks: job.jobRequirements };
+  return { id: getUniqueId(job), tasks: job.jobRequirements.tasks };
 };
