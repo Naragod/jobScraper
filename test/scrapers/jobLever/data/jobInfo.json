@@ -1,21 +1,23 @@
 {
   "link": "https://jobs.lever.co/eventbrite/8ec0f8df-3542-43aa-ae4f-c45e9d25537a",
-  "jobRequirements": [
-    "8+ years of practical machine learning experience including excellent foundational knowledge and depth in at least one specialization like Natural Language Processing, Computer Vision, or similar",
-    "Expertise operationalizing, monitoring, and scaling data processes and models in spanning realtime and offline environments",
-    "Comfort collaborating with both product and data engineers to deliver solutions with complex requirements",
-    "Demonstrated ability to be a technical lead with strong communication skills and an ability to drive the company’s vision for machine learning",
-    "Advanced knowledge of Spark, Snowpark, Python or the Sagemaker ecosystem",
-    "Domain expertise in recommender systems or fraud detection",
-    "Active Eventbrite user with a passion for live events"
-  ],
+  "jobRequirements": {
+    "tasks": [
+      "8+ years of practical machine learning experience including excellent foundational knowledge and depth in at least one specialization like Natural Language Processing, Computer Vision, or similar",
+      "Expertise operationalizing, monitoring, and scaling data processes and models in spanning realtime and offline environments",
+      "Comfort collaborating with both product and data engineers to deliver solutions with complex requirements",
+      "Demonstrated ability to be a technical lead with strong communication skills and an ability to drive the company’s vision for machine learning",
+      "Advanced knowledge of Spark, Snowpark, Python or the Sagemaker ecosystem",
+      "Domain expertise in recommender systems or fraud detection",
+      "Active Eventbrite user with a passion for live events"
+    ]
+  },
   "applicationInfo": {
     "commitment": "Full-time",
     "department": "Data /",
     "location": "San Francisco, California",
     "title": "Principal Machine Learning Engineer",
     "company": "eventbrite",
-    "workplaceTypes": "/ Remote",
+    "workplaceType": "/ Remote",
     "description": [
       "THE CHALLENGE",
       "Eventbrite is building the global platform for live experience and helping to build new connections between creators and their audience every day. The Eventbrite platform generates a huge amount of data about what creators should do to succeed, about how consumers really make decisions, and about what’s cool in your neighborhood. The Data Science team is charged with converting the massive potential of our data about events and customer preferences into product features that delight our customers and build a foundation of trust in our marketplace.",
