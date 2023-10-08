@@ -1,15 +1,11 @@
-import { getNodeList } from "../../utils/htmlTraversal";
 import { sleep, timeElapsed } from "../../utils/main";
 import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
 
 const handlerWrapper = async (link: string, options: any, callback: any) => {
   const { pattern = "*", throttleSpeed } = options;
-  // JSDOM. Takes about .83 seconds
-  // const pageHtml = await getNodeList(link, pattern);
-  // LINKEDOM. Takes about .57 seconds.
   const pageHtml = await getNativeNodeList(link, pattern);
   const { result } = await timeElapsed(callback, link, pageHtml);
-  
+
   if (throttleSpeed) await sleep(throttleSpeed);
   return result;
 };

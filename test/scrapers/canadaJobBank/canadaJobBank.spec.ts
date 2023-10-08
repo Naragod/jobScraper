@@ -1,5 +1,5 @@
 import { Page } from "playwright";
-import { closeBrowser, getBrowserPage } from "../../../src/scrapers/common/browserSupport";
+import { closeBrowser, getBrowserPage } from "../../../src/scrapers/common/playwrightBrowserSupport";
 import { getJobInformation } from "../../../src/scrapers/canadaJobBank/applicationHandler";
 import { getApplicationBasicInfo, getJobRequirements } from "../../../src/scrapers/canadaJobBank/parser";
 

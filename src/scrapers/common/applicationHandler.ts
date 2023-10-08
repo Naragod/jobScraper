@@ -1,7 +1,7 @@
 import { saveJobInfo } from "../../database/main";
 import { writeFileSync } from "fs";
 import { classifyJobs } from "../../classifiers/main";
-import { closeBrowser } from "../common/browserSupport";
+import { closeBrowser } from "./playwrightBrowserSupport";
 import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/interfaces";
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
 import { removeExcessArrayItems } from "../../utils/parser";
@@ -50,7 +50,7 @@ export class Scraper {
       const now = new Date().toISOString();
       let jobsInformation: IJobInfo[] = [];
       const { getJobInformation, getAllJobPageLinks, formatters, name: JobBoardName } = this.jobBoard;
-      
+
       while (applicationsViewed < applicationLimit) {
         applicationPage += 1;
         let jobLinks = await getAllJobPageLinks(searchParams);

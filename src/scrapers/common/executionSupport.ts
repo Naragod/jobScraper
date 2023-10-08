@@ -1,5 +1,5 @@
 import { JobInfoGetterFn } from "./interfaces";
-import { getBrowserPage } from "./browserSupport";
+import { getBrowserPage } from "./playwrightBrowserSupport";
 import { sleep } from "../../utils/main";
 
 // configuration variables

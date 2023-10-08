@@ -1,6 +1,6 @@
 import { Page } from "playwright";
 import { getJobInformation } from "../../../src/scrapers/jobLever/applicationHandler";
-import { closeBrowser, getBrowserPage } from "../../../src/scrapers/common/browserSupport";
+import { closeBrowser, getBrowserPage } from "../../../src/scrapers/common/playwrightBrowserSupport";
 import { getApplicationBasicInfo, getJobRequirements, getInputFields } from "../../../src/scrapers/jobLever/parser";
 
 // Expected Content
