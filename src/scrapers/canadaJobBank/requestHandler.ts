@@ -1,5 +1,5 @@
 import { baseURL } from "../../config/canadaJobBank.config.json";
-import { AllJobsLinksGetterFn, IJobSearchOptions } from "../../scrapers/common/interfaces";
+import { AllJobsLinksGetterFn, IJobSearchOptions } from "../common/interfaces";
 import { findElementsInNodeList, getNodeList } from "../../utils/htmlTraversal";
 
 export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJobSearchOptions): Promise<string[]> => {

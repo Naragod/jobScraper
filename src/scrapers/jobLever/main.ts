@@ -1,6 +1,6 @@
 import { getJobInformationNatively } from "./applicationHandler";
 import { JobBoard, Scraper } from "../common/applicationHandler";
-import { getAllJobPageLinks } from "../../apiRequests/jobLever/requestHandler";
+import { getAllJobPageLinks } from "./requestHandler";
 import {
   formatToJobInfoTableStructure,
   formatToJobRequirementsStructure,

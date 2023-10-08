@@ -1,5 +1,5 @@
 import { getJobInformationNatively } from "./applicationHandler";
-import { getAllJobPageLinks } from "../../apiRequests/canadaJobBank/requestHandler";
+import { getAllJobPageLinks } from "./requestHandler";
 import { JobBoard, Scraper } from "../common/applicationHandler";
 import {
   formatToJobInfoTableStructure,

@@ -1,5 +1,5 @@
 import { baseURL } from "../../config/linkedIn.config.json";
-import { AllJobsLinksGetterFn, IJobSearchOptions } from "../../scrapers/common/interfaces";
+import { AllJobsLinksGetterFn, IJobSearchOptions } from "../common/interfaces";
 import { getNodeList } from "../../utils/htmlTraversal";
 
 // searchTerm: software engineer

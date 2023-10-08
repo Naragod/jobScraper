@@ -8,7 +8,9 @@ const main = async () => {
   console.log("ENVIRONMENT:", process.env.ENVIRONMENT);
   await timeElapsed(scrapeJobsOnLinkedIn, { searchTerm: "Software Engineer" }, 5);
   await timeElapsed(scrapeJobsOnCanadaJobBoard, { searchTerm: "software", location: "toronto" }, 5);
-  await Promise.allSettled(companies.map((company) => timeElapsed(scrapeJobsOnJobLever, { searchTerm: company }, 5)));
+  await Promise.allSettled(
+    companies.map(async (company) => await timeElapsed(scrapeJobsOnJobLever, { searchTerm: company }, 5)),
+  );
   process.exit();
 };
 
