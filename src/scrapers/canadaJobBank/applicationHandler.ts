@@ -28,7 +28,6 @@ export const getJobInformation: JobInfoGetterFn = async (link: string, page: Pag
 
 export const getJobInformationNatively: JobInfoGetterNativelyFn = (link: string, html: NodeListOf<Element>) => {
   try {
-    console.log(link);
     // basic info will always appear regardless of the job application type: Should go first.
     const applicationInfo = getApplicationBasicInfoNatively(html);
 
