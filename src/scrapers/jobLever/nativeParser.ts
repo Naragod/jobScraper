@@ -1,5 +1,6 @@
 import { flatten } from "../../utils/main";
 import { getAllInnerTextElements, locator } from "../../utils/nativeHtmlTraversal";
+import { IApplicationInfo, IJobRequirements } from "../common/interfaces";
 
 // constants
 // ****************************************************************************
@@ -7,21 +8,22 @@ const REGEXES = [new RegExp("\n", "gi"), new RegExp("/", "g")];
 
 // getters
 // ****************************************************************************
-export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<Element>) => {
+export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<Element>): IApplicationInfo => {
   try {
     const company = link.split("/")[3];
     const title = flatten(getAllInnerTextElements(html, ".posting-headline H2", REGEXES))[0];
     const location = flatten(getAllInnerTextElements(html, ".posting-headline .location", REGEXES))[0];
     const description = flatten(getAllInnerTextElements(html, "[data-qa='job-description']", REGEXES));
     const department = flatten(getAllInnerTextElements(html, ".posting-headline .department", REGEXES))[0];
-    const workplaceTypes = flatten(getAllInnerTextElements(html, ".posting-headline .workplaceTypes", REGEXES))[0];
+    const workplaceType = flatten(getAllInnerTextElements(html, ".posting-headline .workplaceTypes", REGEXES))[0];
 
     return {
       title,
       company,
+      pay: "",
       location,
       department,
-      workplaceTypes,
+      workplaceType,
       description: [...new Set(description)],
     };
   } catch (err) {
@@ -30,9 +32,16 @@ export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<E
   }
 };
 
-export const getJobRequirementsNatively = (html: NodeListOf<Element>) => {
+export const getJobRequirementsNatively = (html: NodeListOf<Element>): IJobRequirements => {
   try {
-    return flatten(getAllInnerTextElements(html, ".posting-requirements", REGEXES)[0]);
+    const jobRequirements = getAllInnerTextElements(html, ".posting-requirements", REGEXES);
+
+    if (jobRequirements.length !== 0) return { tasks: flatten(jobRequirements[0]) };
+    // get all job requirements
+    const miscJobReq = getAllInnerTextElements(html, "[data-qa='job-description']", REGEXES);
+
+    if (miscJobReq.length !== 0) return { tasks: flatten(miscJobReq) };
+    return { tasks: [] };
   } catch (err) {
     console.error(err);
     throw err;

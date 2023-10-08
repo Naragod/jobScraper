@@ -7,6 +7,7 @@ import {
   executeCallbackOnNodeList,
   getInnerText,
 } from "../../utils/nativeHtmlTraversal";
+import { IApplicationInfo, IJobRequirements } from "../common/interfaces";
 
 const jobInfoMapper = (child: Element, i: number) => {
   let result: any = {};
@@ -23,7 +24,7 @@ const jobInfoMapper = (child: Element, i: number) => {
   return result;
 };
 
-export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>) => {
+export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>): IApplicationInfo => {
   const title = flatten(getAllInnerTextElements(html, ".job-posting-details-body .title"))[0];
   const company = flatten(getAllInnerTextElements(html, "span[property='hiringOrganization']"))[0];
 
@@ -32,7 +33,7 @@ export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>) => {
   return { title, company, ...result };
 };
 
-export const getJobRequirementsNatively = (html: NodeListOf<Element>) => {
+export const getJobRequirementsNatively = (html: NodeListOf<Element>): IJobRequirements => {
   const regexes = [new RegExp("\n", "gi"), new RegExp("/", "g")];
   const jobRequirementElements = locator(html, "#comparisonchart")[0];
 

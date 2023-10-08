@@ -22,7 +22,8 @@ export const getJobInformationNatively: JobInfoGetterNativelyFn = (link: string,
     const applicationInfo = getApplicationBasicInfoNatively(link, html);
     return { link, applicationInfo, jobRequirements, err: false };
   } catch (err) {
-    console.error(err)
-    return { link, applicationInfo: {}, jobRequirements: [], err };
+    console.error(err);
+    const applicationInfo = { title: "", location: "", company: "", pay: "" };
+    return { link, applicationInfo, jobRequirements: { tasks: [] }, err };
   }
 };
