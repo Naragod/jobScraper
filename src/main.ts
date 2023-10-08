@@ -6,9 +6,9 @@ import { timeElapsed } from "./utils/main";
 
 const main = async () => {
   console.log("ENVIRONMENT:", process.env.ENVIRONMENT);
-  // await timeElapsed(scrapeJobsOnLinkedIn, { searchTerm: "Software Engineer" }, 15);
-  await timeElapsed(scrapeJobsOnCanadaJobBoard, { searchTerm: "software", location: "toronto" }, 1000);
-  await Promise.allSettled(companies.map((company) => timeElapsed(scrapeJobsOnJobLever, { searchTerm: company }, 100)));
+  await timeElapsed(scrapeJobsOnLinkedIn, { searchTerm: "Software Engineer" }, 5);
+  await timeElapsed(scrapeJobsOnCanadaJobBoard, { searchTerm: "software", location: "toronto" }, 5);
+  await Promise.allSettled(companies.map((company) => timeElapsed(scrapeJobsOnJobLever, { searchTerm: company }, 5)));
   process.exit();
 };
 
