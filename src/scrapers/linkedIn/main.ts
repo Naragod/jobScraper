@@ -12,5 +12,5 @@ export const scrapeJobs = async (searchParams: any, applicationLimit = 100) => {
 
   const linkedIn = new JobBoard("linkedIn", functions, formatters);
   const linkedInScraper = new Scraper(linkedIn);
-  return await linkedInScraper.scrapeJobs(searchParams, applicationLimit, { throttleSpeed: 500, concurrent: 5 });
+  return await linkedInScraper.scrapeJobsNatively(searchParams, applicationLimit, { throttleSpeed: 500, concurrent: 5 });
 };

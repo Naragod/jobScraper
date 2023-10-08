@@ -14,7 +14,7 @@ describe("JobLever Scraper", () => {
     describe("getApplicationBasicInfoNatively", () => {
       it("usage", async () => {
         const html = getLinkedDOMNode(htmlString);
-        const { description: resultDescription, ...resultBasicInfo } = getApplicationBasicInfoNatively(link, html);
+        const { description: resultDescription = [], ...resultBasicInfo } = getApplicationBasicInfoNatively(link, html);
         const { description, ...basicJobInformation } = jobInformation;
         expect(resultBasicInfo).toEqual(basicJobInformation);
         expect(resultDescription.length).toEqual(description.length);
