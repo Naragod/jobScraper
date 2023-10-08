@@ -1,4 +1,4 @@
-import { getJobInformation } from "./applicationHandler";
+import { getJobInformationNatively } from "./applicationHandler";
 import { JobBoard, Scraper } from "../common/applicationHandler";
 import { getAllJobPageLinks } from "../../apiRequests/linkedIn/requestHandler";
 import {
@@ -8,9 +8,10 @@ import {
 
 export const scrapeJobs = async (searchParams: any, applicationLimit = 100) => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
-  const functions = { getJobInformation, getAllJobPageLinks };
+  const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
 
   const linkedIn = new JobBoard("linkedIn", functions, formatters);
   const linkedInScraper = new Scraper(linkedIn);
-  return await linkedInScraper.scrapeJobsNatively(searchParams, applicationLimit, { throttleSpeed: 500, concurrent: 5 });
+  const options = { throttleSpeed: 500, concurrent: 5 };
+  return await linkedInScraper.scrapeJobsNatively(searchParams, applicationLimit, options);
 };
