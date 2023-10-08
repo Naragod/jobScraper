@@ -1,0 +1,25 @@
+{
+  "jobInformation": {
+    "title": "software designer",
+    "company": "Reach web Experts",
+    "location": "2560 Matheson Blvd E, Mississauga, ON, L4W 4Z3",
+    "pay": "50.50, 30 to 35 hours per week",
+    "commitment": "Full time",
+    "jobId": "#2629259",
+    "jobProvider": "Job Bank"
+  },
+  "jobRequirements": {
+    "languages": "English",
+    "tasks": [
+      "Collect and document user's requirements and develop logical and physical specifications",
+      "Research, evaluate and synthesize technical information to design, develop and test computer-based systems",
+      "Develop data, process and network models to optimize architecture and to evaluate the performance and reliability of designs",
+      "Plan, design and co-ordinate the development, installation, integration and operation of computer-based systems",
+      "Assess, troubleshoot, document, upgrade and develop maintenance procedures for operating systems, communications environments and applications software",
+      "Lead and co-ordinate teams of information systems professionals in the development of software and integrated information systems, process control software and other embedded software control systems"
+    ],
+    "education": ["College, CEGEP or other non-university certificate or diploma from a program of 1 year to 2 years"],
+    "experience": ["2 years to less than 3 years"],
+    "techExperience": ["C", "C++", "Networking software", "Java"]
+  }
+}

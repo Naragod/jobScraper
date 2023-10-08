@@ -1,37 +1,44 @@
 import { findElementsInElement } from "../../utils/htmlTraversal";
-import { flatten } from "../../utils/main";
-import { locator, getAllInnerTextElements, getElementAfterNatively } from "../../utils/nativeHtmlTraversal";
+import { destructureObj, flatten } from "../../utils/main";
+import {
+  locator,
+  getAllInnerTextElements,
+  getElementAfterNatively,
+  executeCallbackOnNodeList,
+  getInnerText,
+} from "../../utils/nativeHtmlTraversal";
 
-export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>) => {
-  const titleHtml = locator(html, ".job-posting-details-body").map((item) => getAllInnerTextElements(item, ".title"));
-  const companyHTML = getAllInnerTextElements(html, "span[property='hiringOrganization']");
-  const listItems = getAllInnerTextElements(html, ".job-posting-brief");
-  const title = [...new Set(flatten(titleHtml))][0];
+const jobInfoMapper = (child: Element, i: number) => {
+  let result: any = {};
+  const value = getInnerText(child);
 
-  const company = flatten(companyHTML)[0];
-  const pay = listItems[1].slice(1).join(", ");
-  const location = listItems[0].slice(1).join(", ");
-  const commitment = listItems[2].slice(1).join(", ");
-  const jobId = listItems[listItems.length - 1].slice(-1)[0];
-  const jobProvider = listItems[listItems.length - 1].slice(-2, -1)[0];
+  if (i == 0) result["location"] = value.slice(1).join(", ");
+  else if (i == 1) result["pay"] = value.slice(1).join(", ");
+  else if (i == 2) result["commitment"] = value.slice(1).join(", ");
+  else if (i == 7) {
+    result["jobId"] = value.slice(1)[1];
+    result["jobProvider"] = value.slice(1)[0];
+  } else return;
 
-  return {
-    title,
-    pay,
-    jobId,
-    company,
-    location,
-    commitment,
-    jobProvider,
-  };
+  return result;
 };
 
-export const getJobRequirementsNatively = async (html: NodeListOf<Element>) => {
+export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>) => {
+  const title = flatten(getAllInnerTextElements(html, ".job-posting-details-body .title"))[0];
+  const company = flatten(getAllInnerTextElements(html, "span[property='hiringOrganization']"))[0];
+
+  const rawJobInfo = executeCallbackOnNodeList(html, "ul.job-posting-brief > li", jobInfoMapper);
+  const { result } = destructureObj(rawJobInfo, ["location", "pay", "commitment", "jobId", "jobProvider"]);
+  return { title, company, ...result };
+};
+
+export const getJobRequirementsNatively = (html: NodeListOf<Element>) => {
+  const regexes = [new RegExp("\n", "gi"), new RegExp("/", "g")];
   const jobRequirementElements = locator(html, "#comparisonchart")[0];
 
   // the languages section for some reason is a paragraph <p> while all other sections are lists of spans <span>
   const languageSection: any = getElementAfterNatively(jobRequirementElements, "H4", "Languages");
-  let result: any = { languages: languageSection !== null ? languageSection.textContent : null };
+  let result: any = { languages: languageSection !== null ? getInnerText(languageSection).join() : null };
 
   // the tasks, tasks, experience, etc sections generally return a list
   const sections: any = {
@@ -44,7 +51,7 @@ export const getJobRequirementsNatively = async (html: NodeListOf<Element>) => {
   for (let sectionKey in sections) {
     // get all span elements in list Node <ul> and extract their textContent
     result[sectionKey] = findElementsInElement(sections[sectionKey], "SPAN")
-      .map((item) => item.textContent)
+      .map((item) => flatten(getInnerText(item, regexes)).join(", "))
       .filter((item: any) => item != "");
   }
   return result;
