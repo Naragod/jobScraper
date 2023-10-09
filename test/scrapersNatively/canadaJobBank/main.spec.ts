@@ -4,7 +4,7 @@ import {
 } from "../../../src/scrapers/canadaJobBank/nativeParser";
 import { getHTMLStringFromFile } from "../../../src/utils/io";
 import { getLinkedDOMNode } from "../../../src/utils/nativeHtmlTraversal";
-import { jobInformation, jobRequirements } from "./data/page_results.json";
+import { applicationInfo, jobRequirements } from "./data/page_results.json";
 
 describe("Canada Job Bank Scraper", () => {
   describe("CanadaJobBank Native Parser", () => {
@@ -16,7 +16,7 @@ describe("Canada Job Bank Scraper", () => {
       it("usage", () => {
         const html = getLinkedDOMNode(htmlString);
         const result = getApplicationBasicInfoNatively(html);
-        expect(result).toEqual(jobInformation);
+        expect(result).toEqual(applicationInfo);
       });
     });
 

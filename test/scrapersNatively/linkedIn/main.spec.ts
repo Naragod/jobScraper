@@ -4,7 +4,7 @@ import {
 } from "../../../src/scrapers/linkedIn/nativeParser";
 import { getHTMLStringFromFile } from "../../../src/utils/io";
 import { getLinkedDOMNode } from "../../../src/utils/nativeHtmlTraversal";
-import { jobInformation, jobRequirements } from "./data/linkedIn_results.json";
+import { applicationInfo, jobRequirements } from "./data/linkedIn_results.json";
 
 describe("LinkedIn Scraper", () => {
   describe("LinkedIn Native Parser", () => {
@@ -16,7 +16,7 @@ describe("LinkedIn Scraper", () => {
       it("usage", () => {
         const html = getLinkedDOMNode(htmlString);
         const result = getApplicationBasicInfoNatively(html);
-        expect(result).toEqual(jobInformation);
+        expect(result).toEqual(applicationInfo);
       });
     });
 

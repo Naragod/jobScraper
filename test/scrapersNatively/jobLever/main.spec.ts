@@ -4,7 +4,7 @@ import {
 } from "../../../src/scrapers/jobLever/nativeParser";
 import { getHTMLStringFromFile } from "../../../src/utils/io";
 import { getLinkedDOMNode } from "../../../src/utils/nativeHtmlTraversal";
-import { jobInformation, jobRequirements, withoutJobReq } from "./data/netflix_results.json";
+import { applicationInfo, jobRequirements, withoutJobReq } from "./data/netflix_results.json";
 
 describe("JobLever Scraper", () => {
   describe("JobLever Native Parser", () => {
@@ -15,7 +15,7 @@ describe("JobLever Scraper", () => {
       it("usage", async () => {
         const html = getLinkedDOMNode(htmlString);
         const { description: resultDescription = [], ...resultBasicInfo } = getApplicationBasicInfoNatively(link, html);
-        const { description, ...basicJobInformation } = jobInformation;
+        const { description, ...basicJobInformation } = applicationInfo;
         expect(resultBasicInfo).toEqual(basicJobInformation);
         expect(resultDescription.length).toEqual(description.length);
       });
