@@ -1,16 +1,36 @@
-import { scrapeJobs as scrapeJobsOnJobLever } from "./scrapers/jobLever/main";
-import { scrapeJobs as scrapeJobsOnLinkedIn } from "./scrapers/linkedIn/main";
-import { scrapeJobs as scrapeJobsOnCanadaJobBoard } from "./scrapers/canadaJobBank/main";
+import {
+  searchJobs as searchJobsJobsOnJobLever,
+  scrapeJobsNatively as scrapeJobsNativelyOnJobLever,
+} from "./scrapers/jobLever/main";
+import {
+  searchJobs as searchJobsOnLinkedIn,
+  scrapeJobsNatively as scrapeJobsNativelyOnLinkedIn,
+} from "./scrapers/linkedIn/main";
+import {
+  searchJobs as searchJobsOnCanadaJobBoad,
+  scrapeJobsNatively as scrapeJobsNativelyOnCananaJobBoard,
+} from "./scrapers/canadaJobBank/main";
 import { companies } from "./config/jobLever.config.json";
 import { timeElapsed } from "./utils/main";
 
 const main = async () => {
   console.log("ENVIRONMENT:", process.env.ENVIRONMENT);
-  await timeElapsed(scrapeJobsOnLinkedIn, { searchTerm: "Software Engineer" }, 5);
-  await timeElapsed(scrapeJobsOnCanadaJobBoard, { searchTerm: "software", location: "toronto" }, 5);
-  await Promise.allSettled(
-    companies.map(async (company) => await timeElapsed(scrapeJobsOnJobLever, { searchTerm: company }, 5)),
-  );
+  // canadaJobBoard
+  // **************************************************************************
+  await timeElapsed(searchJobsOnCanadaJobBoad, { searchTerm: "software", location: "toronto" }, 6); // uses queues
+  // await timeElapsed(scrapeJobsNativelyOnCananaJobBoard, { searchTerm: "Software Engineer" }, 6); // synchronous implementation
+
+  // linkedIn
+  // **************************************************************************
+  await timeElapsed(searchJobsOnLinkedIn, { searchTerm: "Software Engineer" }, 6); // uses queues
+  // await timeElapsed(scrapeJobsNativelyOnCananaJobBoard, { searchTerm: "Software Engineer" }, 6); // synchronous implementation
+
+  // jobLever
+  // **************************************************************************
+  for (let company of companies) {
+    await timeElapsed(searchJobsJobsOnJobLever, { searchTerm: company }, 6); // uses queues
+    // await timeElapsed(scrapeJobsNativelyOnLinkedIn, { searchTerm: company }, 6); // synchronous implementation
+  }
   process.exit();
 };
 
