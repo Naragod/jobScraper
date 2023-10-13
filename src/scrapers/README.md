@@ -24,3 +24,7 @@ Job Posting Example: https://careers.icims.com/careers-home/jobs
 
 Website: https://breezy.hr/
 Job Posting Example: https://time-doctor.breezy.hr/p/3bcabd4c69ad-senior-backend-engineer
+
+Website: https://join.com
+Job Posting Example: https://join.com/companies/gently1/9398272-software-engineer-integrations?pid=24a1b46991e3de1fbcf0
+Join has a complete company directory that we can parse: https://join.com/companies
