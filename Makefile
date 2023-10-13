@@ -21,6 +21,15 @@ migrate:
 rm-containers:
 	npm run remove-containers
 
+view-queue:
+	sudo docker exec -it jobscraper_queue bash -c "rabbitmqctl list_queues"
+
+clean-queue:
+	sudo docker exec -it jobscraper_queue bash -c "rabbitmqctl stop_app; rabbitmqctl reset; rabbitmqctl start_app;"
+
+enter-queue:
+	sudo docker exec -it jobscraper_queue bash
+
 psql:
 	psql postgresql://postgres@localhost:6321/postgres
 
