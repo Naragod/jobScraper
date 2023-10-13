@@ -24,3 +24,5 @@ rm-containers:
 psql:
 	psql postgresql://postgres@localhost:6321/postgres
 
+psql-test:
+	psql postgresql://postgres@localhost:6321/test
