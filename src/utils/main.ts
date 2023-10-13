@@ -8,13 +8,6 @@ export const flatten = (arr: any[]): any[] => {
     .filter((item: any) => item != undefined && item != "");
 };
 
-export const removeDuplicatesFromTwoDimArr = (arr: any[]) => {
-  return arr
-    .map((item) => JSON.stringify(item))
-    .filter((el: any, index: number, array: any[]) => index === array.indexOf(el))
-    .map((item) => JSON.parse(item));
-};
-
 export const destructureObj = (obj: any, destructureBy: any[]): any => {
   let result: any = {};
   let leftOvers: any = {};

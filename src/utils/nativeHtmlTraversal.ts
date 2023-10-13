@@ -1,5 +1,5 @@
 import { parseHTML } from "linkedom";
-import { flatten, removeDuplicatesFromTwoDimArr } from "./main";
+import { flatten } from "./main";
 import { sanitizeString } from "./parser";
 
 export const getLinkedDOMNode = (html: string, pattern = "*") => {
