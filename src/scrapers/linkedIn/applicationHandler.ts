@@ -17,7 +17,7 @@ export const getJobInformation: JobInfoGetterFn = async (link: string, page: Pag
 export const getJobInformationNatively: JobInfoGetterNativelyFn = (link: string, html: NodeListOf<Element>) => {
   try {
     const jobRequirements = getJobRequirementsNatively(html);
-    const applicationInfo = getApplicationBasicInfoNatively(html);
+    const applicationInfo = getApplicationBasicInfoNatively(link, html);
     return { link, applicationInfo, jobRequirements, err: false };
   } catch (err) {
     console.error(err);

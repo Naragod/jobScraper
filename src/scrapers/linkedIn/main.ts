@@ -6,12 +6,25 @@ import {
   formatToJobRequirementsStructure,
 } from "../../database/formatters/linkedIn.formatter";
 
-export const scrapeJobs = async (searchParams: any, applicationLimit = 100) => {
+const setup = async () => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
   const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
+  const options = { throttleSpeed: 100, jobLinksQueue: "linkedInJobLinks" };
+  const linkedInScraper = new JobBoard("linkedIn", functions, formatters, options);
+  return new Scraper(linkedInScraper);
+};
 
-  const linkedIn = new JobBoard("linkedIn", functions, formatters);
-  const linkedInScraper = new Scraper(linkedIn);
-  const options = { throttleSpeed: 500, concurrent: 5 };
-  return await linkedInScraper.scrapeJobsNatively(searchParams, applicationLimit, options);
+export const searchJobs = async (searchParams: any, applicationLimit = 100) => {
+  const linkedInScraper = await setup();
+  await linkedInScraper.queueJobUrls(searchParams, applicationLimit);
+};
+
+export const parseJobs = async () => {
+  const linkedInScraper = await setup();
+  await linkedInScraper.parseJobLinks();
+};
+
+export const scrapeJobsNatively = async (searchParams: any, applicationLimit = 100) => {
+  const linkedInScraper = await setup();
+  return await linkedInScraper.scrapeJobsNatively(searchParams, applicationLimit);
 };

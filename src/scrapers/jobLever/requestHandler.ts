@@ -1,6 +1,7 @@
 import { baseURL } from "../../config/jobLever.config.json";
 import { AllJobsLinksGetterFn, IJobSearchOptions } from "../common/interfaces";
-import { findElementsInNodeList, getNodeList } from "../../utils/htmlTraversal";
+import { findElementsInNodeList } from "../../utils/htmlTraversal";
+import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
 
 export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJobSearchOptions) => {
   const { searchTerm, location, commitment, workplaceType } = searchParams;
@@ -8,7 +9,7 @@ export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJo
   url = workplaceType != undefined ? `${url}&workplaceType=${workplaceType}` : url;
   url = location != undefined ? `${url}&location=${encodeURIComponent(location)}` : url;
   url = commitment != undefined ? `${url}&commitment=${encodeURIComponent(commitment)}` : url;
-  const jobEntries = await getNodeList(url, ".posting-apply");
+  const jobEntries = await getNativeNodeList(url, ".posting-apply");
 
   // return all links
   return findElementsInNodeList(jobEntries, "A").map((item: any) => item.href);

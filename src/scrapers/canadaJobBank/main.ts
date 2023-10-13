@@ -9,13 +9,14 @@ import {
 const setup = async () => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
   const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
-  const canadaJobBoard = new JobBoard("canadaJobBoard", functions, formatters);
+  const options = { throttleSpeed: 100, jobLinksQueue: "canadaJobBoardJobLinks" };
+  const canadaJobBoard = new JobBoard("canadaJobBoard", functions, formatters, options);
   return new Scraper(canadaJobBoard);
 };
+
 export const searchJobs = async (searchParams: any, applicationLimit = 100) => {
   const canadaJobBoardScraper = await setup();
   await canadaJobBoardScraper.queueJobUrls(searchParams, applicationLimit);
-  // return await canadaJobBoardScraper.scrapeJobsNatively(searchParams, applicationLimit);
 };
 
 export const parseJobs = async () => {
