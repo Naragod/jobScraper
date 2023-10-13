@@ -15,7 +15,7 @@ describe("LinkedIn Scraper", () => {
     describe("getApplicationBasicInfoNatively", () => {
       it("usage", () => {
         const html = getLinkedDOMNode(htmlString);
-        const result = getApplicationBasicInfoNatively(html);
+        const result = getApplicationBasicInfoNatively(link, html);
         expect(result).toEqual(applicationInfo);
       });
     });

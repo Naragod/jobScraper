@@ -16,12 +16,15 @@ describe("Database", () => {
       const { jobInfo, jobBoard } = linkedInDummyJob;
       const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
       const ids = <any[]>await saveJobInfo([jobInfo], formatters, jobBoard);
-      console.log("ids:", ids);
 
       expect(ids.length).toBe(1);
       const record = await getJobRecord(ids[0]);
-      console.log(record);
-      expect(1).toBe(2);
+      const { id, ...result } = record[0];
+      expect(result).toEqual({
+        job_board: "linkedIn",
+        job_information_id: "f8efb9d087ac6faf9db724943cd62eb31e6823f7",
+        job_requirements_id: "f8efb9d087ac6faf9db724943cd62eb31e6823f7",
+      });
     });
   });
 });
