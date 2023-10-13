@@ -14,7 +14,7 @@ export const executeInParallel = async (jobLinks: string[], handler: any, option
   const result: any[] = [];
   const jobsToRetry = [];
   const promiseQueue = [];
-  const { concurrent } = options;
+  const { concurrent = 7 } = options;
 
   for (let link of jobLinks) {
     const func = () => handlerWrapper(link, options, handler);

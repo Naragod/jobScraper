@@ -6,24 +6,34 @@ import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/inter
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
 import { removeExcessArrayItems } from "../../utils/parser";
 import { executeInParallel } from "./nativeExecutionSupport";
+import { consumeMessages, getChannel, sendMessageToQueue } from "../../queue/main";
+import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
 
 export class JobBoard {
   public name: string;
   public formatters: any;
+  public jobLinksQueue: string;
   public getJobInformation: JobInfoGetterFn;
   public getAllJobPageLinks: AllJobsLinksGetterFn;
 
-  constructor(name: string, functions: any, formatters: any) {
+  constructor(name: string, functions: any, formatters: any, options: any = {}) {
     this.name = name;
     this.formatters = formatters;
+    this.jobLinksQueue = options.jobLinksQueue || "jobLinks";
     this.getJobInformation = functions["getJobInformation"];
     this.getAllJobPageLinks = functions["getAllJobPageLinks"];
   }
 }
 
 export class Scraper {
+  public channel: any;
   constructor(private jobBoard: JobBoard) {
     this.jobBoard = jobBoard;
+  }
+
+  public async getChannel() {
+    if (this.channel == undefined) this.channel = await getChannel();
+    return this.channel;
   }
 
   public async scrapeSinglePage(link: string, executionOptions: any = {}) {
@@ -37,6 +47,38 @@ export class Scraper {
       console.error(err);
       throw err;
     }
+  }
+
+  public async queueJobUrls(searchParams: any, applicationLimit = 100) {
+    let applicationPage = 0;
+    let applicationsViewed = 0;
+    const channel = await getChannel();
+    const { getAllJobPageLinks, jobLinksQueue } = this.jobBoard;
+
+    while (applicationsViewed <= applicationLimit) {
+      applicationPage += 1;
+      searchParams["page"] = applicationPage;
+      let jobLinks = await getAllJobPageLinks(searchParams);
+
+      if (jobLinks.length == 0) break;
+      applicationsViewed += jobLinks.length;
+      jobLinks = removeExcessArrayItems(jobLinks, applicationsViewed, applicationLimit);
+      await Promise.allSettled(jobLinks.map((link) => sendMessageToQueue(channel, jobLinksQueue, { link })));
+    }
+  }
+
+  public async parseJobLinks() {
+    const channel = await getChannel();
+    const { jobLinksQueue, getJobInformation, formatters, name: JobBoardName } = this.jobBoard;
+
+    await consumeMessages(channel, jobLinksQueue, async (message: any) => {
+      const { link } = JSON.parse(message.content.toString());
+      const html = await getNativeNodeList(link, "*");
+      const result = <any>getJobInformation(link, <any>html);
+
+      if (result == null) return;
+      await saveJobInfo([result], formatters, JobBoardName);
+    });
   }
 
   public async scrapeJobsNatively(
@@ -53,6 +95,7 @@ export class Scraper {
 
       while (applicationsViewed < applicationLimit) {
         applicationPage += 1;
+        searchParams["page"] = applicationPage;
         let jobLinks = await getAllJobPageLinks(searchParams);
         const jobToRetryFileName = `./jobs_to_retry/${searchParams.searchTerm}_${applicationPage}_${now}.json`;
 
