@@ -1,15 +1,15 @@
 import { parseHTML } from "linkedom";
 import { flatten } from "./main";
 import { sanitizeString } from "./parser";
+import { superFetch } from "./proxy";
 
 export const getLinkedDOMNode = (html: string, pattern = "*") => {
   const { document } = parseHTML(html);
   return document.querySelectorAll(pattern);
 };
 
-export const getNativeNodeList = async (url: string, pattern: string): Promise<NodeListOf<Element>> => {
-  const response = await fetch(url);
-  const htmlResponse = await response.text();
+export const getNativeNodeList = async (url: string, pattern: string, options = {}): Promise<NodeListOf<Element>> => {
+  const htmlResponse = await superFetch(url, options);
   return getLinkedDOMNode(htmlResponse, pattern);
 };
 
