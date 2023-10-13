@@ -1,0 +1,25 @@
+{
+  "linkedInDummyJob": {
+    "jobBoard": "linkedIn",
+    "jobInfo": {
+      "link": "somelink.com",
+      "jobRequirements": { "tasks": ["A", "B", "C"] },
+      "applicationInfo": {
+        "title": "NodeJs Software Developer - SaaS, Enterprise Products",
+        "company": "Somecompany",
+        "location": "Vancouver, British Columbia, Canada",
+        "pay": "",
+        "extra": {
+          "companyLink": "https://www.linkedin.com/company/cybercoders?trk=public_jobs_topcard-org-name",
+          "miscelaneousInformation": {
+            "Seniority level": "Mid-Senior level",
+            "Employment type": "Full-time",
+            "Job function": "Information Technology",
+            "Industries": "Software Development"
+          }
+        }
+      },
+      "err": false
+    }
+  }
+}
