@@ -14,7 +14,7 @@ export const sendMessageToQueue = async (channel: Channel, queue: string, messag
   console.log(`Sent: ${JSON.stringify(message)} to: ${queue}`);
 };
 
-export const consumeMessage = async (
+export const consumeMessageFromQueue = async (
   channel: Channel,
   queue: string,
   callback: Function,
@@ -22,27 +22,15 @@ export const consumeMessage = async (
   return await new Promise((resolve, reject) => {
     channel.consume(
       queue,
-      (message) => {
+      async (message) => {
         console.log(`Waiting for message in queue: ${queue}`);
+        const result = await callback(message).catch(reject);
         channel.ack(<any>message);
-        resolve(callback(message));
+        resolve(result);
+        console.log(`Consumed message: ${message?.content.toString()}`);
       },
       { noAck: false },
     );
     setTimeout(() => reject(new Error("Took too long to consume Message")), 10000);
   });
-};
-
-export const consumeMessages = async (channel: Channel, queue: string, callback: Function = () => {}) => {
-  let result: any[] = [];
-  let { messageCount } = await channel.assertQueue(queue, { durable: true });
-  // receive at most 1 message.
-  await channel.prefetch(1);
-
-  while (messageCount > 0) {
-    const msg = await consumeMessage(channel, queue, callback);
-    messageCount = (await channel.checkQueue(queue)).messageCount;
-    result.push(msg);
-  }
-  return result;
 };

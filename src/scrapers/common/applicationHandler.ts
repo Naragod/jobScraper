@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import { saveJobInfo } from "../../database/main";
 import { writeFileSync } from "fs";
 import { classifyJobs } from "../../classifiers/main";
@@ -6,20 +7,26 @@ import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/inter
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
 import { removeExcessArrayItems } from "../../utils/parser";
 import { executeInParallel } from "./nativeExecutionSupport";
-import { consumeMessages, getChannel, sendMessageToQueue } from "../../queue/main";
+import { consumeMessageFromQueue, getChannel, sendMessageToQueue } from "../../queue/main";
 import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
+import { sleep } from "../../utils/main";
+
+dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
+const { USE_PROXY } = process.env;
 
 export class JobBoard {
   public name: string;
   public formatters: any;
+  public throttleSpeed: number;
   public jobLinksQueue: string;
   public getJobInformation: JobInfoGetterFn;
   public getAllJobPageLinks: AllJobsLinksGetterFn;
 
-  constructor(name: string, functions: any, formatters: any, options: any = {}) {
+  constructor(name: string, functions: any, formatters: any, options: any) {
     this.name = name;
     this.formatters = formatters;
-    this.jobLinksQueue = options.jobLinksQueue || "jobLinks";
+    this.jobLinksQueue = options.jobLinksQueue;
+    this.throttleSpeed = options.throttleSpeed || 0;
     this.getJobInformation = functions["getJobInformation"];
     this.getAllJobPageLinks = functions["getAllJobPageLinks"];
   }
@@ -49,38 +56,47 @@ export class Scraper {
     }
   }
 
+  // uses linkeDom. Much faster than original implementation as now multiple consumers can parse the information.
   public async queueJobUrls(searchParams: any, applicationLimit = 100) {
     let applicationPage = 0;
     let applicationsViewed = 0;
     const channel = await getChannel();
-    const { getAllJobPageLinks, jobLinksQueue } = this.jobBoard;
+    const { getAllJobPageLinks, jobLinksQueue, name: jobBoardName } = this.jobBoard;
 
-    while (applicationsViewed <= applicationLimit) {
+    while (applicationsViewed < applicationLimit) {
       applicationPage += 1;
       searchParams["page"] = applicationPage;
       let jobLinks = await getAllJobPageLinks(searchParams);
 
       if (jobLinks.length == 0) break;
-      applicationsViewed += jobLinks.length;
       jobLinks = removeExcessArrayItems(jobLinks, applicationsViewed, applicationLimit);
-      await Promise.allSettled(jobLinks.map((link) => sendMessageToQueue(channel, jobLinksQueue, { link })));
+      const promises = jobLinks.map((link) => sendMessageToQueue(channel, jobLinksQueue, { link, jobBoardName }));
+      await Promise.allSettled(promises);
+      applicationsViewed += jobLinks.length;
     }
   }
 
+  // uses linkeDom. Much faster than original implementation as now multiple consumers can parse the information.
   public async parseJobLinks() {
+    const { jobLinksQueue, getJobInformation, formatters, name: jobBoardName, throttleSpeed } = this.jobBoard;
     const channel = await getChannel();
-    const { jobLinksQueue, getJobInformation, formatters, name: JobBoardName } = this.jobBoard;
+    // assign a single task to a worker. If this is removed, all tasks will be assigned to the same worker
+    channel.prefetch(1);
 
-    await consumeMessages(channel, jobLinksQueue, async (message: any) => {
-      const { link } = JSON.parse(message.content.toString());
-      const html = await getNativeNodeList(link, "*");
+    await consumeMessageFromQueue(channel, jobLinksQueue, async (message: any) => {
+      const { link, jobBoardName: jbName } = JSON.parse(message.content.toString());
+
+      if (jbName != jobBoardName) throw new Error(`Link: ${link} incompatible with parser: ${jobBoardName}`);
+      const html = await getNativeNodeList(link, "*", { useProxy: USE_PROXY });
       const result = <any>getJobInformation(link, <any>html);
+      await sleep(throttleSpeed);
 
       if (result == null) return;
-      await saveJobInfo([result], formatters, JobBoardName);
+      await saveJobInfo([result], formatters, jobBoardName);
     });
   }
 
+  // uses linkeDom. Super fast. A few limitations.
   public async scrapeJobsNatively(
     searchParams: any,
     applicationLimit = 100,
@@ -91,7 +107,7 @@ export class Scraper {
       let applicationsViewed = 0;
       const now = new Date().toISOString();
       let jobsInformation: IJobInfo[] = [];
-      const { getJobInformation, getAllJobPageLinks, formatters, name: JobBoardName } = this.jobBoard;
+      const { getJobInformation, getAllJobPageLinks, formatters, name: jobBoardName } = this.jobBoard;
 
       while (applicationsViewed < applicationLimit) {
         applicationPage += 1;
@@ -106,7 +122,7 @@ export class Scraper {
 
         applicationsViewed += jobLinks.length;
         console.log("applicationsViewed:", applicationsViewed);
-        await saveJobInfo(result, formatters, JobBoardName);
+        await saveJobInfo(result, formatters, jobBoardName);
 
         if (jobsToRetry.length == 0) continue;
         writeFileSync(jobToRetryFileName, JSON.stringify(jobsToRetry));
@@ -119,13 +135,14 @@ export class Scraper {
     }
   }
 
+  // uses playwright
   public async scrapeJobs(searchParams: any, applicationLimit = 100, executionOptions: any = {}): Promise<IJobInfo[]> {
     try {
       let applicationPage = 0;
       let applicationsViewed = 0;
       const now = new Date().toISOString();
       let jobsInformation: IJobInfo[] = [];
-      const { getJobInformation, getAllJobPageLinks, formatters, name: JobBoardName } = this.jobBoard;
+      const { getJobInformation, getAllJobPageLinks, formatters, name: jobBoardName } = this.jobBoard;
 
       while (applicationsViewed < applicationLimit) {
         applicationPage += 1;
@@ -147,7 +164,7 @@ export class Scraper {
         jobsInformation = jobsInformation.concat(result);
         applicationsViewed += jobLinks.length;
         console.log("applicationsViewed:", applicationsViewed);
-        // await saveJobInfo(result, formatters, JobBoardName);
+        // await saveJobInfo(result, formatters, jobBoardName);
 
         if (jobsToRetry.length == 0) continue;
         writeFileSync(
