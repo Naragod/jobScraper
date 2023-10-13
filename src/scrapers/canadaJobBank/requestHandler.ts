@@ -1,6 +1,7 @@
 import { baseURL } from "../../config/canadaJobBank.config.json";
 import { AllJobsLinksGetterFn, IJobSearchOptions } from "../common/interfaces";
-import { findElementsInNodeList, getNodeList } from "../../utils/htmlTraversal";
+import { findElementsInNodeList } from "../../utils/htmlTraversal";
+import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
 
 export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJobSearchOptions): Promise<string[]> => {
   const { searchTerm, location, age = 7, page = 1, sort } = searchParams;
@@ -12,7 +13,7 @@ export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJo
   url = sort !== undefined ? `${url}&sort=${sort}` : url;
   url = page !== undefined ? `${url}&page=${page}` : url;
   url = location !== undefined ? `${url}&locationstring=${location}` : url;
-  const jobEntries = await getNodeList(url, "[id^='article-']");
+  const jobEntries = await getNativeNodeList(url, "[id^='article-']");
 
   // return all links
   return findElementsInNodeList(jobEntries, "A")

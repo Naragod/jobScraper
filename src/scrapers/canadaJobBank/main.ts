@@ -6,10 +6,24 @@ import {
   formatToJobRequirementsStructure,
 } from "../../database/formatters/canadaJobBank.formatter";
 
-export const scrapeJobs = async (searchParams: any, applicationLimit = 100) => {
+const setup = async () => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
   const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
   const canadaJobBoard = new JobBoard("canadaJobBoard", functions, formatters);
-  const canadaJobBoardScraper = new Scraper(canadaJobBoard);
+  return new Scraper(canadaJobBoard);
+};
+export const searchJobs = async (searchParams: any, applicationLimit = 100) => {
+  const canadaJobBoardScraper = await setup();
+  await canadaJobBoardScraper.queueJobUrls(searchParams, applicationLimit);
+  // return await canadaJobBoardScraper.scrapeJobsNatively(searchParams, applicationLimit);
+};
+
+export const parseJobs = async () => {
+  const canadaJobBoardScraper = await setup();
+  await canadaJobBoardScraper.parseJobLinks();
+};
+
+export const scrapeJobsNatively = async (searchParams: any, applicationLimit = 100) => {
+  const canadaJobBoardScraper = await setup();
   return await canadaJobBoardScraper.scrapeJobsNatively(searchParams, applicationLimit);
 };
