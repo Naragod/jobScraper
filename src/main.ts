@@ -1,30 +1,16 @@
-import { searchJobs as searchJobsOnLinkedIn } from "./scrapers/linkedIn/main";
-import { searchJobs as searchJobsJobsOnJobLever } from "./scrapers/jobLever/main";
-import { searchJobs as searchJobsOnCanadaJobBoad } from "./scrapers/canadaJobBank/main";
-import { companies } from "./config/jobLever.config.json";
-import { timeElapsed } from "./utils/main";
+import { server } from "./apiRequests/server";
 
-const main = async () => {
-  const jobSearchSize = 50;
-  console.log("ENVIRONMENT:", process.env.ENVIRONMENT);
+const main = () => {
+  const port = 8890;
 
-  // canadaJobBoard
-  // **************************************************************************
-  await timeElapsed(searchJobsOnCanadaJobBoad, { searchTerm: "software", location: "toronto" }, jobSearchSize); // uses queues
-
-  // linkedIn
-  // **************************************************************************
-  await timeElapsed(searchJobsOnLinkedIn, { searchTerm: "lawyer" }, jobSearchSize); // uses queues
-
-  // jobLever
-  // **************************************************************************
-  for (let company of companies) {
-    await timeElapsed(searchJobsJobsOnJobLever, { searchTerm: company }, jobSearchSize); // uses queues
-  }
-  process.exit();
+  server.listen(port, () => {
+    console.log("Listening on port:", port);
+  });
 };
 
-main().catch((err) => {
-  console.log(err);
-  process.exit(1);
-});
+try {
+  main();
+} catch (err) {
+  console.error(err);
+  main();
+}

@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-import { saveJobInfo } from "../../database/main";
 import { writeFileSync } from "fs";
 import { classifyJobs } from "../../classifiers/main";
 import { closeBrowser } from "./playwrightBrowserSupport";
+import { saveJobInfo, saveJobsInfo } from "../../database/main";
 import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/interfaces";
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
 import { removeExcessArrayItems } from "../../utils/parser";
@@ -13,7 +13,6 @@ import { sleep } from "../../utils/main";
 import { queueJobLinks } from "../../queue/jobLinkImplementation";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
-const { USE_PROXY } = process.env;
 
 export class JobBoard {
   public name: string;
@@ -50,7 +49,7 @@ export class Scraper {
       const result = await handleJobApplication(link, getJobInformation, executionOptions);
 
       if (result.err) return;
-      await saveJobInfo([result], formatters, name);
+      await saveJobInfo(result, formatters, name);
     } catch (err) {
       console.error(err);
       throw err;
@@ -86,12 +85,12 @@ export class Scraper {
       const { link, jobBoardName: jbName } = JSON.parse(message.content.toString());
 
       if (jbName != jobBoardName) throw new Error(`Link: ${link} incompatible with parser: ${jobBoardName}`);
-      const html = await getNativeNodeList(link, "*", { useProxy: USE_PROXY });
+      const html = await getNativeNodeList(link, "*", <any>process.env.USE_PROXY);
       const result = <any>getJobInformation(link, <any>html);
       await sleep(throttleSpeed);
 
       if (result == null) return;
-      await saveJobInfo([result], formatters, jobBoardName);
+      await saveJobInfo(result, formatters, jobBoardName);
     }).catch((_err) => console.log(`Consumer error on queue: ${jobLinksQueue}`));
   }
 
@@ -121,7 +120,7 @@ export class Scraper {
 
         applicationsViewed += jobLinks.length;
         console.log("applicationsViewed:", applicationsViewed);
-        await saveJobInfo(result, formatters, jobBoardName);
+        await saveJobsInfo(result, formatters, jobBoardName);
 
         if (jobsToRetry.length == 0) continue;
         writeFileSync(jobToRetryFileName, JSON.stringify(jobsToRetry));
@@ -163,7 +162,7 @@ export class Scraper {
         jobsInformation = jobsInformation.concat(result);
         applicationsViewed += jobLinks.length;
         console.log("applicationsViewed:", applicationsViewed);
-        // await saveJobInfo(result, formatters, jobBoardName);
+        await saveJobsInfo(result, formatters, jobBoardName);
 
         if (jobsToRetry.length == 0) continue;
         writeFileSync(
