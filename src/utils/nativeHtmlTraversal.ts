@@ -8,8 +8,12 @@ export const getLinkedDOMNode = (html: string, pattern = "*") => {
   return document.querySelectorAll(pattern);
 };
 
-export const getNativeNodeList = async (url: string, pattern: string, options = {}): Promise<NodeListOf<Element>> => {
-  const htmlResponse = await superFetch(url, options);
+export const getNativeNodeList = async (
+  url: string,
+  pattern: string,
+  useProxy = false,
+): Promise<NodeListOf<Element>> => {
+  const htmlResponse = await superFetch(url, useProxy);
   return getLinkedDOMNode(htmlResponse, pattern);
 };
 
