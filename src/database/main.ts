@@ -20,7 +20,11 @@ export const saveJobInfo = async (jobInfo: IJobInfo[], formatters: any, jobBoard
         return insertedIds.map((item) => item.id);
       });
       return result;
-    } catch (err) {
+    } catch (err: any) {
+      if (err.code == 23505) {
+        console.log("Duplicate key contraint violated. Record already exists, continuing.");
+        return;
+      }
       console.log("Failed on job:", job, err);
       throw err;
     }
