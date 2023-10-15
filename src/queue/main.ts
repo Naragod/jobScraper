@@ -13,7 +13,7 @@ export const getChannel = async () => {
 };
 
 export const sendMessageToQueue = async (channel: Channel, queue: string, message: Object) => {
-  channel.assertQueue(queue, { durable: true });
+  await channel.assertQueue(queue, { durable: true });
   channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), { persistent: true });
   console.log(`Sent: ${JSON.stringify(message)} to: ${queue}`);
 };
@@ -23,9 +23,10 @@ export const consumeMessageFromQueue = async (
   queue: string,
   callback: Function,
 ): Promise<ConsumeMessage | null> => {
+  const { consumerCount } = await channel.assertQueue(queue, { durable: true });
+  console.log(`Initializing queue. Curent consumer count: ${consumerCount + 1}`);
+
   return await new Promise((resolve, reject) => {
-    console.log("Initializing queue consumer")
-    channel.assertQueue(queue, { durable: true });
     channel.consume(
       queue,
       async (message) => {

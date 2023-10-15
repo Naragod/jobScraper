@@ -10,6 +10,7 @@ import { executeInParallel } from "./nativeExecutionSupport";
 import { consumeMessageFromQueue, getChannel, sendMessageToQueue } from "../../queue/main";
 import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
 import { sleep } from "../../utils/main";
+import { queueJobLinks } from "../../queue/jobLinkImplementation";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 const { USE_PROXY } = process.env;
@@ -60,7 +61,6 @@ export class Scraper {
   public async queueJobUrls(searchParams: any, applicationLimit = 100) {
     let applicationPage = 0;
     let applicationsViewed = 0;
-    const channel = await getChannel();
     const { getAllJobPageLinks, jobLinksQueue, name: jobBoardName } = this.jobBoard;
 
     while (applicationsViewed < applicationLimit) {
@@ -70,8 +70,7 @@ export class Scraper {
 
       if (jobLinks.length == 0) break;
       jobLinks = removeExcessArrayItems(jobLinks, applicationsViewed, applicationLimit);
-      const promises = jobLinks.map((link) => sendMessageToQueue(channel, jobLinksQueue, { link, jobBoardName }));
-      await Promise.allSettled(promises);
+      await queueJobLinks(jobLinksQueue, jobBoardName, jobLinks);
       applicationsViewed += jobLinks.length;
     }
   }
@@ -83,7 +82,7 @@ export class Scraper {
     // assign a single task to a worker. If this is removed, all tasks will be assigned to the same worker
     channel.prefetch(1);
 
-    await consumeMessageFromQueue(channel, jobLinksQueue, async (message: any) => {
+    consumeMessageFromQueue(channel, jobLinksQueue, async (message: any) => {
       const { link, jobBoardName: jbName } = JSON.parse(message.content.toString());
 
       if (jbName != jobBoardName) throw new Error(`Link: ${link} incompatible with parser: ${jobBoardName}`);
