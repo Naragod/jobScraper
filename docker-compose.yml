@@ -45,6 +45,9 @@ services:
       - ./:/app/
     depends_on:
       - db
+      - queue
+    ports:
+      - "8810:8890"
 
   # Connection Process first time: https://stackoverflow.com/a/56617524/8714371
   # Comment out if already have DB GUI installed
