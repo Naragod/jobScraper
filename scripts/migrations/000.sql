@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS jobs(
     job_board TEXT NOT NULL,
     job_information_id TEXT NOT NULL,
     job_requirements_id TEXT NOT NULL,
+    created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (job_information_id) REFERENCES job_information (id) ON DELETE CASCADE,
     FOREIGN KEY (job_requirements_id) REFERENCES job_requirements (id) ON DELETE CASCADE
 );
