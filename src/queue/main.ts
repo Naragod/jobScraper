@@ -24,6 +24,8 @@ export const consumeMessageFromQueue = async (
   callback: Function,
 ): Promise<ConsumeMessage | null> => {
   return await new Promise((resolve, reject) => {
+    console.log("Initializing queue consumer")
+    channel.assertQueue(queue, { durable: true });
     channel.consume(
       queue,
       async (message) => {
@@ -34,7 +36,7 @@ export const consumeMessageFromQueue = async (
         console.log(`Consumed message: ${message?.content.toString()}`);
       },
       { noAck: false },
-    );C
+    );
     setTimeout(() => reject(new Error("Took too long to consume Message")), <any>QUEUE_MESSAGE_TIMEOUT);
   });
 };

@@ -93,7 +93,7 @@ export class Scraper {
 
       if (result == null) return;
       await saveJobInfo([result], formatters, jobBoardName);
-    });
+    }).catch((_err) => console.log(`Consumer error on queue: ${jobLinksQueue}`));
   }
 
   // uses linkeDom. Super fast. A few limitations.
