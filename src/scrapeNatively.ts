@@ -5,19 +5,21 @@ import { companies } from "./config/jobLever.config.json";
 import { timeElapsed } from "./utils/main";
 
 const main = async () => {
+  const jobSearchSize = 50;
   console.log("ENVIRONMENT:", process.env.ENVIRONMENT);
+
   // canadaJobBoard
   // **************************************************************************
-  await timeElapsed(scrapeJobsNativelyOnCananaJobBoard, { searchTerm: "Software Engineer" }, 6); // synchronous implementation
+  await timeElapsed(scrapeJobsNativelyOnCananaJobBoard, { searchTerm: "Software Engineer" }, jobSearchSize); // synchronous implementation
 
   // linkedIn
   // **************************************************************************
-  await timeElapsed(scrapeJobsNativelyOnLinkedIn, { searchTerm: "Software Engineer" }, 6); // synchronous implementation
+  await timeElapsed(scrapeJobsNativelyOnLinkedIn, { searchTerm: "Software Engineer" }, jobSearchSize); // synchronous implementation
 
   // jobLever
   // **************************************************************************
   for (let company of companies) {
-    await timeElapsed(scrapeJobsNativelyOnJobLever, { searchTerm: company }, 6); // uses queues
+    await timeElapsed(scrapeJobsNativelyOnJobLever, { searchTerm: company }, jobSearchSize); // uses queues
   }
   process.exit();
 };

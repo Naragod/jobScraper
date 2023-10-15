@@ -4,6 +4,7 @@ import { parseJobs as parseJobsOnJobLever } from "./scrapers/jobLever/main";
 import { parseJobs as parseJobsOnCanadaJobBoard } from "./scrapers/canadaJobBank/main";
 const main = async () => {
   console.log("ENVIRONMENT:", process.env.ENVIRONMENT);
+  
   // canadaJobBoard
   // **************************************************************************
   await parseJobsOnCanadaJobBoard();
