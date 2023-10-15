@@ -1,7 +1,7 @@
 import { parseHTML } from "linkedom";
 import { flatten } from "./main";
 import { sanitizeString } from "./parser";
-import { superFetch } from "./proxy";
+import { superFetch } from "../proxy/main";
 
 export const getLinkedDOMNode = (html: string, pattern = "*") => {
   const { document } = parseHTML(html);
