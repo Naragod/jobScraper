@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { Channel, ConsumeMessage, connect } from "amqplib";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
-const { QUEUE_PORT, QUEUE_HOST } = process.env;
+const { QUEUE_PORT, QUEUE_HOST, QUEUE_MESSAGE_TIMEOUT } = process.env;
 
 // tutorial
 // https://www.rabbitmq.com/tutorials/tutorial-two-javascript.html
@@ -34,7 +34,7 @@ export const consumeMessageFromQueue = async (
         console.log(`Consumed message: ${message?.content.toString()}`);
       },
       { noAck: false },
-    );
-    setTimeout(() => reject(new Error("Took too long to consume Message")), 10000);
+    );C
+    setTimeout(() => reject(new Error("Took too long to consume Message")), <any>QUEUE_MESSAGE_TIMEOUT);
   });
 };

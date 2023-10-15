@@ -19,10 +19,10 @@ export const saveJobInfo = async (jobInfo: IJobInfo[], formatters: any, jobBoard
         })} RETURNING id`;
         return insertedIds.map((item) => item.id);
       });
-      return result
+      return result;
     } catch (err) {
       console.log("Failed on job:", job, err);
-      throw err
+      throw err;
     }
   }
 };
