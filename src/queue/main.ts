@@ -1,10 +1,14 @@
+import dotenv from "dotenv";
 import { Channel, ConsumeMessage, connect } from "amqplib";
+
+dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
+const { QUEUE_PORT, QUEUE_HOST } = process.env;
 
 // tutorial
 // https://www.rabbitmq.com/tutorials/tutorial-two-javascript.html
 
 export const getChannel = async () => {
-  const connection = await connect({ protocol: "amqp", hostname: "localhost" });
+  const connection = await connect(`amqp://${QUEUE_HOST}:${QUEUE_PORT}`);
   return await connection.createChannel();
 };
 

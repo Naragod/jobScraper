@@ -26,8 +26,11 @@ services:
   queue:
     image: rabbitmq:3.12.6
     container_name: jobscraper_queue
+    networks:
+      static-network:
+        ipv4_address: 172.23.0.9
     ports:
-      - "5672:5672"
+      - "5610:5672"
 
   # Svelte app
   app:

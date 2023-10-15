@@ -5,6 +5,9 @@ up:
 run-scraper:
 	docker compose run app bash -c "npm run prod"
 
+run-worker:
+	docker compose run app bash -c "npm run worker-prod"
+
 get-db-ip:
 	docker inspect  -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' jobscraper_db
 
