@@ -29,6 +29,7 @@ export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<E
     location,
     pay: pay || "",
     extra: { companyLink, miscelaneousInformation },
+    commitment: miscelaneousInformation["Employment type"],
   };
 };
 
