@@ -7,18 +7,12 @@
     "build": "tsc",
     "test": "clear; ENVIRONMENT=test jest --runInBand ",
     "test-coverage": "clear; ENVIRONMENT=test jest --coverage",
-    "scrapeNatively-dev": "npm run build; clear; ENVIRONMENT=dev node --enable-source-maps dist/scrapeNatively.js",
-    "scrapeNatively-prod": "npm run build; clear; ENVIRONMENT=prod node --enable-source-maps dist/scrapeNatively.js",
-    "worker": "npm run build; clear; ENVIRONMENT=dev node --enable-source-maps dist/worker.js",
-    "worker-prod": "npm run build; clear; ENVIRONMENT=prod node --enable-source-maps dist/worker.js",
-    "dev": "npm run build; clear; ENVIRONMENT=dev node --enable-source-maps dist/main.js",
-    "prod": "npm run build; clear; ENVIRONMENT=prod node --enable-source-maps dist/main.js;",
     "migrate": "chmod +x ./scripts/run_migrations.sh; ./scripts/run_migrations.sh",
     "prettydev": "npm run build; clear; node --enable-source-maps dist/main.js; npm run format",
     "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'",
     "remove-volumes": "sudo docker volume rm $(sudo docker volume ls -q)",
     "remove-containers": "sudo docker rm $(sudo docker ps -a -q)",
-    "devServer": "ENVIRONMENT=dev nodemon src/apiRequests/server.ts "
+    "devServer": "ENVIRONMENT=dev nodemon src/main.ts "
   },
   "author": "Mateo Nar",
   "license": "ISC",
@@ -37,8 +31,7 @@
     "playwright": "^1.38.1",
     "postgres": "^3.3.5",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2",
-    "winston": "^3.10.0"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.2",

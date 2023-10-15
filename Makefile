@@ -5,16 +5,7 @@ up:
 
 migrate:
 	npm run migrate
-
-run-scraper:
-	docker compose run nodejs_server bash -c "npm run scrapeNatively-prod"
-
-run-search:
-	docker compose run nodejs_server bash -c "npm run prod"
-
-run-worker:
-	docker compose run nodejs_server bash -c "npm run worker-prod"
-
+	
 # Queue utility commands
 view-queue-undelivered:
 	sudo docker exec -it jobscraper_queue bash -c "rabbitmqctl list_queues name messages_ready messages_unacknowledged"
@@ -45,6 +36,7 @@ get-db-ip:
 stop-all:
 	sudo docker stop $(sudo docker ps -q)
 
+# Delete everything, volumes, images, containers. Use this to completely clean and reset your system.
 clean:
 	docker system prune -a --volumes
 	npm run remove-volumes
