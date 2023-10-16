@@ -6,6 +6,7 @@ SELECT
     ji.company,
     ji.location,
     ji.pay,
+	ji.commitment,
     ji.description,
     ji.link,
     jr.tasks
