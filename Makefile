@@ -41,5 +41,9 @@ clean:
 	docker system prune -a --volumes
 	npm run remove-volumes
 
+shallow-clean:
+	npm run remove-containers
+	sudo docker system prune -a
+
 rm-containers:
 	npm run remove-containers
