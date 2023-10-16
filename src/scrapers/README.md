@@ -28,3 +28,9 @@ Job Posting Example: https://time-doctor.breezy.hr/p/3bcabd4c69ad-senior-backend
 Website: https://join.com
 Job Posting Example: https://join.com/companies/gently1/9398272-software-engineer-integrations?pid=24a1b46991e3de1fbcf0
 Join has a complete company directory that we can parse: https://join.com/companies
+
+Website: https://www.cais.ca/careers
+Job Posting Example: https://www.cais.ca/careers#career19767
+
+Website: https://www.cisontario.ca/professional-learning/job-search/jobs-at-cisaa-member-schools
+Job Posting Example: https://www.cisontario.ca/professional-learning/job-search/job-posting-detail/~board/member-job-postings/post/supply-teacher-smls
