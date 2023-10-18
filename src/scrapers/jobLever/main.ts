@@ -19,9 +19,9 @@ export const searchJobs = async (searchParams: any, applicationLimit = 100) => {
   await jobLeverScraper.queueJobUrls(searchParams, applicationLimit);
 };
 
-export const parseJobs = async () => {
+export const parseJobs = async (options:any) => {
   const jobLeverScraper = await setup();
-  await jobLeverScraper.parseJobLinks();
+  await jobLeverScraper.parseJobLinks(options);
 };
 
 export const scrapeJobsNatively = async (searchParams: any, applicationLimit = 100) => {

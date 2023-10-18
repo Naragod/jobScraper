@@ -20,14 +20,14 @@ export const searchJobs = async (searchTerm: string, location: string, age: numb
   await timeElapsed(searchJobsOnLinkedIn, { searchTerm, location, age }, searchSize); // uses queues
 };
 
-export const parseJobs = async () => {
+export const parseJobs = async (options: any) => {
   // canadaJobBoard
   // **************************************************************************
-  await parseJobsOnCanadaJobBoard();
+  await parseJobsOnCanadaJobBoard(options);
 
   // linkedIn
   // **************************************************************************
-  await parseJobsOnLinkedIn();
+  await parseJobsOnLinkedIn(options);
 };
 
 export const scrapeNatively = async (searchTerm: string, location: string, age: number, searchSize = 100) => {

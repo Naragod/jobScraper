@@ -21,10 +21,16 @@ export const sendMessageToQueue = async (channel: Channel, queue: string, messag
 export const consumeMessageFromQueue = async (
   channel: Channel,
   queue: string,
+  maxConsumers: number,
   callback: Function,
 ): Promise<ConsumeMessage | null> => {
   const { consumerCount } = await channel.assertQueue(queue, { durable: true });
-  console.log(`Initializing queue. Curent consumer count: ${consumerCount + 1}`);
+  console.log(`Initializing queue. Current consumer count: ${consumerCount + 1}`);
+
+  if (consumerCount >= maxConsumers) {
+    console.log("-----------------Maximum number of consumers reached.-----------------");
+    return null;
+  }
 
   return await new Promise((resolve, reject) => {
     channel.consume(

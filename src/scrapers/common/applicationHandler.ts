@@ -75,13 +75,14 @@ export class Scraper {
   }
 
   // uses linkeDom. Much faster than original implementation as now multiple consumers can parse the information.
-  public async parseJobLinks() {
+  public async parseJobLinks(options: any) {
+    const { maxConsumers } = options;
     const { jobLinksQueue, getJobInformation, formatters, name: jobBoardName, throttleSpeed } = this.jobBoard;
     const channel = await getChannel();
     // assign a single task to a worker. If this is removed, all tasks will be assigned to the same worker
     channel.prefetch(1);
 
-    consumeMessageFromQueue(channel, jobLinksQueue, async (message: any) => {
+    consumeMessageFromQueue(channel, jobLinksQueue, maxConsumers, async (message: any) => {
       const { link, jobBoardName: jbName } = JSON.parse(message.content.toString());
 
       if (jbName != jobBoardName) throw new Error(`Link: ${link} incompatible with parser: ${jobBoardName}`);
