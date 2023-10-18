@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
 import { Channel, ConsumeMessage, connect } from "amqplib";
+import { Observable, Subscriber } from "rxjs";
+import { getRandomHashId } from "../utils/main";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
-const { QUEUE_PORT, QUEUE_HOST, QUEUE_MESSAGE_TIMEOUT } = process.env;
+const { QUEUE_PORT, QUEUE_HOST, MAX_QUEUE_CONSUMERS } = process.env;
 
 // tutorial
 // https://www.rabbitmq.com/tutorials/tutorial-two-javascript.html
@@ -17,33 +19,29 @@ export const sendMessageToQueue = async (channel: Channel, queue: string, messag
   channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), { persistent: true });
   console.log(`Sent: ${JSON.stringify(message)} to: ${queue}`);
 };
-
-export const consumeMessageFromQueue = async (
-  channel: Channel,
-  queue: string,
-  maxConsumers: number,
-  callback: Function,
-): Promise<ConsumeMessage | null> => {
+export const consumeMessagesFromQueue = async (channel: Channel, queue: string, callback: Function) => {
   const { consumerCount } = await channel.assertQueue(queue, { durable: true });
-  console.log(`Initializing queue. Current consumer count: ${consumerCount + 1}`);
+  const messageHandler = async (consumerTag: string, message: ConsumeMessage | null, subscriber: Subscriber<any>) => {
+    console.log(`Waiting for message in queue: ${queue}`);
+    const result = await callback(message);
+    channel.ack(<any>message);
+    subscriber.next({ consumerTag, result });
+    console.log(`Consumed message: ${message?.content.toString()}`);
+  };
 
-  if (consumerCount >= maxConsumers) {
-    console.log("-----------------Maximum number of consumers reached.-----------------");
-    return null;
-  }
-
-  return await new Promise((resolve, reject) => {
-    channel.consume(
-      queue,
-      async (message) => {
-        console.log(`Waiting for message in queue: ${queue}`);
-        const result = await callback(message).catch(reject);
-        channel.ack(<any>message);
-        resolve(result);
-        console.log(`Consumed message: ${message?.content.toString()}`);
-      },
-      { noAck: false },
-    );
-    setTimeout(() => reject(new Error("Took too long to consume Message")), <any>QUEUE_MESSAGE_TIMEOUT);
+  return new Observable((subscriber) => {
+    try {
+      if (consumerCount >= <any>MAX_QUEUE_CONSUMERS) throw new Error("Maximum number of consumers reached.");
+      const consumerTag = getRandomHashId();
+      console.log(`------------ Creating Consumer: ${consumerTag} ------------`);
+      channel.consume(queue, async (message) => await messageHandler(consumerTag, message, subscriber), {
+        noAck: false,
+        consumerTag,
+      });
+    } catch (err: any) {
+      console.log(`Consumer error on queue: ${queue}: ${err.message}`);
+    }
   });
 };
+
+export const removeConsumer = async (channel: Channel, consumerTag: string) => await channel.cancel(consumerTag);
