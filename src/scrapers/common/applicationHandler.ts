@@ -7,10 +7,9 @@ import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/inter
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
 import { removeExcessArrayItems } from "../../utils/parser";
 import { executeInParallel } from "./nativeExecutionSupport";
-import { consumeMessageFromQueue, getChannel, sendMessageToQueue } from "../../queue/main";
-import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
-import { sleep } from "../../utils/main";
-import { queueJobLinks } from "../../queue/jobLinkImplementation";
+import { getChannel } from "../../queue/main";
+import { parseJobLinksFromQueue, queueJobLinks } from "../../queue/jobLinkImplementation";
+import { concatAll, from, map } from "rxjs";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 
@@ -76,23 +75,12 @@ export class Scraper {
 
   // uses linkeDom. Much faster than original implementation as now multiple consumers can parse the information.
   public async parseJobLinks(options: any) {
-    const { maxConsumers } = options;
-    const { jobLinksQueue, getJobInformation, formatters, name: jobBoardName, throttleSpeed } = this.jobBoard;
-    const channel = await getChannel();
-    // assign a single task to a worker. If this is removed, all tasks will be assigned to the same worker
-    channel.prefetch(1);
+    const { numOfWorkers = 1 } = options;
 
-    consumeMessageFromQueue(channel, jobLinksQueue, maxConsumers, async (message: any) => {
-      const { link, jobBoardName: jbName } = JSON.parse(message.content.toString());
-
-      if (jbName != jobBoardName) throw new Error(`Link: ${link} incompatible with parser: ${jobBoardName}`);
-      const html = await getNativeNodeList(link, "*", <any>process.env.USE_PROXY);
-      const result = <any>getJobInformation(link, <any>html);
-      await sleep(throttleSpeed);
-
-      if (result == null) return;
-      await saveJobInfo(result, formatters, jobBoardName);
-    }).catch((_err) => console.log(`Consumer error on queue: ${jobLinksQueue}`));
+    for (let i = 0; i < numOfWorkers; i++) {
+      const observable = await parseJobLinksFromQueue(this.jobBoard);
+      observable.subscribe((value) => console.log(`__ message consumed on: ${value.consumerTag}__`));
+    }
   }
 
   // uses linkeDom. Super fast. A few limitations.
