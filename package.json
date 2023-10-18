@@ -12,7 +12,7 @@
     "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'",
     "remove-volumes": "sudo docker volume rm $(sudo docker volume ls -q)",
     "remove-containers": "sudo docker rm $(sudo docker ps -a -q)",
-    "devServer": "ENVIRONMENT=dev nodemon src/main.ts "
+    "devServer": "ENVIRONMENT=dev nodemon src/main.ts"
   },
   "author": "Mateo Nar",
   "license": "ISC",

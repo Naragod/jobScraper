@@ -15,7 +15,7 @@ describe("Database", () => {
     it("usage - save simple job", async () => {
       const { jobInfo, jobBoard } = linkedInDummyJob;
       const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
-      const ids = <any[]>await saveJobInfo([jobInfo], formatters, jobBoard);
+      const ids = <any[]>await saveJobInfo(jobInfo, formatters, jobBoard);
 
       expect(ids.length).toBe(1);
       const record = await getJobRecord(ids[0]);
