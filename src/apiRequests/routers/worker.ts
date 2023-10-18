@@ -10,4 +10,3 @@ workerRouter.get("/", async (req: Request, res: Response) => {
 
   return res.send("hitting the worker endpoint");
 });
-

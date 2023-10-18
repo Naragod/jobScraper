@@ -19,7 +19,7 @@ export const searchJobs = async (searchParams: any, applicationLimit = 100) => {
   await linkedInScraper.queueJobUrls(searchParams, applicationLimit);
 };
 
-export const parseJobs = async (options:any) => {
+export const parseJobs = async (options: any) => {
   const linkedInScraper = await setup();
   await linkedInScraper.parseJobLinks(options);
 };
