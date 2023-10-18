@@ -8,7 +8,7 @@ searchRouter.get("/", async (req: Request, res: Response) => {
 
   await searchJobs(<string>searchTerm, <any>location, <any>age, <any>searchSize);
 
-  await parseJobs({ maxConsumers: 1 });
+  await parseJobs({ numOfWorkers: 5 });
 
   return res.send("hitting the search endpoint");
 });
