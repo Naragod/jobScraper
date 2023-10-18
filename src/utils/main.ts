@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { sanitizeString } from "./parser";
 
 export const flatten = (arr: any[]): any[] => {
@@ -41,3 +42,5 @@ export const timeElapsed = async <T>(func: Function, ...args: any[]): Promise<{ 
   console.log(`${func.name} took ${secondsElapsed}.${millisecondsElapsted} seconds to execute.`);
   return { result, time: end - start };
 };
+
+export const getRandomHashId = () => crypto.randomBytes(10).toString("hex");
