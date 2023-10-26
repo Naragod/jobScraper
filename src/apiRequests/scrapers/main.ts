@@ -1,41 +1,65 @@
-import { timeElapsed } from "../../utils/main";
-import {
-  searchJobs as searchJobsOnLinkedIn,
-  parseJobs as parseJobsOnLinkedIn,
-  scrapeJobsNatively as scrapeJobsNativelyOnLinkedIn,
-} from "../../scrapers/linkedIn/main";
-import {
-  searchJobs as searchJobsOnCanadaJobBoad,
-  parseJobs as parseJobsOnCanadaJobBoard,
-  scrapeJobsNatively as scrapeJobsNativelyOnCananaJobBoard,
-} from "../../scrapers/canadaJobBank/main";
+import { getScraper as getJobLeverScraper } from "../../scrapers/jobLever/main";
+import { getScraper as getJobsOnLinkedInScraper } from "../../scrapers/linkedIn/main";
+import { getScraper as getCanadaJobBoardScraper } from "../../scrapers/canadaJobBank/main";
+import { getScraper as getJobsOnCityOfTorontoScraper } from "../../scrapers/cityOfToronto/main";
+import { Scraper } from "../../scrapers/common/applicationHandler";
 
-export const searchJobs = async (searchTerm: string, location: string, age: number, searchSize = 100) => {
-  // canadaJobBoard
-  // **************************************************************************
-  await timeElapsed(searchJobsOnCanadaJobBoad, { searchTerm, location, age }, searchSize); // uses queues
+const getScrapers = async (): Promise<{ [key: string]: Scraper }> => {
+  const canadaJobBoardScraper = await getCanadaJobBoardScraper();
+  const cityOfTorontoScraper = await getJobsOnCityOfTorontoScraper();
+  const linkedInScraper = await getJobsOnLinkedInScraper();
+  const jobLeverScraper = await getJobLeverScraper();
 
-  // linkedIn
-  // **************************************************************************
-  // await timeElapsed(searchJobsOnLinkedIn, { searchTerm, location, age }, searchSize); // uses queues
-};
-
-export const parseJobs = async (options: any) => {
-  // canadaJobBoard
-  // **************************************************************************
-  await parseJobsOnCanadaJobBoard(options);
-
-  // linkedIn
-  // **************************************************************************
-  // await parseJobsOnLinkedIn(options);
+  return {
+    canadaJobBoardScraper,
+    cityOfTorontoScraper,
+    linkedInScraper,
+    jobLeverScraper,
+  };
 };
 
 export const scrapeNatively = async (searchTerm: string, location: string, age: number, searchSize = 100) => {
-  // canadaJobBoard
-  // **************************************************************************
-  await timeElapsed(scrapeJobsNativelyOnCananaJobBoard, { searchTerm, location, age }, searchSize); // synchronous implementation
+  const scrapers = await getScrapers();
 
-  // linkedIn
-  // **************************************************************************
-  await timeElapsed(scrapeJobsNativelyOnLinkedIn, { searchTerm, location, age }, searchSize); // synchronous implementation
+  for (let [_key, scraper] of Object.entries(scrapers)) {
+    await scraper.scrapeJobsNatively({ searchTerm, location, age }, searchSize); // synchronous implementation
+  }
+};
+
+export const searchJobs = async (searchTerm: string, location: string, age: number, searchSize = 100) => {
+  const scrapers = await getScrapers();
+
+  for (let [_key, scraper] of Object.entries(scrapers)) {
+    await scraper.queueJobUrls({ searchTerm, location, age }, searchSize); // uses queues
+  }
+};
+
+export const parseJobs = async (options: any) => {
+  const scrapers = await getScrapers();
+
+  for (let [_key, scraper] of Object.entries(scrapers)) {
+    await scraper.parseJobLinks(options);
+  }
+};
+
+export const searchJobsOn = async (
+  jobBoard: string,
+  searchTerm: string,
+  location: string,
+  age: number,
+  searchSize = 100,
+) => {
+  const scrapers = await getScrapers();
+  const scraper = scrapers[`${jobBoard}Scraper`];
+
+  if (scraper == undefined) throw new Error(`Invalid Scraper Name: ${scraper}`);
+  await scraper.queueJobUrls({ searchTerm, location, age }, searchSize); // uses queues
+};
+
+export const parseJobsOn = async (jobBoard: string, options: any) => {
+  const scrapers = await getScrapers();
+  const scraper = scrapers[`${jobBoard}Scraper`];
+
+  if (scraper == undefined) throw new Error(`Invalid Scraper Name: ${scraper}`);
+  await scraper.parseJobLinks(options);
 };
