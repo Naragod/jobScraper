@@ -1,166 +1,139 @@
 {
-	"info": {
-		"_postman_id": "3a821fb2-671a-47bb-8891-7bbbca10fe5b",
-		"name": "jobScraper",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "10824596"
-	},
-	"item": [
-		{
-			"name": "job_board_endpoints",
-			"item": [
-				{
-					"name": "jobLever",
-					"item": [
-						{
-							"name": "GET-job-page",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "https://jobs.lever.co/netflix",
-									"protocol": "https",
-									"host": [
-										"jobs",
-										"lever",
-										"co"
-									],
-									"path": [
-										"netflix"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "canadaJobBank",
-					"item": [
-						{
-							"name": "home-page",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=software&locationstring=&sort=M",
-									"protocol": "https",
-									"host": [
-										"www",
-										"jobbank",
-										"gc",
-										"ca"
-									],
-									"path": [
-										"jobsearch",
-										"jobsearch"
-									],
-									"query": [
-										{
-											"key": "searchstring",
-											"value": "software"
-										},
-										{
-											"key": "locationstring",
-											"value": ""
-										},
-										{
-											"key": "sort",
-											"value": "M"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "job-page",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "https://www.jobbank.gc.ca/jobsearch/jobposting/39074081;jsessionid=65A73AE05EFC37FD05E321A13AAB3882.jobsearch76?source=searchresults",
-									"protocol": "https",
-									"host": [
-										"www",
-										"jobbank",
-										"gc",
-										"ca"
-									],
-									"path": [
-										"",
-										"jobsearch",
-										"jobposting",
-										"39074081;jsessionid=65A73AE05EFC37FD05E321A13AAB3882.jobsearch76"
-									],
-									"query": [
-										{
-											"key": "source",
-											"value": "searchresults"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "job_scraper_endpoints",
-			"item": [
-				{
-					"name": "search",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8810/search?searchTerm=construction&location=toronto&searchSize=5",
-							"host": [
-								"localhost"
-							],
-							"port": "8810",
-							"path": [
-								"search"
-							],
-							"query": [
-								{
-									"key": "searchTerm",
-									"value": "construction"
-								},
-								{
-									"key": "location",
-									"value": "toronto"
-								},
-								{
-									"key": "searchSize",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "worker",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8810/worker",
-							"host": [
-								"localhost"
-							],
-							"port": "8810",
-							"path": [
-								"worker"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "3a821fb2-671a-47bb-8891-7bbbca10fe5b",
+    "name": "jobScraper",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "10824596"
+  },
+  "item": [
+    {
+      "name": "job_board_endpoints",
+      "item": [
+        {
+          "name": "jobLever",
+          "item": [
+            {
+              "name": "GET-job-page",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://jobs.lever.co/netflix",
+                  "protocol": "https",
+                  "host": ["jobs", "lever", "co"],
+                  "path": ["netflix"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "canadaJobBank",
+          "item": [
+            {
+              "name": "home-page",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring=software&locationstring=&sort=M",
+                  "protocol": "https",
+                  "host": ["www", "jobbank", "gc", "ca"],
+                  "path": ["jobsearch", "jobsearch"],
+                  "query": [
+                    {
+                      "key": "searchstring",
+                      "value": "software"
+                    },
+                    {
+                      "key": "locationstring",
+                      "value": ""
+                    },
+                    {
+                      "key": "sort",
+                      "value": "M"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "job-page",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "https://www.jobbank.gc.ca/jobsearch/jobposting/39074081;jsessionid=65A73AE05EFC37FD05E321A13AAB3882.jobsearch76?source=searchresults",
+                  "protocol": "https",
+                  "host": ["www", "jobbank", "gc", "ca"],
+                  "path": [
+                    "",
+                    "jobsearch",
+                    "jobposting",
+                    "39074081;jsessionid=65A73AE05EFC37FD05E321A13AAB3882.jobsearch76"
+                  ],
+                  "query": [
+                    {
+                      "key": "source",
+                      "value": "searchresults"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "job_scraper_endpoints",
+      "item": [
+        {
+          "name": "search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8810/search?searchTerm=construction&location=toronto&searchSize=5",
+              "host": ["localhost"],
+              "port": "8810",
+              "path": ["search"],
+              "query": [
+                {
+                  "key": "searchTerm",
+                  "value": "construction"
+                },
+                {
+                  "key": "location",
+                  "value": "toronto"
+                },
+                {
+                  "key": "searchSize",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "worker",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8810/worker",
+              "host": ["localhost"],
+              "port": "8810",
+              "path": ["worker"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }

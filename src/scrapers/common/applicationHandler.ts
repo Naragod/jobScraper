@@ -36,8 +36,8 @@ export class Scraper {
     this.jobBoard = jobBoard;
   }
 
-  public getName (){
-    return this.jobBoard.name
+  public getName() {
+    return this.jobBoard.name;
   }
 
   public async getChannel() {
