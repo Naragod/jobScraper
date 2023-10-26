@@ -22,7 +22,8 @@ export const parseJobLinksFromQueue = async (jobBoard: JobBoard): Promise<Observ
     const { link, jobBoardName: jbName } = JSON.parse(message.content.toString());
 
     if (jbName != jobBoardName) throw new Error(`Link: ${link} incompatible with parser: ${jobBoardName}`);
-    const html = await getNativeNodeList(link, "*", <any>process.env.USE_PROXY);
+    const proxyOptions = { useProxy: <any>process.env.USE_PROXY, proxyCallType: "datacenter" as const };
+    const html = await getNativeNodeList(link, "*", proxyOptions);
     const result = <any>getJobInformation(link, <any>html);
     await sleep(throttleSpeed);
 
