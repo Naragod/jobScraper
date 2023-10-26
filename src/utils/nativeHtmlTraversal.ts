@@ -2,6 +2,7 @@ import { parseHTML } from "linkedom";
 import { flatten } from "./main";
 import { sanitizeString } from "./parser";
 import { superFetch } from "../proxy/main";
+import { IProxyCallOptions } from "../scrapers/common/interfaces";
 
 export const getLinkedDOMNode = (html: string, pattern = "*") => {
   const { document } = parseHTML(html);
@@ -11,9 +12,9 @@ export const getLinkedDOMNode = (html: string, pattern = "*") => {
 export const getNativeNodeList = async (
   url: string,
   pattern: string,
-  useProxy = false,
+  options: IProxyCallOptions = { useProxy: false, proxyCallType: "datacenter" },
 ): Promise<NodeListOf<Element>> => {
-  const htmlResponse = await superFetch(url, useProxy);
+  const htmlResponse = await superFetch(url, options);
   return getLinkedDOMNode(htmlResponse, pattern);
 };
 
