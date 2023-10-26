@@ -13,7 +13,7 @@ export interface IApplicationInfo {
   company: string;
   location: string;
   pay: string;
-  description?: string[];
+  description?: string;
   commitment?: string;
   workplaceType?: string;
   jobProvider?: string;
@@ -43,6 +43,12 @@ export interface IApplicationQuestion {
   err: any;
 }
 
+export interface IProxyCallOptions {
+  useProxy?: boolean;
+  sessionId?: string;
+  proxyCallType?: "datacenter" | "unblocker";
+}
+
 export interface IJobSearchOptions {
   searchTerm: string;
   age?: number;
@@ -52,6 +58,7 @@ export interface IJobSearchOptions {
   location?: string;
   commitment?: string;
   workplaceType?: string | number;
+  country?: string;
 }
 
 export interface JobInfoGetterFn {

@@ -15,6 +15,7 @@ export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<E
     const location = flatten(getAllInnerTextElements(html, ".posting-headline .location", REGEXES))[0];
     const description = flatten(getAllInnerTextElements(html, "[data-qa='job-description']", REGEXES));
     const department = flatten(getAllInnerTextElements(html, ".posting-headline .department", REGEXES))[0];
+    const commitment = flatten(getAllInnerTextElements(html, ".posting-headline .commitment", REGEXES))[0];
     const workplaceType = flatten(getAllInnerTextElements(html, ".posting-headline .workplaceTypes", REGEXES))[0];
 
     return {
@@ -22,9 +23,10 @@ export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<E
       company,
       pay: "",
       location,
+      commitment,
       department,
       workplaceType,
-      description: [...new Set(description)],
+      description: [...new Set(description)].join(", "),
     };
   } catch (err) {
     console.error(err);
