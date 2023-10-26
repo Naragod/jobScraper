@@ -18,6 +18,20 @@ const getScrapers = async (): Promise<{ [key: string]: Scraper }> => {
   };
 };
 
+export const scrapeJobsNativelyOn = async (
+  jobBoard: string,
+  searchTerm: string,
+  location: string,
+  age: number,
+  searchSize = 100,
+) => {
+  const scrapers = await getScrapers();
+  const scraper = scrapers[`${jobBoard}Scraper`];
+
+  if (scraper == undefined) throw new Error(`Invalid Scraper Name: ${scraper}`);
+  await scraper.scrapeJobsNatively({ searchTerm, location, age }, searchSize);
+};
+
 export const scrapeNatively = async (searchTerm: string, location: string, age: number, searchSize = 100) => {
   const scrapers = await getScrapers();
 
