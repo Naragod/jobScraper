@@ -1,0 +1,5 @@
+{
+  "baseURL": "https://jobs.toronto.ca",
+  "recreationURL": "https://jobs.toronto.ca/recreation/search",
+  "cityURL": "https://jobs.toronto.ca/jobsatcity/search"
+}

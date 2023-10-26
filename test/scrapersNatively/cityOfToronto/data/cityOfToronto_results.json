@@ -1,0 +1,180 @@
+{
+  "nurseApplication": {
+    "applicationInfo": {
+      "title": "NURSE PRACTITIONER",
+      "company": "cityOfToronto",
+      "pay": "$62.07 - $67.16, Wage Grade 16",
+      "commitment": "Permanent, Full-Time Vacancy",
+      "description": "{\"jobId\":\"30445\",\"category\":\"Health Care\",\"section\":\"Seniors Services & Long Term Care, LTC Regional Services\",\"affiliation\":\"L79 Full-Time\"}"
+    },
+    "jobRequirements": {
+      "tasks": [
+        "Delivers primary health care to residents in the Long-Term Care Home in the management of acute and chronic medical conditions, therapeutic management, health promotion and diseaseinjury prevention in order to deliver comprehensive health services.",
+        "Conducts focused health assessment using and adapting assessment tools and techniques based on resident needs.",
+        "Completes health history into resident's situation, including physical, psychosocial, emotional, cultural and ethnic dimensions of health.",
+        "Performs physical examination and identifies and interprets normal and abnormal findings.",
+        "Orders diagnostic investigations, and interprets results using evidence-based clinical reasoning.",
+        "Synthesizes health information using critical inquiry and clinical reasoning to formulate a diagnosis, health risks and states of healthillness.",
+        "Communicates with residents about the health assessment findings andor diagnosis, including outcomes and prognosis through the application of knowledge of pathophysiology, psychopathology, epidemiology, infectious diseases, behavioural sciences and family processes when making diagnoses and providing overall therapeutic management.",
+        "Selects appropriate interventions from a range of non-pharmacological and pharmacological interventions to restore or maintain resident functional, physiological and mental stability to achieve optimal health.",
+        "Promotes safe resident care by mitigating harm and addressing immediate risks for residents and others affected by adverse events and near misses.",
+        "Participates with the Medical Director and other senior management staff in the development and implementation of evaluation processes and the identification of strategies to continually improve clinical outcomes and effectively manage risks.",
+        "Collaborates with senior management in the Division and other community health services in initiatives for the development, implementation and evaluation of systems to promote continuity of resident care across the continuum.",
+        "Ensures Accreditation Canada standards are evident in daily practice.",
+        "Ensures resident files and health care records are properly maintained in compliance with applicable legislation and divisional expectations.",
+        "Identifies, and collaborates with the Medical Director on, educational programs for the care team.",
+        "Ability to incorporate knowledge of diversity, cultural safety and the determinants of health in the assessment, diagnosis and therapeutic management of residents and the evaluation of outcomes",
+        "Ability to exercise independent judgment and to assess situations and problems efficiently and effectively",
+        "Leadership skills, working well within an inter-professional team and ability to foster effective working relationships",
+        "Ability to provide clinical supervision, education and mentoring for nursing students, medical students, and other learners, including residentsfamilies",
+        "Ability to develop and implement evaluation processes and identify strategies to improve clinical outcomes and manage risks",
+        "Strong and effective verbal and written communication skills",
+        "Ability to use computer software such as MS Office applications, email and web applications",
+        "Ability to build and maintain effective relationships and partnerships with a diverse range of stakeholders as well as work effectively within multidisciplinary teams",
+        "Ability to support the Toronto Public Service Values to ensure a culture that champions equity, diversity and respectful workplaces",
+        "Ability to work shifts, evenings, weekends and holidays, as required",
+        "Knowledge of relevant legislation and statutes, including, but not limited to, the Occupational Health and Safety Act and the Fixing Long-Term Care Act",
+        "Good verbal and written communication skills with strong attention to detail",
+        "Ability and willingness to provide a service that enhances the dignity and reflects the diversity of residents",
+        "Current registration with the College of Nurses of Ontario as a Registered Nurse in the Extended Class (Primary Health Care or Adult) and entitled to practise.",
+        "Experience as a Nurse Practitioner in long-term care, acute care, rehabilitation, continuing care or primary care.",
+        "Experience in long-term care, with providing empatheticrelational care for the elderly and those living in long-term care, and clinical work experience with frail older adults, critical care, and mental health as a Nurse Practitioner.",
+        "Certification in Geriatric Nursing from the Canadian Nursing Association or equivalent experience."
+      ]
+    }
+  },
+  "techLeaderApplication": {
+    "applicationInfo": {
+      "title": "CORPORATE APPLICATION TECHNICAL LEADER (MS Automation Admin)",
+      "company": "cityOfToronto",
+      "location": "Toronto, 703 Don Mills Road",
+      "pay": "$53.05 - $58.15",
+      "commitment": "Full Time, Permanent Vacancy",
+      "description": "{\"jobId\":\"39826\",\"category\":\"Information & Technology\",\"section\":\"Technology Services, Technology Services Delivery\",\"affiliation\":\"L79 Full-time\"}"
+    },
+    "jobRequirements": {
+      "tasks": [
+        "Directs business and technical inter-divisional staff and professional services to deliver and sustain complex, critical enterprise business applications and information through the application life-cycle and reports progress to manager, stakeholders and team members and ensures successful delivery of solutions adhering to project management methodology",
+        "Directs the day to day work output of staff and resources including the scheduling, assigning and reviewing of work tasks to ensure a continuing and consistent service by sustaining complex, critical enterprise business applications and information.",
+        "Negotiates amongst divisional business and technical stakeholders with multiple points of view to drive consensus for corporate-wide solution designs.",
+        "Brings together multiple stakeholders from across all divisions and provides expert advice within the context of corporate architectures, standards, policies, procedures and emerging technologies.",
+        "Determines project requirements, analyzes and recommends feasible options, designs, builds andor codes, acquires, tests, and implements enterprise information structures and applications, and sustains information technology solutions to meet critical City-wide and divisional business objectives and to provide scalable enterprise solutions.",
+        "Applies technical expertise to recommend, develop and maintain corporate policies, procedures and standards that are consistent with legislation to ensure enterprise information and applications integrity.",
+        "Applies technical expertise to ensure security, privacy and quality assurance requirements are implemented in a manner that delivers business requirements and is consistent with MFIPPA and legislation, thereby ensuring the integrity of complex enterprise information and applications.",
+        "Applies project management expertise to lead andor input to project management and procurement processes including the evaluation and recommendation of complex technical solutions and professional services.",
+        "On a project basis, provides direction and assigns work to non-I&T positions e.g. divisional unit staff (management & bargaining-unit).",
+        "Applies technical expertise to develop andor input to procurement and project management documentation. Examples include business cases, RFIPQs, Sole Sources, statements of work, service level agreements, project charters, project plans, status reports, issue logs, change orders, resource plans, budgets, migration plans, contingency plans, and risk assessments.",
+        "Communicates effectively e.g., leading and facilitating meetings, preparing and delivering presentations and reports. Audiences include businessproject managers, project team members and other orders of government and external parties.",
+        "Develops andor applies complex business and application models, information structures, data models, data schemas, technical program code, network and security interfaces, data and application design as governed by architectural frameworks, technology standards, information policies and legislative requirements.",
+        "Applies a strong understanding of information and technology industry and City priorities over both the short and longer term to advise, develop and maintain City infrastructures, methodologies, tools and techniques; ensures conformance and adherence in daily practice among business and technical teams.",
+        "Actively participates in corporate and cross-divisional initiatives to design, construct and implement business and application infrastructure solutions, such as data warehousing, document management and electronic service delivery.",
+        "Analyzes and recommends changes to current business practices, business and information processes, data flows, performance measures, information delivery and knowledge utilization toward a more efficiently managed and coherently integrated information environment for all divisions in the City.",
+        "Generates the plan and directs the project team in the execution of software upgrade activities.",
+        "Applies technical expertise to perform analysis, development and testing for new or enhancements to existing complex, critical enterprise business applications and information.",
+        "Applies technical expertise to support the development and testing environments of complex computing solutions.",
+        "Strong customer service orientation along with a demonstrated ability to establish and maintain effective stakeholder relationships.",
+        "Ability to elicit, drive andor develop application requirements to ensure that business needs and requirements have been adequately defined and documented, andor the root cause of the problem accurately stated.",
+        "Excellent problem-solving, leadership, facilitation, and interpersonal skills.",
+        "Ability to work effectively as a member of a team, collaboratively with others in a multidisciplinary team environment and independently, as required.",
+        "Advanced time management and estimation capabilities and ability to perform several tasks and projects concurrently.",
+        "Knowledge of current and emerging technologies, and skills to evaluate and recommend new technology for introduction into a complex technical environment.",
+        "Ability to develop, maintain and execute both test plans and disaster recovery plans.",
+        "Ability to work flexible hours including days, afternoons, nights and weekends, as required.",
+        "Ability to be on call for support of production systems, as required.",
+        "Ability to travel across various office locations within the City of Toronto, as required.",
+        "Post-secondary education in Computer Science or a related discipline, or the approved equivalent combination of education andor experience.",
+        "Extensive working knowledge of Microsoft server technologies with extensive experience in an enterprise, large infrastructure environment comprised of at least 1,000 Microsoft Servers, on Group Policy, DNS, DHCP, Active Directory and patch management in supporting Microsoft Windows Server 202220192016 environments.",
+        "Experience designing and deploying Windows 202220192016 clustering Services, secured and hardening Windows 202220192016 Server OS.",
+        "Experience in proficiency in scripting languages such as PowerShell, Python or JSON for automating tasks and serverinfrastructure deployment tools.",
+        "Experience with managing digital certificates, including applying for, installing, renewing, and revoking certificates.",
+        "Experience with knowledge of Transport Layer Security (TLS) protocols, which provide privacy and data integrity between applications communicating over a network.",
+        "Experience of virtualization technologies, including concepts like virtual machines (VMs), virtual networking, and virtual storage.",
+        "Considerable experience in project management, leading projects, and teams, utilizing project management software and successfully completing business solution projects according to an established methodology."
+      ]
+    }
+  },
+  "waterTechApplication": {
+    "applicationInfo": {
+      "title": "WATER SERVICE TECHNICIAN 1",
+      "company": "cityOfToronto",
+      "pay": "$35.38",
+      "commitment": "Full-time, Permanent Vacancies",
+      "location": "Toronto, Finch Yard, 1026 Finch Avenue West, Toronto, M3J 2E1",
+      "description": "{\"category\":\"Audit, Compliance & Inspections\",\"section\":\"Toronto Water, TW Customer & Technical Support\",\"affiliation\":\"Local 416 Outside\"}"
+    },
+    "jobRequirements": {
+      "tasks": [
+        "Job Category: Audit, Compliance & Inspections",
+        "Division & Section: Toronto Water, TW Customer & Technical Support",
+        "Work Location: Finch Yard, 1026 Finch Avenue West, Toronto, M3J 2E1",
+        "Job Type & Duration: Full-time, Permanent Vacancies",
+        "Hourly Rate: $35.38",
+        "Hours & Shift Information: Monday to Sunday, 40 hours per week",
+        "Affiliation: Local 416 Outside",
+        "Number of Positions Open: 4",
+        "Posting Period: 24-Oct-2023 to 07-Nov-2023",
+        "Responds and interacts to customer service enquiries related to operations, maintenance, andor repairs andor assesses performance of water and wastewater systems and appurtenances, such as water meters.",
+        "Acts as the first response to spills and clean ups.",
+        "Assesses, prioritizes and determines the level of response required to correct or deal with the activities related to water and wastewater.",
+        "Operates light equipment specific to water and wastewater operations.",
+        "Prepares and monitors emergency sites by erecting barricades and traffic control signs.",
+        "Utilizes a variety of hand and power tools and equipment associated with water and wastewater operations.",
+        "May provide work direction to others.",
+        "May provide training to others.",
+        "Reads water and wastewater field drawings.",
+        "Ensures that work is performed in a clean and safe manner.",
+        "Maintains accurate daily records utilizing field sheets andor electronic devices.",
+        "Performs field water quality tests.",
+        "Performs related work as required.",
+        "Ability to inspect, maintain, install, remove, replace, repair, rebuild, service, perform diagnostics, assess and perform accuracy tests for all water meter transmission units (MTU) and water meters less than or equal to one inch (25mm) in diameter including seasonal water meters and connections and valves related to andor affecting such water meters, and testify if required.",
+        "Ability to provide work direction to others.",
+        "Ability to analyze and resolve problems, conflicting situations and determine required course of action.",
+        "Ability to communicate clearly and effectively, both verbally and in writing.",
+        "Ability to work independently, assessing multiple priorities and taking ownership for assigned tasks.",
+        "Must be familiar with requirements of the Occupational Health and Safety Act and its regulations and procedures for the safe performance of hisher duties and responsibilities.",
+        "Knowledge of Provincial and Municipal legislation, standards, regulations and procedures as it relates to safe drinking water.",
+        "Ability to maintain vehicles and equipment in a clean, tidy and safe condition.",
+        "Must be able to work shiftsweekends and standby in accordance with Collective Agreement.",
+        "Ability to work overtime and call-ins as required.",
+        "Ability to report to various work sites in a timely and efficient manner and perform work in confined spaces.",
+        "Must be physically capable of performing required duties (accommodation will be provided in all parts of the hiring process as required under the City’s Employment Accommodation Policy and the Joint Modified Work Program in the Collective Agreement) and able to work in all weather conditions.",
+        "Must have an Ontario Secondary School Diploma or approved equivalent.",
+        "Must possess and be able to maintain Ministry of Environment Water Distribution Class 1 Certificate of Competency or have successfully completed the Ministry's entry level course for drinking water operators and have passed the class 1 drinking water examination (OIT), or must be able to obtain and maintain a Ministry of Environment Water Distribution Class 1 Certificate of Competency within sixteen (16) months after being offered the position.",
+        "Must possess or be able obtain the Water Meter Installation Certification.",
+        "Must possess and be able to maintain a valid Province of Ontario Class G and qualify for the City’s drivers’ permit.",
+        "Must have experience interacting and communicating with both internal and external customers.",
+        "Considerable experience in the operation, maintenance, assessment and installation of water distribution andor wastewater collection services and appurtenances, including water meters and all related equipment.",
+        "Experience operating and knowledge of various computer applications and electronic devices.",
+        "Experience in reading field, engineering and utility drawings, including interpreting drawings and specifications."
+      ]
+    }
+  },
+  "visualArtsApplication": {
+    "applicationInfo": {
+      "title": "Visual Arts Instructor (Drawing//Painting/Pottery) - North York District",
+      "pay": "$23.64",
+      "company": "cityOfToronto",
+      "location": "Toronto, TBD",
+      "commitment": "Temporary, Part-time",
+      "description": "{\"category\":\"Arts\"}"
+    },
+    "jobRequirements": {
+      "tasks": [
+        "Plans, organizes, implements and instructs program session for Visual Arts programs for a variety of ages.",
+        "Prepares lesson plans based on program curriculum prior to the start of the program session.",
+        "Ensures necessary supplies and equipment list is provided prior to start of session to the appropriate supervisor.",
+        "Ensures that the appropriate supplies and equipment are in place and operational before the start of each class.",
+        "Ensures that the supplies and equipment are cleaned and stored away after use.",
+        "Trains, oversees and evaluates Assistant Art Instructors or volunteers assigned to the program.",
+        "Interacts with the public and all internal staff to provide program information.",
+        "Adheres to all policy and safety guidelines as outlined in the Part Time Recreation Workers Handbook and all relevant policy and procedure manuals.",
+        "Performs administrative tasks necessary to support the program (i.e. attendance, incident and accident reports).",
+        "Follows the principles of Healthy Child Development (HIGH FIVE) in the planning and delivery of programs. Follows the principles of Healthy Child Development (HIGH FIVE) in the planning and delivery of programs.",
+        "Demonstrated ability to teach appropriate age group, demonstrated artistic ability (portfolio), leadership training or volunteer experience",
+        "Formal training and experience or post secondary qualifications in a related field is an asset.",
+        "Must attend and successfully complete related mandatory and in-service training sessions (NEO  New Employee Orientation).",
+        "Must produce original current Emergency First Aid certification as recognized by the WSIB."
+      ]
+    }
+  }
+}
