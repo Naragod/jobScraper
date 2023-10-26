@@ -9,7 +9,6 @@ import { removeExcessArrayItems } from "../../utils/parser";
 import { executeInParallel } from "./nativeExecutionSupport";
 import { getChannel } from "../../queue/main";
 import { parseJobLinksFromQueue, queueJobLinks } from "../../queue/jobLinkImplementation";
-import { concatAll, from, map } from "rxjs";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 
@@ -35,6 +34,10 @@ export class Scraper {
   public channel: any;
   constructor(private jobBoard: JobBoard) {
     this.jobBoard = jobBoard;
+  }
+
+  public getName (){
+    return this.jobBoard.name
   }
 
   public async getChannel() {
