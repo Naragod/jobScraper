@@ -11,10 +11,9 @@ describe("Proxy", () => {
     const sessionId = "abcd";
 
     for (let i = 0; i < 3; i++) {
-      const result = await callProxy("https://lumtest.com/myip.json", sessionId);
-      console.log(result)
+      const result = await callProxy("https://lumtest.com/myip.json", { proxyCallType: "datacenter", sessionId });
+      console.log(result);
     }
     expect(1).toBe(2);
-
   });
 });
