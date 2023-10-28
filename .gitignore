@@ -6,7 +6,7 @@ email_config.json
 # **.config.json
 coverage
 .env**
-
+**/__pycache__/
 # ignore auto generated test files
 *.spec.js
 *.spec.js.map
