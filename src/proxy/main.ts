@@ -5,12 +5,12 @@ import { IProxyCallOptions } from "../scrapers/common/interfaces";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 const APIOPTIONS = {
-  host: process.env.PROXY_DATACENTER_HOST,
-  port: process.env.PROXY_DATACENTER_PORT,
-  datacenter_username: process.env.PROXY_DATACENTER_USERNAME,
-  datacenter_password: process.env.PROXY_DATACENTER_PASSWORD,
-  unblocker_username: process.env.PROXY_UNBLOCKER_USERNAME,
-  unblocker_password: process.env.PROXY_UNBLOCKER_PASSWORD,
+  host: process.env.PROXY_DATACENTER_HOST || "",
+  port: process.env.PROXY_DATACENTER_PORT || "",
+  datacenter_username: process.env.PROXY_DATACENTER_USERNAME || "",
+  datacenter_password: process.env.PROXY_DATACENTER_PASSWORD || "",
+  unblocker_username: process.env.PROXY_UNBLOCKER_USERNAME || "",
+  unblocker_password: process.env.PROXY_UNBLOCKER_PASSWORD || "",
 };
 
 const httpsProxyGetCall = async (url: string, proxy: any) => {

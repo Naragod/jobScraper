@@ -27,7 +27,6 @@ export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJo
   let citySearchUrl = `${cityURL}?q=${searchTerm}`;
   let recreationSearchUrl = `${recreationURL}?q=${searchTerm}`;
   const cityLinks = [citySearchUrl, recreationSearchUrl];
-  console.log("cityLinks:", cityLinks);
   const page = await getBrowserPage();
 
   for (let link of cityLinks) {
