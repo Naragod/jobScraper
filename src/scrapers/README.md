@@ -34,3 +34,6 @@ Job Posting Example: https://www.cais.ca/careers#career19767
 
 Website: https://www.cisontario.ca/professional-learning/job-search/jobs-at-cisaa-member-schools
 Job Posting Example: https://www.cisontario.ca/professional-learning/job-search/job-posting-detail/~board/member-job-postings/post/supply-teacher-smls
+
+Website: https://risepeople.com/
+Job Posting Example: https://careers.risepeople.com/rise/en/8100_software-engineer-%E2%80%94-.net
