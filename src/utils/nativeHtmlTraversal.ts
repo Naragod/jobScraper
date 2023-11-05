@@ -46,6 +46,11 @@ export const getAllInnerTextElements = (nodeList: NodeListOf<Element>, pattern: 
   return executeCallbackOnNodeList(nodeList, pattern, callback);
 };
 
+// specific implementation of executeCallbackOnNodeList
+export const getAllHrefLinks = (nodeList: NodeListOf<Element>, pattern: string) => {
+  return flatten(executeCallbackOnNodeList(nodeList, pattern, (el: any) => el.href));
+};
+
 export const getElementAfterNatively = (
   nodeList: NodeListOf<Element>,
   elementType: string,
