@@ -7,43 +7,48 @@ dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 const APIOPTIONS = {
   host: process.env.PROXY_DATACENTER_HOST || "",
   port: process.env.PROXY_DATACENTER_PORT || "",
-  datacenter_username: process.env.PROXY_DATACENTER_USERNAME || "",
-  datacenter_password: process.env.PROXY_DATACENTER_PASSWORD || "",
-  unblocker_username: process.env.PROXY_UNBLOCKER_USERNAME || "",
-  unblocker_password: process.env.PROXY_UNBLOCKER_PASSWORD || "",
 };
 
-const httpsProxyGetCall = async (url: string, proxy: any) => {
-  const { data } = await axios.get(url, { proxy, httpsAgent: new Agent({ rejectUnauthorized: false }) });
+const SERVICE_INFORMATION: any = {
+  datacenter: {
+    username: process.env.PROXY_DATACENTER_USERNAME || "",
+    password: process.env.PROXY_DATACENTER_PASSWORD || "",
+  },
+  unblocker: {
+    username: process.env.PROXY_UNBLOCKER_USERNAME || "",
+    password: process.env.PROXY_UNBLOCKER_PASSWORD || "",
+  },
+};
+
+const httpsProxyGetCall = async (url: string, config: any) => {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  const { host, port, username: usernameWithoutSessionId, sessionId, password, proxyCallType } = config;
+  const usernameWithSessionId = `${usernameWithoutSessionId}-session-${sessionId}`;
+  const username = sessionId.length > 0 ? usernameWithSessionId : usernameWithoutSessionId;
+  const proxy = { host, port, auth: { username, password } };
+
+  const { data } = await axios
+    .get(url, { proxy, httpsAgent: new Agent({ rejectUnauthorized: false }) })
+    .catch((err) => {
+      console.error(`httpsProxyGetCall Failed -- ${proxyCallType}:`, url, err.message);
+      throw err;
+    });
   return data;
 };
 
 // unique sessionIds will be assigned unique IP addresses
 // https://help.brightdata.com/hc/en-us/articles/13719730577937#heading-6
-export const callProxy = async (
-  url: string,
-  options: IProxyCallOptions = { useProxy: true, proxyCallType: "datacenter" },
-) => {
-  const { proxyCallType } = options;
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+export const callProxy = async (url: string, options: IProxyCallOptions = { proxyCallType: "datacenter" }) => {
+  const { host, port } = APIOPTIONS;
+  const { proxyCallType, sessionId = "" } = options;
 
-  if (proxyCallType == "datacenter") {
-    const { sessionId = "" } = options;
-    const { host, port, datacenter_username: usernameWithoutSessionId, datacenter_password: password } = APIOPTIONS;
-    const usernameWithSessionId = `${usernameWithoutSessionId}-session-${sessionId}`;
-    const username = sessionId.length > 0 ? usernameWithSessionId : usernameWithoutSessionId;
-    const proxy: any = { host, port, auth: { username, password } };
-    return await httpsProxyGetCall(url, proxy).catch((err) => {
-      console.error("httpsProxyGetCall Failed -- datacenter:", url, err.message);
-      return <any>"";
-    });
-  }
-  const { host, port, unblocker_username: username, unblocker_password: password } = APIOPTIONS;
-  const proxy: any = { host, port, auth: { username, password } };
-  return await httpsProxyGetCall(url, proxy).catch((err) => {
-    console.error("httpsProxyGetCall Failed -- unblocker:", url, err.message);
-    return <any>"";
-  });
+  const service = SERVICE_INFORMATION[<string>proxyCallType];
+  if (service == undefined) throw new Error(`Unknown proxyCallType: ${proxyCallType}`);
+
+  const password = service["password"];
+  const username = service["username"];
+  const config = { host, port, username, password, sessionId, proxyCallType };
+  return await httpsProxyGetCall(url, config);
 };
 
 export const superFetch = async (url: string, options: IProxyCallOptions) => {
