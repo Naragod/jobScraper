@@ -2,7 +2,7 @@ import { Page } from "playwright";
 import { recreationURL, cityURL, baseURL } from "../../config/cityOfToronto.config.json";
 import { getLinkedDOMNode } from "../../utils/nativeHtmlTraversal";
 import { AllJobsLinksGetterFn, IJobSearchOptions } from "../common/interfaces";
-import { closeBrowser, getBrowserPage } from "../common/playwrightBrowserSupport";
+import { getBrowserPage } from "../common/playwrightBrowserSupport";
 
 const expandList = async (page: Page, pattern: string) => {
   while (true) {
@@ -35,6 +35,6 @@ export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJo
     const links = await getLinks(page, "a.jobTitle-link");
     result = [...new Set(result.concat(links))];
   }
-  closeBrowser();
+  await page.close()
   return result;
 };

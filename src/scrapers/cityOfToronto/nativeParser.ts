@@ -59,10 +59,9 @@ export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<E
 };
 
 export const getJobRequirementsNatively = (html: NodeListOf<Element>): IJobRequirements => {
-  let result: string[] = [];
   const regexes = [new RegExp("\n", "gi"), new RegExp("/", "g")];
   const cleanTextContent = (child: Element, _i: number) => sanitizeString(child.textContent, regexes).split("\t");
   const applicationInfoList: any[] = flatten(executeCallbackOnNodeList(html, "ul", cleanTextContent)).slice(3, -1);
   const orderedApplicationInfoList: any[] = flatten(executeCallbackOnNodeList(html, "ol", cleanTextContent));
-  return { tasks: [...new Set(result.concat(applicationInfoList, orderedApplicationInfoList))] };
+  return { tasks: [...new Set(applicationInfoList.concat(orderedApplicationInfoList))] };
 };
