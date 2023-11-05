@@ -21,13 +21,14 @@ searchRouter.get("/", async (req: Request, res: Response) => {
 });
 
 searchRouter.get("/searchnatively", async (req: Request, res: Response) => {
+  let result: any = {};
   const { searchTerm, location, searchSize, age = 7, jobBoard } = req.query;
 
   if (jobBoard)
-    await scrapeJobsNativelyOn(<string>jobBoard, <string>searchTerm, <any>location, <any>age, <any>searchSize);
-  else await scrapeNatively(<string>searchTerm, <any>location, <any>age, <any>searchSize);
+    result = await scrapeJobsNativelyOn(<string>jobBoard, <string>searchTerm, <any>location, <any>age, <any>searchSize);
+  else result = await scrapeNatively(<string>searchTerm, <any>location, <any>age, <any>searchSize);
 
-  return res.send("hitting the scrapeNatively endpoint");
+  return res.json(result);
 });
 
 searchRouter.get("/searchOn", async (req: Request, res: Response) => {

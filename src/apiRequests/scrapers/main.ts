@@ -3,6 +3,7 @@ import { getScraper as getJobsOnLinkedInScraper } from "../../scrapers/linkedIn/
 import { getScraper as getCanadaJobBoardScraper } from "../../scrapers/canadaJobBank/main";
 import { getScraper as getJobsOnCityOfTorontoScraper } from "../../scrapers/cityOfToronto/main";
 import { Scraper } from "../../scrapers/common/applicationHandler";
+import { IJobInfo } from "../../scrapers/common/interfaces";
 
 const getScrapers = async (): Promise<{ [key: string]: Scraper }> => {
   const canadaJobBoardScraper = await getCanadaJobBoardScraper();
@@ -26,18 +27,26 @@ export const scrapeJobsNativelyOn = async (
   searchSize = 100,
 ) => {
   const scrapers = await getScrapers();
-  const scraper = scrapers[`${jobBoard}Scraper`];
+  const scraperName = `${jobBoard}Scraper`;
+  const scraper = scrapers[`${scraperName}`];
 
-  if (scraper == undefined) throw new Error(`Invalid Scraper Name: ${scraper}`);
-  await scraper.scrapeJobsNatively({ searchTerm, location, age }, searchSize);
+  if (scraper == undefined) return { error: `Invalid Scraper: ${scraperName}` };
+  const jobInfoList = await scraper.scrapeJobsNatively({ searchTerm, location, age }, searchSize);
+  const result: any = { totalCount: jobInfoList.length };
+  result[scraperName] = { count: jobInfoList.length, jobInfoList };
+  return result;
 };
 
 export const scrapeNatively = async (searchTerm: string, location: string, age: number, searchSize = 100) => {
+  let result: any = { totalCount: 0, jobInfoList: [] };
   const scrapers = await getScrapers();
 
   for (let [_key, scraper] of Object.entries(scrapers)) {
-    await scraper.scrapeJobsNatively({ searchTerm, location, age }, searchSize); // synchronous implementation
+    let jobInfoList = await scraper.scrapeJobsNatively({ searchTerm, location, age }, searchSize); // synchronous implementation
+    result["totalCount"] += jobInfoList.length;
+    result["jobInfoList"] = result["jobInfoList"].concat(jobInfoList);
   }
+  return result;
 };
 
 export const searchJobs = async (searchTerm: string, location: string, age: number, searchSize = 100) => {
