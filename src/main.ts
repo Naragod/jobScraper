@@ -10,6 +10,8 @@ const main = () => {
 
 try {
   main();
+
+  // await closeBrowser();
 } catch (err) {
   console.error(err);
   main();
