@@ -18,6 +18,7 @@ export interface IApplicationInfo {
   workplaceType?: string;
   jobProvider?: string;
   department?: string;
+  externalLink?: string;
   extra?: any;
 }
 
