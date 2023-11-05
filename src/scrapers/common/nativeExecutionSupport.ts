@@ -31,7 +31,8 @@ export const executeInParallel = async (jobLinks: string[], handler: any, option
     }
   }
   (await Promise.allSettled(promiseQueue)).map((resolvedP: any) => {
-    if (resolvedP.value.err == false) return result.push(resolvedP.value);
+    if (resolvedP != undefined && resolvedP.value != undefined && resolvedP.value.err == false)
+      return result.push(resolvedP.value);
     jobsToRetry.push(resolvedP.value);
   });
   return { result, jobsToRetry };

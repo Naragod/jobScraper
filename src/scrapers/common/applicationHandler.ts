@@ -95,15 +95,16 @@ export class Scraper {
     try {
       let applicationPage = 0;
       let applicationsViewed = 0;
-      const now = new Date().toISOString();
+      // const now = new Date().toISOString();
       let jobsInformation: IJobInfo[] = [];
       const { getJobInformation, getAllJobPageLinks, formatters, name: jobBoardName } = this.jobBoard;
+      console.log(`Scraping using: ${jobBoardName}`)
 
       while (applicationsViewed < applicationLimit) {
         applicationPage += 1;
         searchParams["page"] = applicationPage;
         let jobLinks = await getAllJobPageLinks(searchParams);
-        const jobToRetryFileName = `./jobs_to_retry/${searchParams.searchTerm}_${applicationPage}_${now}.json`;
+        // const jobToRetryFileName = `./jobs_to_retry/${searchParams.searchTerm}_${applicationPage}_${now}.json`;
 
         if (jobLinks.length == 0) break;
         jobLinks = removeExcessArrayItems(jobLinks, applicationsViewed, applicationLimit);
@@ -115,7 +116,7 @@ export class Scraper {
         await saveJobsInfo(result, formatters, jobBoardName);
 
         if (jobsToRetry.length == 0) continue;
-        writeFileSync(jobToRetryFileName, JSON.stringify(jobsToRetry));
+        // writeFileSync(jobToRetryFileName, JSON.stringify(jobsToRetry));
       }
 
       return jobsInformation;
