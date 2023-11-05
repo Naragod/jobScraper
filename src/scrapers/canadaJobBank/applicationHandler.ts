@@ -1,7 +1,7 @@
 import { Page } from "playwright";
 import { JobInfoGetterFn, JobInfoGetterNativelyFn } from "../common/interfaces";
 import { getApplicationBasicInfo, getJobRequirements } from "./parser";
-import { getApplicationBasicInfoNatively, getJobRequirementsNatively } from "./nativeParser";
+import { getApplicationBasicInfoNatively, getExternalLink, getJobRequirementsNatively } from "./nativeParser";
 
 export const getJobInformation: JobInfoGetterFn = async (link: string, page: Page) => {
   try {
@@ -33,8 +33,7 @@ export const getJobInformationNatively: JobInfoGetterNativelyFn = (link: string,
 
     if (applicationInfo.jobProvider !== "Job Bank") {
       console.log("Job requires application on website");
-      // we will eventually want to get the external link.
-      // leave this process for a dom handler. Current step is getting job information. i.e. parsing the job.
+      applicationInfo["externalLink"] = getExternalLink(html);
       return { link, applicationInfo, jobRequirements: { tasks: [] }, err: false };
     }
     const jobRequirements = getJobRequirementsNatively(html);

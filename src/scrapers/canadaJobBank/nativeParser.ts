@@ -2,10 +2,11 @@ import { findElementsInElement } from "../../utils/htmlTraversal";
 import { destructureObj, flatten } from "../../utils/main";
 import {
   locator,
+  getInnerText,
+  getAllHrefLinks,
   getAllInnerTextElements,
   getElementAfterNatively,
   executeCallbackOnNodeList,
-  getInnerText,
 } from "../../utils/nativeHtmlTraversal";
 import { IApplicationInfo, IJobRequirements } from "../common/interfaces";
 
@@ -22,6 +23,10 @@ const jobInfoMapper = (child: Element, i: number) => {
   } else return;
 
   return result;
+};
+
+export const getExternalLink = (html: NodeListOf<Element>): string => {
+  return getAllHrefLinks(html, "#externalJobLink")[0];
 };
 
 export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>): IApplicationInfo => {
