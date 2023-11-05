@@ -9,6 +9,7 @@ SELECT
 	ji.commitment,
     ji.description,
     ji.link,
+    ji.external_link,
     jr.tasks
 FROM
     jobs

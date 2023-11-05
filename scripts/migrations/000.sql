@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS job_information(
 CREATE TABLE IF NOT EXISTS job_requirements(
     -- hash of job job_requirements properties
     id TEXT PRIMARY KEY,
-    tasks TEXT [] NOT NULL,
+    tasks JSON NOT NULL,
     education TEXT,
     experience TEXT,
     languages TEXT [],
