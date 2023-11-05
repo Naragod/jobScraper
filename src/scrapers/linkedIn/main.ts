@@ -9,7 +9,7 @@ import {
 export const getScraper = async () => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };
   const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
-  const options = { throttleSpeed: 100, jobLinksQueue: "linkedInJobLinks" };
+  const options = { throttleSpeed: 500, jobLinksQueue: "linkedInJobLinks", concurrent: 2 };
   const linkedInScraper = new JobBoard("linkedIn", functions, formatters, options);
   return new Scraper(linkedInScraper);
 };
