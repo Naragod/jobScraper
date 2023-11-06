@@ -26,6 +26,9 @@ psql:
 psql-test:
 	psql postgresql://postgres@localhost:6321/test
 
+psql-prod:
+	psql postgresql://postgres:mateoJasonPassword123!@awsjobs.ccn4xri11eaj.us-east-2.rds.amazonaws.com:5432/postgres
+
 # Utility docker commands
 full-restart:
 	make clean; make up; make migrate;
