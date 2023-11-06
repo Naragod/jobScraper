@@ -3,6 +3,9 @@
 up: 
 	docker compose up 
 
+up-prod:
+	docker-compose up
+
 migrate:
 	npm run migrate
 
