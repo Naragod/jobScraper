@@ -44,7 +44,7 @@ services:
         EXEC_ENV: ${EXEC_ENV}
       dockerfile: Dockerfile
     volumes:
-      - ./:/app/
+      - node_app_data:/app/
     depends_on:
       - db
       - queue
@@ -70,5 +70,6 @@ services:
   # ***************************************************************************
 
 volumes:
+  node_app_data:
   postgres_database_jobscraper_data:
   pgadmin_config:
