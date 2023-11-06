@@ -35,6 +35,9 @@ psql-test:
 psql-prod:
 	psql postgresql://postgres:mateoJasonPassword123!@awsjobs.ccn4xri11eaj.us-east-2.rds.amazonaws.com:5432/postgres
 
+psql-prod-migrate:
+	psql postgresql://postgres:mateoJasonPassword123!@awsjobs.ccn4xri11eaj.us-east-2.rds.amazonaws.com:5432/postgres -f scripts/migrations/000.sql
+
 # Utility docker commands
 full-restart:
 	make clean; make up; make migrate;
