@@ -40,6 +40,8 @@ services:
       static-network:
         ipv4_address: 172.23.0.3
     build:
+      args:
+        EXEC_ENV: ${EXEC_ENV}
       dockerfile: Dockerfile
     volumes:
       - ./:/app/

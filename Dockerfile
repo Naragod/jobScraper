@@ -7,6 +7,13 @@ WORKDIR /app
 
 COPY . /app
 
+ARG EXEC_ENV=dev
+
 RUN npm i
 
-CMD npm run devServer
+# set environment variable from argument
+# arguments are unable to be used once the image has been created
+# https://stackoverflow.com/a/70782808/8714371
+ENV EXEC_ENV_ENV=${EXEC_ENV}
+
+CMD npm run ${EXEC_ENV_ENV}
