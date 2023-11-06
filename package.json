@@ -14,8 +14,7 @@
     "remove-containers": "sudo docker rm $(sudo docker ps -a -q)",
     "staticSearch": "npm run build; ENVIRONMENT=dev node dist/scripts/searches/main.js",
     "dev": "ENVIRONMENT=dev nodemon src/main.ts",
-    "prod": "npm run build; ENVIRONMENT=prod node dist/src/main.js",
-    "testy": "ENVIRONMENT=dev ts-node src/scrapers/scraperHandler.ts"
+    "prod": "npm run build; ENVIRONMENT=prod NODE_TLS_REJECT_UNAUTHORIZED='0' node dist/src/main.js"
   },
   "author": "Mateo Nar",
   "license": "ISC",
