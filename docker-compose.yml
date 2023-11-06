@@ -71,18 +71,18 @@ services:
   # Comment out if already have DB GUI installed
   # Optional
   # ***************************************************************************
-  pgadmin:
-    image: dpage/pgadmin4:7
-    container_name: jobscraper_pg_admin
-    environment:
-      - "PGADMIN_DEFAULT_EMAIL=postgres@gmail.com"
-      - "PGADMIN_DEFAULT_PASSWORD=password"
-    ports:
-      - "6320:80"
-    volumes:
-      - pgadmin_config:/var/lib/pgadmin/data
-    depends_on:
-      - db
+  # pgadmin:
+  #   image: dpage/pgadmin4:7
+  #   container_name: jobscraper_pg_admin
+  #   environment:
+  #     - "PGADMIN_DEFAULT_EMAIL=postgres@gmail.com"
+  #     - "PGADMIN_DEFAULT_PASSWORD=password"
+  #   ports:
+  #     - "6320:80"
+  #   volumes:
+  #     - pgadmin_config:/var/lib/pgadmin/data
+  #   depends_on:
+  #     - db
   # ***************************************************************************
 
 volumes:
