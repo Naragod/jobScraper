@@ -1,6 +1,6 @@
 import hash from "object-hash";
-import { destructureObj } from "../../utils/main";
-import { IJobInfo } from "../../scrapers/common/interfaces";
+import { IJobInfo } from "../../../scrapers/common/interfaces";
+import { destructureObj } from "../../../utils/main";
 
 const getUniqueId = (job: IJobInfo) => {
   const columns = ["id", "title", "link", "company", "location", "pay", "commitment", "externalLink"];

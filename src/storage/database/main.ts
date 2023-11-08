@@ -1,4 +1,4 @@
-import { IJobInfo } from "../scrapers/common/interfaces";
+import { IJobInfo } from "../../scrapers/common/interfaces";
 import { sql } from "./db";
 
 export const saveJobsInfo = async (jobInfo: IJobInfo[], formatters: any, jobBoard: string) => {
@@ -31,11 +31,15 @@ export const saveJobInfo = async (job: IJobInfo, formatters: any, jobBoard: stri
   } catch (err: any) {
     if (err.code == 23505) {
       console.log("Duplicate key contraint violated. Record already exists, continuing.");
-      return;
+      return [];
     }
     console.log("Failed on job:", job, err);
     throw err;
   }
+};
+
+export const getJobsInfo = async (searchTerm: string, location: string, limit = 10) => {
+  return await sql`SELECT * FROM jobs_info_view WHERE title ILIKE ${"%" + searchTerm + "%"} LIMIT ${limit}`;
 };
 
 export const getJobRecord = async (id: string) => {

@@ -1,9 +1,9 @@
-import { cleanDatabase } from "../../src/database/db";
+import { cleanDatabase } from "../../src/storage/database/db";
 import {
   formatToJobInfoTableStructure,
   formatToJobRequirementsStructure,
-} from "../../src/database/formatters/linkedIn.formatter";
-import { saveJobInfo, getJobRecord } from "../../src/database/main";
+} from "../../src/storage/database/formatters/linkedIn.formatter";
+import { saveJobInfo, getJobRecord } from "../../src/storage/database/main";
 import { linkedInDummyJob } from "./data/dummyJob.json";
 
 describe("Database", () => {

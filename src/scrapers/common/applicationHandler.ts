@@ -2,13 +2,13 @@ import dotenv from "dotenv";
 import { writeFileSync } from "fs";
 import { classifyJobs } from "../../classifiers/main";
 import { closeBrowser } from "./playwrightBrowserSupport";
-import { saveJobInfo, saveJobsInfo } from "../../database/main";
+import { saveJobInfo, saveJobsInfo } from "../../storage/database/main";
 import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/interfaces";
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
 import { removeExcessArrayItems } from "../../utils/parser";
 import { executeInParallel } from "./nativeExecutionSupport";
-import { getChannel } from "../../queue/main";
-import { parseJobLinksFromQueue, queueJobLinks } from "../../queue/jobLinkImplementation";
+import { getChannel } from "../../storage/queue/main";
+import { parseJobLinksFromQueue, queueJobLinks } from "../../storage/queue/jobLinkImplementation";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 
@@ -98,7 +98,7 @@ export class Scraper {
       // const now = new Date().toISOString();
       let jobsInformation: IJobInfo[] = [];
       const { getJobInformation, getAllJobPageLinks, formatters, name: jobBoardName } = this.jobBoard;
-      console.log(`Scraping using: ${jobBoardName}`)
+      console.log(`Scraping using: ${jobBoardName}`);
 
       while (applicationsViewed < applicationLimit) {
         applicationPage += 1;

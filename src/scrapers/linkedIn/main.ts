@@ -4,7 +4,7 @@ import { getAllJobPageLinks } from "./requestHandler";
 import {
   formatToJobInfoTableStructure,
   formatToJobRequirementsStructure,
-} from "../../database/formatters/linkedIn.formatter";
+} from "../../storage/database/formatters/linkedIn.formatter";
 
 export const getScraper = async () => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };

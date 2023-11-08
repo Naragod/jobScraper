@@ -4,7 +4,7 @@ import { JobBoard, Scraper } from "../common/applicationHandler";
 import {
   formatToJobInfoTableStructure,
   formatToJobRequirementsStructure,
-} from "../../database/formatters/canadaJobBank.formatter";
+} from "../../storage/database/formatters/canadaJobBank.formatter";
 
 export const getScraper = async () => {
   const formatters = { formatToJobInfoTableStructure, formatToJobRequirementsStructure };

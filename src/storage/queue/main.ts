@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Channel, ConsumeMessage, connect } from "amqplib";
 import { Observable, Subscriber } from "rxjs";
-import { getRandomHashId } from "../utils/main";
+import { getRandomHashId } from "../../utils/main";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 const { QUEUE_PORT, QUEUE_HOST, MAX_QUEUE_CONSUMERS } = process.env;

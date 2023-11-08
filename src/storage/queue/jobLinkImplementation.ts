@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
+import { sleep } from "../../utils/main";
 import { saveJobInfo } from "../database/main";
-import { JobBoard } from "../scrapers/common/applicationHandler";
-import { sleep } from "../utils/main";
-import { getNativeNodeList } from "../utils/nativeHtmlTraversal";
+import { JobBoard } from "../../scrapers/common/applicationHandler";
+import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
 import { consumeMessagesFromQueue, getChannel, sendMessageToQueue } from "./main";
 
 export const queueJobLinks = async (queueName: string, jobBoardName: string, jobLinks: string[]) => {
@@ -28,6 +28,8 @@ export const parseJobLinksFromQueue = async (jobBoard: JobBoard): Promise<Observ
     await sleep(throttleSpeed);
 
     if (result == null) return;
-    await saveJobInfo(result, formatters, jobBoardName);
+    const savedResult = await saveJobInfo(result, formatters, jobBoardName);
+
+    if (savedResult.length == 0) return;
   });
 };
