@@ -70,6 +70,12 @@ services:
   # ***************************************************************************
 
 volumes:
+  # more info here: https://stackoverflow.com/a/49920624/8714371
   node_app_data:
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: "./" # path to file. This is a bind mount
   postgres_database_jobscraper_data:
   pgadmin_config:
