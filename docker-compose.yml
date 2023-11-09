@@ -49,6 +49,7 @@ services:
   # nodejs app
   nodejs_server:
     image: jobscraper
+    restart: always
     container_name: jobscraper_app
     networks:
       static-network:
