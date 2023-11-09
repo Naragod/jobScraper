@@ -1,9 +1,9 @@
+import { Scraper } from "../../scrapers/common/applicationHandler";
+import { IMetadataSearchOptions } from "../../scrapers/common/interfaces";
 import { getScraper as getJobLeverScraper } from "../../scrapers/jobLever/main";
 import { getScraper as getJobsOnLinkedInScraper } from "../../scrapers/linkedIn/main";
 import { getScraper as getCanadaJobBoardScraper } from "../../scrapers/canadaJobBank/main";
 import { getScraper as getJobsOnCityOfTorontoScraper } from "../../scrapers/cityOfToronto/main";
-import { Scraper } from "../../scrapers/common/applicationHandler";
-import { IJobInfo } from "../../scrapers/common/interfaces";
 
 const getScrapers = async (): Promise<{ [key: string]: Scraper }> => {
   const canadaJobBoardScraper = await getCanadaJobBoardScraper();
@@ -49,11 +49,11 @@ export const scrapeNatively = async (searchTerm: string, location: string, age: 
   return result;
 };
 
-export const searchJobs = async (searchTerm: string, location: string, age: number, searchSize = 100) => {
+export const searchJobs = async (searchTerm: string, location: string, age: number, options: IMetadataSearchOptions) => {
   const scrapers = await getScrapers();
 
   for (let [_key, scraper] of Object.entries(scrapers)) {
-    await scraper.queueJobUrls({ searchTerm, location, age }, searchSize); // uses queues
+    await scraper.queueJobUrls({ searchTerm, location, age }, options); // uses queues
   }
 };
 
@@ -70,13 +70,13 @@ export const searchJobsOn = async (
   searchTerm: string,
   location: string,
   age: number,
-  searchSize = 100,
+  options: IMetadataSearchOptions,
 ) => {
   const scrapers = await getScrapers();
   const scraper = scrapers[`${jobBoard}Scraper`];
 
   if (scraper == undefined) throw new Error(`Invalid Scraper Name: ${scraper}`);
-  await scraper.queueJobUrls({ searchTerm, location, age }, searchSize); // uses queues
+  await scraper.queueJobUrls({ searchTerm, location, age }, options); // uses queues
 };
 
 export const parseJobsOn = async (jobBoard: string, options: any) => {

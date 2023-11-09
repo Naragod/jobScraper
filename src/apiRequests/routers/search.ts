@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { Request, Response, Router } from "express";
 import {
   searchJobs,
@@ -11,13 +12,18 @@ import {
 export const searchRouter = Router({ caseSensitive: true });
 
 searchRouter.get("/", async (req: Request, res: Response) => {
-  const { searchTerm, location, searchSize, age = 7 } = req.query;
+  const { requestidentifier = uuidv4() } = req.headers;
+  const { searchTerm, location, searchSize = 20, age = 7 } = req.query;
+  console.log(requestidentifier);
 
-  await searchJobs(<string>searchTerm, <any>location, <any>age, <any>searchSize);
+  setTimeout(() => res.send("Search initated..."), 8000);
 
-  await parseJobs({ numOfWorkers: 5 });
+  searchJobs(<string>searchTerm, <any>location, <any>age, {
+    searchSize: <any>searchSize,
+    requestidentifier: <any>requestidentifier,
+  });
 
-  return res.send("hitting the search endpoint");
+  parseJobs({ numOfWorkers: 5 });
 });
 
 searchRouter.get("/searchnatively", async (req: Request, res: Response) => {
@@ -32,9 +38,13 @@ searchRouter.get("/searchnatively", async (req: Request, res: Response) => {
 });
 
 searchRouter.get("/searchOn", async (req: Request, res: Response) => {
+  const { requestidentifier = uuidv4() } = req.headers;
   const { jobBoard, searchTerm, location, searchSize, age = 7 } = req.query;
 
-  await searchJobsOn(<string>jobBoard, <string>searchTerm, <any>location, <any>age, <any>searchSize);
+  await searchJobsOn(<string>jobBoard, <string>searchTerm, <any>location, <any>age, {
+    searchSize: <any>searchSize,
+    requestidentifier: <any>requestidentifier,
+  });
 
   await parseJobsOn(<string>jobBoard, { numOfWorkers: 5 });
 
