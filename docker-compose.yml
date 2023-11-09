@@ -8,21 +8,21 @@ networks:
 
 services:
   # Postgres with pgvector extension
-  db:
-    image: ankane/pgvector
-    container_name: jobscraper_db
-    restart: always
-    networks:
-      static-network:
-        ipv4_address: 172.23.0.2
-    volumes:
-      - postgres_database_jobscraper_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    ports:
-      - "6321:5432"
+  # db:
+  #   image: ankane/pgvector
+  #   container_name: jobscraper_db
+  #   restart: always
+  #   networks:
+  #     static-network:
+  #       ipv4_address: 172.23.0.2
+  #   volumes:
+  #     - postgres_database_jobscraper_data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_HOST_AUTH_METHOD=trust
+  #   ports:
+  #     - "6321:5432"
 
   redis:
     image: redis:7.2.3
@@ -61,7 +61,6 @@ services:
     volumes:
       - node_app_data:/app/
     depends_on:
-      - db
       - redis
       - queue
     ports:
