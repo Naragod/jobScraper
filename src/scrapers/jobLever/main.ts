@@ -11,5 +11,5 @@ export const getScraper = async () => {
   const functions = { getJobInformation: getJobInformationNatively, getAllJobPageLinks };
   const options = { throttleSpeed: 100, jobLinksQueue: "jobLeverJobLinks" };
   const jobLeverScraper = new JobBoard("jobLever", functions, formatters, options);
-  return new Scraper(jobLeverScraper); 
+  return new Scraper(jobLeverScraper);
 };

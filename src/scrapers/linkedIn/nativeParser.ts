@@ -1,5 +1,10 @@
 import { flatten } from "../../utils/main";
-import { executeCallbackOnNodeList, getAllHrefLinks, getAllInnerTextElements, getInnerText } from "../../utils/nativeHtmlTraversal";
+import {
+  executeCallbackOnNodeList,
+  getAllHrefLinks,
+  getAllInnerTextElements,
+  getInnerText,
+} from "../../utils/nativeHtmlTraversal";
 import { IApplicationInfo } from "../common/interfaces";
 
 // constants
@@ -13,7 +18,7 @@ export const getApplicationBasicInfoNatively = (link: string, html: NodeListOf<E
   const pay = flatten(getAllInnerTextElements(html, ".compensation__salary", REGEXES))[0];
   const location = flatten(getAllInnerTextElements(html, ".topcard__flavor", REGEXES))[1];
   const company = flatten(getAllInnerTextElements(html, ".topcard__flavor A", REGEXES))[0];
-  const companyLink = getAllHrefLinks(html, ".topcard__flavor A")[0]
+  const companyLink = getAllHrefLinks(html, ".topcard__flavor A")[0];
 
   const miscelaneousInformation = getAllInnerTextElements(html, "li.description__job-criteria-item", REGEXES).reduce(
     (result, criteria) => {

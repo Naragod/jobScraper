@@ -49,7 +49,12 @@ export const scrapeNatively = async (searchTerm: string, location: string, age: 
   return result;
 };
 
-export const searchJobs = async (searchTerm: string, location: string, age: number, options: IMetadataSearchOptions) => {
+export const searchJobs = async (
+  searchTerm: string,
+  location: string,
+  age: number,
+  options: IMetadataSearchOptions,
+) => {
   const scrapers = await getScrapers();
 
   for (let [_key, scraper] of Object.entries(scrapers)) {

@@ -35,6 +35,6 @@ export const getAllJobPageLinks: AllJobsLinksGetterFn = async (searchParams: IJo
     const links = await getLinks(page, "a.jobTitle-link");
     result = [...new Set(result.concat(links))];
   }
-  await page.close()
+  await page.close();
   return result;
 };
