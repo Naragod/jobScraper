@@ -3,7 +3,7 @@ import { writeFileSync } from "fs";
 import { classifyJobs } from "../../classifiers/main";
 import { closeBrowser } from "./playwrightBrowserSupport";
 import { saveJobInfo, saveJobsInfo } from "../../storage/database/main";
-import { AllJobsLinksGetterFn, IJobInfo, JobInfoGetterFn } from "../common/interfaces";
+import { AllJobsLinksGetterFn, IJobInfo, IMetadataSearchOptions, JobInfoGetterFn } from "../common/interfaces";
 import { handleJobApplication, handleJobApplicationsInParallel } from "../common/executionSupport";
 import { removeExcessArrayItems } from "../../utils/parser";
 import { executeInParallel } from "./nativeExecutionSupport";
@@ -59,19 +59,21 @@ export class Scraper {
   }
 
   // uses linkeDom. Much faster than original implementation as now multiple consumers can parse the information.
-  public async queueJobUrls(searchParams: any, applicationLimit = 100) {
+  public async queueJobUrls(searchParams: any, options: IMetadataSearchOptions) {
     let applicationPage = 0;
     let applicationsViewed = 0;
+    const { searchSize, requestidentifier } = options;
     const { getAllJobPageLinks, jobLinksQueue, name: jobBoardName } = this.jobBoard;
+    const messageMetaData = { requestidentifier, jobBoardName };
 
-    while (applicationsViewed < applicationLimit) {
+    while (applicationsViewed < searchSize) {
       applicationPage += 1;
       searchParams["page"] = applicationPage;
       let jobLinks = await getAllJobPageLinks(searchParams);
 
       if (jobLinks.length == 0) break;
-      jobLinks = removeExcessArrayItems(jobLinks, applicationsViewed, applicationLimit);
-      await queueJobLinks(jobLinksQueue, jobBoardName, jobLinks);
+      jobLinks = removeExcessArrayItems(jobLinks, applicationsViewed, searchSize);
+      await queueJobLinks(jobLinksQueue, jobLinks, messageMetaData);
       applicationsViewed += jobLinks.length;
     }
   }

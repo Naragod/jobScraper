@@ -62,6 +62,11 @@ export interface IJobSearchOptions {
   country?: string;
 }
 
+export interface IMetadataSearchOptions {
+  searchSize: number;
+  requestidentifier: string;
+}
+
 export interface JobInfoGetterFn {
   (link: string, page: Page): Promise<IJobInfoModified>;
 }
