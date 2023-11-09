@@ -10,5 +10,5 @@ queryRouter.get("/", async (req: Request, res: Response) => {
   console.log(`Finding results for requestidentifer: ${requestidentifier}`);
   const jobInfoList = await getAllElementsFromStack(<string>requestidentifier);
 
-  return res.json({ jobInfoList, totalCount: jobInfoList.length });
+  return res.json({ jobInfoList, totalCount: jobInfoList.length }); 
 });
