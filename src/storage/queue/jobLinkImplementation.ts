@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { Observable } from "rxjs";
 import { sleep } from "../../utils/main";
 import { saveJobInfo } from "../database/main";
-import { JobBoard } from "../../scrapers/common/applicationHandler";
+import { JobBoard } from "../../scrapers/applicationHandler";
 import { getNativeNodeList } from "../../utils/nativeHtmlTraversal";
 import { consumeMessagesFromQueue, getChannel, sendMessageToQueue } from "./main";
 import { addToStackCache } from "../redis/operations";

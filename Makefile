@@ -5,6 +5,9 @@ up:
 
 migrate:
 	npm run migrate
+
+staticSearch:
+	npm run staticSearch
 	
 # Queue utility commands
 view-queue-undelivered:

@@ -1,4 +1,4 @@
-import { IJobInfo } from "../scrapers/common/interfaces";
+import { IJobInfo } from "../scrapers/interfaces";
 import { flatten } from "../utils/main";
 
 const stripDown = (arr: string[]) => {

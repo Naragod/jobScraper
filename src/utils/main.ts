@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { sanitizeString } from "./parser";
+import { sanitizeString } from "./sanitation";
 
 export const flatten = (arr: any[]): any[] => {
   return arr

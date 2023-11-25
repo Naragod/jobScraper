@@ -12,8 +12,10 @@
     "format": "prettier --log-level warn --write .; echo 'Succesfully formatted files.'",
     "remove-volumes": "sudo docker volume rm $(sudo docker volume ls -q)",
     "remove-containers": "sudo docker rm $(sudo docker ps -a -q)",
+    "staticSearch": "npm run build; ENVIRONMENT=dev node dist/scripts/searches/main.js",
     "dev": "ENVIRONMENT=dev nodemon src/main.ts",
-    "prod": "npm run build; ENVIRONMENT=prod node dist/src/main.js"
+    "prod": "npm run build; ENVIRONMENT=prod node dist/src/main.js",
+    "testy": "ENVIRONMENT=dev ts-node src/scrapers/scraperHandler.ts"
   },
   "author": "Mateo Nar",
   "license": "ISC",

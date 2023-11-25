@@ -1,5 +1,5 @@
-import * as browserSupport from "../../../src/scrapers/common/playwrightBrowserSupport";
-import { handleJobApplicationsInParallel } from "../../../src/scrapers/common/executionSupport";
+import * as browserSupport from "../../../src/scrapers/playwrightBrowserSupport";
+import { handleJobApplicationsInParallel } from "../../../src/scrapers/executionSupport";
 
 describe("Execution Support", () => {
   describe("handlerJobApplicationsInParallel", () => {

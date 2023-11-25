@@ -1,7 +1,7 @@
 import axios from "axios";
 import dotenv from "dotenv";
 import { Agent } from "https";
-import { IProxyCallOptions } from "../scrapers/common/interfaces";
+import { IProxyCallOptions } from "../scrapers/interfaces";
 
 dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 const APIOPTIONS = {

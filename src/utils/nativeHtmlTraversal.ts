@@ -1,10 +1,10 @@
 import { parseHTML } from "linkedom";
 import { flatten } from "./main";
-import { sanitizeString } from "./parser";
 import { superFetch } from "../proxy/main";
-import { IProxyCallOptions } from "../scrapers/common/interfaces";
+import { IProxyCallOptions } from "../scrapers/interfaces";
+import { sanitizeString } from "./sanitation";
 
-export const getLinkedDOMNode = (html: string, pattern = "*") => {
+export const getLinkedDOMNode = (html: string, pattern = "*"): NodeListOf<Element> => {
   const { document } = parseHTML(html);
   return document.querySelectorAll(pattern);
 };

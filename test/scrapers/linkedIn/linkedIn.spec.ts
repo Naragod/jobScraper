@@ -1,6 +1,6 @@
 import { Page } from "playwright";
 import { getApplicationBasicInfo, getJobRequirements } from "../../../src/scrapers/linkedIn/parser";
-import { getBrowserPage, closeBrowser } from "../../../src/scrapers/common/playwrightBrowserSupport";
+import { getBrowserPage, closeBrowser } from "../../../src/scrapers/playwrightBrowserSupport";
 
 // Expected Content
 // ****************************************************************************

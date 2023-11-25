@@ -1,4 +1,4 @@
-import { IJobInfo } from "../../scrapers/common/interfaces";
+import { IJobInfo } from "../../scrapers/interfaces";
 import { sql } from "./db";
 
 export const saveJobsInfo = async (jobInfo: IJobInfo[], formatters: any, jobBoard: string) => {
