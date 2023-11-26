@@ -46,7 +46,5 @@ searchRouter.get("/searchnatively", async (req: Request, res: Response) => {
     <string[]>jobBoards,
   );
 
-  console.log("Returning result:", result.totalCount)
-
   return res.json(result);
 });

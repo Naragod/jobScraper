@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 import postgres from "postgres";
 
-const env = dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
-console.log("env:", env)
+dotenv.config({ path: `.env.${process.env.ENVIRONMENT}` });
 const { DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD = "" } = process.env;
 
 const getSQLConnection = () => {
