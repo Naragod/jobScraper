@@ -27,6 +27,4 @@ export class ScraperHandler {
 export const test = () => {
   const aa = new ScraperHandler();
   console.log(aa.getScrapers());
-}; 
-
-test();
+};

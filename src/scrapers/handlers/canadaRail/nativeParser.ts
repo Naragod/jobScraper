@@ -1,26 +1,34 @@
 import { flatten } from "../../../utils/main";
-import { getAllInnerTextElements } from "../../../utils/nativeHtmlTraversal";
 import { IApplicationInfo, IJobRequirements } from "../../interfaces";
+import { getAllTextFromHTMLContent } from "../../../utils/htmlTraversal";
+import { getAllInnerTextElements } from "../../../utils/nativeHtmlTraversal";
 
-const getLocation = (html: NodeListOf<Element>) => {
-  const location = flatten(getAllInnerTextElements(html, "[data-tag='displayLocationMessage']"))[0];
-  const availableLocations = flatten(getAllInnerTextElements(html, "[data-tag='LocationDisplayTitle']"));
+const getLocation = (jobLocation: any[]): string => {
+  return jobLocation
+    .map((item) => {
+      const { addressLocality, addressRegion, addressCountry } = item.Address;
+      const { Name: country } = addressCountry;
+      return `${addressLocality}, ${addressRegion}, ${country}`;
+    })
+    .join(" | ");
+};
 
-  if (availableLocations.length > 0) return availableLocations.join(" | ");
-  return location;
+const getScriptContent = (html: NodeListOf<Element>) => {
+  const regexes = [new RegExp("\n", "gi"), new RegExp("/", "g"), new RegExp("\t", "gi")];
+  const rawContent = flatten(getAllInnerTextElements(html, "script[type='application/ld+json']", regexes))[0];
+  return JSON.parse(rawContent);
 };
 
 export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>): IApplicationInfo => {
-  const location = getLocation(html);
-  const regexes = [new RegExp("\n", "gi"), new RegExp("/", "g")];
-  const description = flatten(getAllInnerTextElements(html, ".p-htmlviewer[data-tag='']", regexes))[0];
-  const title = flatten(getAllInnerTextElements(html, "[data-tag='ReqTitle']", regexes))[0];
-  return { title, company: "CanadaRail", location, description, pay: "" };
+  const { Title: title, jobLocation, Description: rawDescription } = getScriptContent(html);
+
+  const location = getLocation(jobLocation);
+  const description = getAllTextFromHTMLContent(rawDescription).join(", ");
+  return { title, company: "CanadaRail", location, description: description || "", pay: "" };
 };
 
 export const getJobRequirementsNatively = (html: NodeListOf<Element>): IJobRequirements => {
-  const regexes = [new RegExp("\n", "gi"), new RegExp("/", "g")];
-  const allTasks = flatten(getAllInnerTextElements(html, ".p-htmlviewer[data-tag='']", regexes));
-  const tasks = allTasks.slice(1, allTasks.indexOf("About CN"));
-  return { tasks };
+  const { Description: rawDescription } = getScriptContent(html);
+
+  return { tasks: getAllTextFromHTMLContent(rawDescription) };
 };
