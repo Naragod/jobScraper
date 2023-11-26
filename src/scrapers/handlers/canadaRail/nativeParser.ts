@@ -6,8 +6,8 @@ import { getAllInnerTextElements } from "../../../utils/nativeHtmlTraversal";
 const getLocation = (jobLocation: any[]): string => {
   return jobLocation
     .map((item) => {
-      const { addressLocality, addressRegion, addressCountry } = item.Address;
-      const { Name: country } = addressCountry;
+      const { addressLocality = "", addressRegion = "", addressCountry = {} } = item.Address;
+      const { Name: country = "" } = addressCountry;
       return `${addressLocality}, ${addressRegion}, ${country}`;
     })
     .join(" | ");
