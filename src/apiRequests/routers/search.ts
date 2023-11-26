@@ -11,7 +11,7 @@ searchRouter.get("/", async (req: Request, res: Response) => {
   console.log(requestidentifier);
 
   const { searchTerm, location, searchSize = 20, age = 7, jobBoards: rawJobBoards } = req.query;
-  const jobBoards = JSON.parse(<string>rawJobBoards);
+  let jobBoards = rawJobBoards !== undefined ? JSON.parse(<string>rawJobBoards) : undefined;
 
   setTimeout(() => res.send("Search initated..."), 8000);
 
@@ -31,7 +31,7 @@ searchRouter.get("/", async (req: Request, res: Response) => {
 
 searchRouter.get("/searchnatively", async (req: Request, res: Response) => {
   const { searchTerm, location, searchSize, age = 7, jobBoards: rawJobBoards } = req.query;
-  const jobBoards = JSON.parse(<string>rawJobBoards);
+  let jobBoards = rawJobBoards !== undefined ? JSON.parse(<string>rawJobBoards) : undefined;
 
   const result = await scrapeNatively(
     <string>searchTerm,
