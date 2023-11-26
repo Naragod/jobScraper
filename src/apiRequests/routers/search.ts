@@ -1,52 +1,45 @@
 import { v4 as uuidv4 } from "uuid";
 import { Request, Response, Router } from "express";
-import {
-  searchJobs,
-  parseJobs,
-  searchJobsOn,
-  parseJobsOn,
-  scrapeNatively,
-  scrapeJobsNativelyOn,
-} from "../scrapers/main";
+import { scrapeNatively } from "../scrapers/main";
+import { ScraperHandler } from "../../scrapers/scraperHandler";
 
+const scraperHandler = new ScraperHandler();
 export const searchRouter = Router({ caseSensitive: true });
 
 searchRouter.get("/", async (req: Request, res: Response) => {
   const { requestidentifier = uuidv4() } = req.headers;
-  const { searchTerm, location, searchSize = 20, age = 7 } = req.query;
   console.log(requestidentifier);
+
+  const { searchTerm, location, searchSize = 20, age = 7, jobBoards: rawJobBoards } = req.query;
+  const jobBoards = JSON.parse(<string>rawJobBoards);
 
   setTimeout(() => res.send("Search initated..."), 8000);
 
-  searchJobs(<string>searchTerm, <any>location, <any>age, {
-    searchSize: <any>searchSize,
-    requestidentifier: <any>requestidentifier,
-  });
+  scraperHandler.searchJobs(
+    <string>searchTerm,
+    <any>location,
+    <any>age,
+    {
+      searchSize: <any>searchSize,
+      requestidentifier: <any>requestidentifier,
+    },
+    <string[]>jobBoards,
+  );
 
-  parseJobs({ numOfWorkers: 5 });
+  scraperHandler.parseJobs({ numOfWorkers: 5 });
 });
 
 searchRouter.get("/searchnatively", async (req: Request, res: Response) => {
-  let result: any = {};
-  const { searchTerm, location, searchSize, age = 7, jobBoard } = req.query;
+  const { searchTerm, location, searchSize, age = 7, jobBoards: rawJobBoards } = req.query;
+  const jobBoards = JSON.parse(<string>rawJobBoards);
 
-  if (jobBoard)
-    result = await scrapeJobsNativelyOn(<string>jobBoard, <string>searchTerm, <any>location, <any>age, <any>searchSize);
-  else result = await scrapeNatively(<string>searchTerm, <any>location, <any>age, <any>searchSize);
+  const result = await scrapeNatively(
+    <string>searchTerm,
+    <string>location,
+    <any>age,
+    <any>searchSize,
+    <string[]>jobBoards,
+  );
 
   return res.json(result);
-});
-
-searchRouter.get("/searchOn", async (req: Request, res: Response) => {
-  const { requestidentifier = uuidv4() } = req.headers;
-  const { jobBoard, searchTerm, location, searchSize, age = 7 } = req.query;
-
-  await searchJobsOn(<string>jobBoard, <string>searchTerm, <any>location, <any>age, {
-    searchSize: <any>searchSize,
-    requestidentifier: <any>requestidentifier,
-  });
-
-  await parseJobsOn(<string>jobBoard, { numOfWorkers: 5 });
-
-  return res.send("hitting the search endpoint");
 });

@@ -1,12 +1,13 @@
 import { Request, Response, Router } from "express";
-import { parseJobs } from "../scrapers/main";
+import { ScraperHandler } from "../../scrapers/scraperHandler";
 
 export const workerRouter = Router({ caseSensitive: true });
 
 workerRouter.get("/", async (req: Request, res: Response) => {
   const { numOfWorkers } = req.query;
 
-  await parseJobs({ numOfWorkers });
+  const scraperHandler = new ScraperHandler();
+  await scraperHandler.parseJobs({ numOfWorkers });
 
   return res.send("hitting the worker endpoint");
 });

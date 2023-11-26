@@ -1,6 +1,6 @@
 import { JobBoard, Scraper } from "./applicationHandler";
 import * as scraperConfigurations from "./handlers/main";
-import { IScraperConfigurationOptions } from "./interfaces";
+import { IMetadataSearchOptions, IScraperConfigurationOptions } from "./interfaces";
 
 export class ScraperHandler {
   public scrapers: { [key: string]: Scraper } = {};
@@ -18,9 +18,42 @@ export class ScraperHandler {
     });
   }
 
-  getScrapers(scraper?: string): { [scraperName: string]: Scraper } | Scraper {
-    if (scraper) return this.scrapers[scraper];
-    return this.scrapers;
+  getScrapers(scrapers?: string[]): { [scraperName: string]: Scraper } {
+    if (scrapers == undefined) return this.scrapers;
+    const result: { [key: string]: Scraper } = {};
+    const scraperNames = Object.keys(this.scrapers);
+    scrapers.map((scraper) => {
+      if (!scraperNames.includes(scraper)) {
+        console.error(`Invalid Scraper: ${scraper}`);
+        return;
+      }
+      result[scraper] = this.scrapers[scraper];
+    });
+    return result;
+  }
+
+  async searchJobs(
+    searchTerm: string,
+    location: string,
+    age: number,
+    options: IMetadataSearchOptions,
+    jobBoards?: string[],
+  ) {
+    const scrapers = this.getScrapers(jobBoards);
+
+    for (let key of Object.keys(scrapers)) {
+      const scraper: Scraper = scrapers[key as keyof Object] as any;
+      await scraper.queueJobUrls({ searchTerm, location, age }, options);
+    }
+  }
+
+  async parseJobs(options: any, jobBoards?: string[]) {
+    const scrapers = this.getScrapers(jobBoards);
+
+    for (let key of Object.keys(scrapers)) {
+      const scraper: Scraper = scrapers[key as keyof Object] as any;
+      await scraper.parseJobLinks(options);
+    }
   }
 }
 
