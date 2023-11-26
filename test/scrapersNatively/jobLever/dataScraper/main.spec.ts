@@ -1,7 +1,7 @@
 import {
   getApplicationBasicInfoNatively,
   getJobRequirementsNatively,
-} from "../../../../src/scrapers/jobLever/nativeParser";
+} from "../../../../src/scrapers/handlers/jobLever/nativeParser";
 import { getHTMLStringFromFile } from "../../../../src/utils/io";
 import { getLinkedDOMNode } from "../../../../src/utils/nativeHtmlTraversal";
 import { applicationInfo, jobRequirements, withoutJobReq } from "./data/netflix_results.json";

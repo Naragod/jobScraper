@@ -1,8 +1,3 @@
-import {
-  getExternalLink,
-  getJobRequirementsNatively,
-  getApplicationBasicInfoNatively,
-} from "../../../src/scrapers/canadaJobBank/nativeParser";
 import { getHTMLStringFromFile } from "../../../src/utils/io";
 import { getLinkedDOMNode } from "../../../src/utils/nativeHtmlTraversal";
 import {
@@ -10,6 +5,11 @@ import {
   jobRequirements as pageResultsJobRequirements,
 } from "./data/page_results.json";
 import { applicationInfo as incompleteJobApplicationInfo } from "./data/incomplete_job_results.json";
+import {
+  getApplicationBasicInfoNatively,
+  getExternalLink,
+  getJobRequirementsNatively,
+} from "../../../src/scrapers/handlers/canadaJobBank/nativeParser";
 
 describe("Canada Job Bank Scraper", () => {
   describe("CanadaJobBank Native Parser", () => {
@@ -25,7 +25,7 @@ describe("Canada Job Bank Scraper", () => {
         const htmlString = getHTMLStringFromFile("test/scrapersNatively/canadaJobBank/data/incomplete_job_post.html");
         const html = getLinkedDOMNode(htmlString);
         const result = getApplicationBasicInfoNatively(html);
-        console.log("Result:", result)
+        console.log("Result:", result);
         expect(result).toEqual(incompleteJobApplicationInfo);
       });
     });

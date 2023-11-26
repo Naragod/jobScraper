@@ -1,7 +1,7 @@
 import {
   getApplicationBasicInfoNatively,
   getJobRequirementsNatively,
-} from "../../../src/scrapers/cityOfToronto/nativeParser";
+} from "../../../src/scrapers/handlers/cityOfToronto/nativeParser";
 import { getHTMLStringFromFile } from "../../../src/utils/io";
 import { getLinkedDOMNode } from "../../../src/utils/nativeHtmlTraversal";
 import { nurseApplication, techLeaderApplication, waterTechApplication, visualArtsApplication } from "./data/cityOfToronto_results.json";

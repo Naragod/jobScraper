@@ -1,6 +1,6 @@
-import { getAllJobPageLinks as getAllJobPageLinksLinkedIn } from "../../src/scrapers/linkedIn/requestHandler";
-import { getAllJobPageLinks as getAllJobPageLinksJobLever } from "../../src/scrapers/jobLever/requestHandler";
-import { getAllJobPageLinks as getAllJobPageLinksCanadaJobBank } from "../../src/scrapers/canadaJobBank/requestHandler";
+import { getAllJobPageLinks as getAllJobPageLinksLinkedIn } from "../../src/scrapers/handlers/linkedIn/requestHandler";
+import { getAllJobPageLinks as getAllJobPageLinksJobLever } from "../../src/scrapers/handlers/jobLever/requestHandler";
+import { getAllJobPageLinks as getAllJobPageLinksCanadaJobBank } from "../../src/scrapers/handlers/canadaJobBank/requestHandler";
 
 describe("getAllJobPageLinks", () => {
   it.skip("LinkedIn - Usage", async () => {

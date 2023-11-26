@@ -1,7 +1,7 @@
 import {
   getApplicationBasicInfoNatively,
   getJobRequirementsNatively,
-} from "../../../src/scrapers/linkedIn/nativeParser";
+} from "../../../src/scrapers/handlers/linkedIn/nativeParser";
 import { getHTMLStringFromFile } from "../../../src/utils/io";
 import { getLinkedDOMNode } from "../../../src/utils/nativeHtmlTraversal";
 import { applicationInfo, jobRequirements } from "./data/linkedIn_results.json";

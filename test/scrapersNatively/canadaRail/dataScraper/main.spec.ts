@@ -1,10 +1,10 @@
+import { getHTMLStringFromFile } from "../../../../src/utils/io";
+import { applicationInfo, jobRequirements } from "./data/results.json";
+import { getLinkedDOMNode } from "../../../../src/utils/nativeHtmlTraversal";
 import {
   getApplicationBasicInfoNatively,
   getJobRequirementsNatively,
-} from "../../../../src/scrapers/canadaRail/nativeParser";
-import { getHTMLStringFromFile } from "../../../../src/utils/io";
-import { getLinkedDOMNode } from "../../../../src/utils/nativeHtmlTraversal";
-import { applicationInfo, jobRequirements } from "./data/results.json";
+} from "../../../../src/scrapers/handlers/canadaRail/nativeParser";
 
 describe("Canada Rail Scraper", () => {
   describe("Canada Rail Native Parser", () => {
