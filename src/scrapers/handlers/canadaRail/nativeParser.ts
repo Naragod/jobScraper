@@ -20,11 +20,9 @@ const getScriptContent = (html: NodeListOf<Element>) => {
 };
 
 export const getApplicationBasicInfoNatively = (html: NodeListOf<Element>): IApplicationInfo => {
-  const { Title: title, jobLocation, Description: rawDescription } = getScriptContent(html);
+  const { Title: title, jobLocation } = getScriptContent(html);
 
-  const location = getLocation(jobLocation);
-  const description = getAllTextFromHTMLContent(rawDescription).join(", ");
-  return { title, company: "CanadaRail", location, description: description || "", pay: "" };
+  return { title, company: "CanadaRail", location: getLocation(jobLocation), pay: "" };
 };
 
 export const getJobRequirementsNatively = (html: NodeListOf<Element>): IJobRequirements => {

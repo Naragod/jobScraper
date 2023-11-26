@@ -14,9 +14,8 @@ describe("Canada Rail Scraper", () => {
     describe("getApplicationBasicInfoNatively", () => {
       it("usage", async () => {
         const html = getLinkedDOMNode(htmlString);
-        const { description, ...result } = getApplicationBasicInfoNatively(html);
-        const { description: expectedDescription, ...expectedResult } = applicationInfo;
-        expect(result).toEqual(expectedResult);
+        const result = getApplicationBasicInfoNatively(html);
+        expect(result).toEqual(applicationInfo);
       });
     });
 
