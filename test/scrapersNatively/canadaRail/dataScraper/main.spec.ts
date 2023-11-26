@@ -8,8 +8,8 @@ import {
 
 describe("Canada Rail Scraper", () => {
   describe("Canada Rail Native Parser", () => {
-    const _link = "https://cn360.csod.com/ux/ats/careersite/1/home/requisition/11820?c=cn360&lang=en-US";
-    const htmlString = getHTMLStringFromFile("test/scrapersNatively/canadaRail/dataScraper/data/train_conductor.html");
+    const _link = "https://cn360.csod.com/ux/ats/careersite/1/home/requisition/11811?c=cn360";
+    const htmlString = getHTMLStringFromFile("test/scrapersNatively/canadaRail/dataScraper/data/raw_request.html");
 
     describe("getApplicationBasicInfoNatively", () => {
       it("usage", async () => {

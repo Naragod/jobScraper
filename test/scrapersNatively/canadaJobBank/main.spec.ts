@@ -25,7 +25,6 @@ describe("Canada Job Bank Scraper", () => {
         const htmlString = getHTMLStringFromFile("test/scrapersNatively/canadaJobBank/data/incomplete_job_post.html");
         const html = getLinkedDOMNode(htmlString);
         const result = getApplicationBasicInfoNatively(html);
-        console.log("Result:", result);
         expect(result).toEqual(incompleteJobApplicationInfo);
       });
     });
