@@ -6,5 +6,5 @@ import { formatters } from "../../../storage/database/formatters/canadaJobBank.f
 export const configuration: IScraperConfigurationOptions = {
   formatters,
   parsingFunctions: { getJobInformation: getJobInformationNatively, getAllJobPageLinks },
-  options: { throttleSpeed: 100, jobLinksQueue: "canadaJobBoardJobLinks", jobBoardName: "CanadaJobBoard" },
+  options: { throttleSpeed: 100, jobLinksQueue: "canadaJobBoardJobLinks", jobBoardName: "canadaJobBoard" },
 };

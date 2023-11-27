@@ -6,5 +6,5 @@ import { formatters } from "../../../storage/database/formatters/linkedIn.format
 export const configuration: IScraperConfigurationOptions = {
   formatters,
   parsingFunctions: { getJobInformation: getJobInformationNatively, getAllJobPageLinks },
-  options: { throttleSpeed: 500, jobLinksQueue: "linkedInJobLinks", concurrent: 2, jobBoardName: "linkedIn" },
+  options: { concurrent: 2, throttleSpeed: 500, jobLinksQueue: "linkedInJobLinks", jobBoardName: "linkedIn" },
 };

@@ -6,5 +6,5 @@ import { formatters } from "../../../storage/database/formatters/joblever.format
 export const configuration: IScraperConfigurationOptions = {
   formatters,
   parsingFunctions: { getJobInformation: getJobInformationNatively, getAllJobPageLinks },
-  options: { throttleSpeed: 100, jobBoardName: "jobLever", jobLinksQueue: "jobLeverJobLinks" },
+  options: { throttleSpeed: 100, jobLinksQueue: "jobLeverJobLinks", jobBoardName: "jobLever" },
 };

@@ -6,5 +6,5 @@ import { formatters } from "../../../storage/database/formatters/canadaRail.form
 export const configuration: IScraperConfigurationOptions = {
   formatters,
   parsingFunctions: { getJobInformation: getJobInformationNatively, getAllJobPageLinks },
-  options: { throttleSpeed: 100, jobBoardName: "canadaRail", jobLinksQueue: "canadaRailJobLinks" },
+  options: { throttleSpeed: 100, jobLinksQueue: "canadaRailJobLinks", jobBoardName: "canadaRail" },
 };
