@@ -27,7 +27,7 @@ searchRouter.get("/", async (req: Request, res: Response) => {
       <string[]>jobBoards,
     );
 
-    scraperHandler.parseJobs({ numOfWorkers: 5 });
+    await scraperHandler.parseJobs({ numOfWorkers: 5 });
   } catch (err) {
     console.error(err);
     return res.status(400).send("Search Failed. Inccorect request.");

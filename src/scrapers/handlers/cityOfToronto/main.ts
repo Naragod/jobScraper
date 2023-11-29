@@ -6,5 +6,5 @@ import { formatters } from "../../../storage/database/formatters/cityOfToronto.f
 export const configuration: IScraperConfigurationOptions = {
   formatters,
   parsingFunctions: { getJobInformation: getJobInformationNatively, getAllJobPageLinks },
-  options: { throttleSpeed: 100, jobBoardName: "cityOfToronto", jobLinksQueue: "cityOfToronto" },
+  options: { throttleSpeed: 100, jobBoardName: "cityOfToronto", jobLinksQueue: "cityOfTorontoLinks" },
 };

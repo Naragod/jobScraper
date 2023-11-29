@@ -29,6 +29,7 @@ export class ScraperHandler {
       }
       result[scraper] = this.scrapers[scraper];
     });
+    console.log(`Scrappers used: ${JSON.stringify(Object.keys(result))}`);
     return result;
   }
 
