@@ -11,22 +11,27 @@ searchRouter.get("/", async (req: Request, res: Response) => {
   console.log(requestidentifier);
 
   const { searchTerm, location, searchSize = 20, age = 7, jobBoards: rawJobBoards } = req.query;
-  let jobBoards = rawJobBoards !== undefined ? JSON.parse(<string>rawJobBoards) : undefined;
+  try {
+    let jobBoards = rawJobBoards !== undefined ? JSON.parse(<string>rawJobBoards) : undefined;
 
-  setTimeout(() => res.send("Search initated..."), 8000);
+    setTimeout(() => res.status(200).send("Search initated..."), 5000);
 
-  scraperHandler.searchJobs(
-    <string>searchTerm,
-    <any>location,
-    <any>age,
-    {
-      searchSize: <any>searchSize,
-      requestidentifier: <any>requestidentifier,
-    },
-    <string[]>jobBoards,
-  );
+    scraperHandler.searchJobs(
+      <string>searchTerm,
+      <any>location,
+      <any>age,
+      {
+        searchSize: <any>searchSize,
+        requestidentifier: <any>requestidentifier,
+      },
+      <string[]>jobBoards,
+    );
 
-  scraperHandler.parseJobs({ numOfWorkers: 5 });
+    scraperHandler.parseJobs({ numOfWorkers: 5 });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).send("Search Failed. Inccorect request.");
+  }
 });
 
 searchRouter.get("/searchnatively", async (req: Request, res: Response) => {
