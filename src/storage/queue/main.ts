@@ -19,25 +19,28 @@ export const sendMessageToQueue = async (channel: Channel, queue: string, messag
   channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)), { persistent: true });
   console.log(`Sent: ${JSON.stringify(message)} to: ${queue}`);
 };
+
 export const consumeMessagesFromQueue = async (channel: Channel, queue: string, callback: Function) => {
   const { consumerCount } = await channel.assertQueue(queue, { durable: true });
-  const messageHandler = async (consumerTag: string, message: ConsumeMessage | null, subscriber: Subscriber<any>) => {
-    console.log(`Waiting for message in queue: ${queue}`);
-    const result = await callback(message);
-    channel.ack(<any>message);
-    subscriber.next({ consumerTag, result });
-    console.log(`Consumed message: ${message?.content.toString()}`);
-  };
 
   return new Observable((subscriber) => {
     try {
       if (consumerCount >= <any>MAX_QUEUE_CONSUMERS) throw new Error("Maximum number of consumers reached.");
       const consumerTag = getRandomHashId();
+      const channelOptions = { consumerTag, noAck: false };
       console.log(`------------ Creating Consumer: ${consumerTag} ------------`);
-      channel.consume(queue, async (message) => await messageHandler(consumerTag, message, subscriber), {
-        noAck: false,
-        consumerTag,
-      });
+      channel.consume(
+        queue,
+        async (message) => {
+          console.log(`Waiting for message in queue: ${queue}`);
+          const result = await callback(message);
+          
+          channel.ack(<any>message);
+          subscriber.next({ consumerTag, result });
+          console.log(`Consumed message: ${message?.content.toString()}`);
+        },
+        channelOptions,
+      );
     } catch (err: any) {
       console.log(`Consumer error on queue: ${queue}: ${err.message}`);
     }

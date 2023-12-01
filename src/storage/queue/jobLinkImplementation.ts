@@ -34,9 +34,11 @@ export const parseJobLinksFromQueue = async (jobBoard: JobBoard): Promise<Observ
       const result = <any>getJobInformation(link, <any>html);
       await sleep(throttleSpeed);
 
+      // save to long term storage postgres database
       if (result == null) return;
       const savedResult = await saveJobInfo(result, formatters, jobBoardName);
 
+      // save to short term storage redis cache
       if (savedResult.length == 0) return;
       await addToStackCache(requestidentifier, JSON.stringify(result));
     } catch (err) {
